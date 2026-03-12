@@ -6,39 +6,39 @@ function App() {
 
   useEffect(() => {
     const start = async () => {
-      try {
-        const liff = await initLiff();
-        if (!liff) return;
 
-        const userProfile = await liff.getProfile();
-        setProfile(userProfile);
-      } catch (error) {
-        console.error("LIFF error:", error);
+      const liff = await initLiff();
+
+      // เช็คว่า login หรือยัง
+      if (!liff.isLoggedIn()) {
+        liff.login();   // ถ้ายังไม่ login จะเด้งไปหน้า LINE login
+        return;
       }
+
+      // ดึงข้อมูล user
+      const profile = await liff.getProfile();
+
+      // ID ของ user ใน LINE
+      const userId = profile.userId;
+
+      setProfile(profile);
+
+      console.log("LINE userId:", userId);
+
     };
 
     start();
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100">
-      <div className="bg-white p-6 rounded-2xl shadow-md text-center">
-        <h1 className="text-3xl font-bold text-blue-600 mb-4">POSTCARE+</h1>
-
-        {profile ? (
-          <div className="flex flex-col items-center gap-3">
-            <img
-              src={profile.pictureUrl}
-              alt="profile"
-              className="w-20 h-20 rounded-full"
-            />
-            <p className="text-lg font-semibold">{profile.displayName}</p>
-            <p className="text-sm text-gray-500 break-all">{profile.userId}</p>
-          </div>
-        ) : (
-          <p className="text-gray-500">Loading LINE profile...</p>
-        )}
-      </div>
+    <div>
+      <h1>Postcare</h1>
+      {profile && (
+        <div>
+          <p>{profile.displayName}</p>
+          <img src={profile.pictureUrl} width="100"/>
+        </div>
+      )}
     </div>
   );
 }
