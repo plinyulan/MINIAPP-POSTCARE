@@ -13,7 +13,6 @@ export default function LoginHN() {
     e.preventDefault();
     console.log("HN:", hn);
     console.log("Password:", password);
-    navigate("/home");
   };
 
 
