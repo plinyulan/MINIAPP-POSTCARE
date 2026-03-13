@@ -1,6 +1,6 @@
 import React, { useNavigate } from "react-router-dom";
 import "./LoginHN.css";
-import loginImg from "./img/Login.png"; // เปลี่ยน path ตามไฟล์จริง
+import loginImg from "/Users/linyulan/postcare-clone/Frontend/Postcare/src/img/Login.png"; 
 
 export default function LoginHN() {
   const navigate = useNavigate();
