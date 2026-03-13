@@ -1,108 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-html,body,#root {
-    width: 100%;
-    min-height: 100%;
-    font-family: Poppins,sans-serif;
-    background: #f2f4f5
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
 }
 
 body {
-    overflow-x: hidden
+  overflow-x: hidden;
 }
 
-.login-page {
-    width: 100%;
-    min-height: 100vh;
-    background: #f3f4f6;
-    display: flex;
-    flex-direction: column;
-    align-items: center
+.hn-login-page {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  min-height: 852px;
+  margin: 0 auto;
+  background: #ffffff;
+  overflow: hidden;
 }
 
-.login-top {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 24px;
-    background: #f3f4f6
+.hn-login-image {
+  position: absolute;
+  width: 308px;
+  height: 315px;
+  left: 50%;
+  top: 68px;
+  transform: translateX(-50%);
+  object-fit: contain;
 }
 
-.login-image {
-    width: 320px;
-    max-width: 88%;
-    height: auto;
-    display: block
+.hn-login-panel {
+  position: absolute;
+  width: 100%;
+  height: 598px;
+  left: 0;
+  top: 254px;
+  background: linear-gradient(
+    149.99deg,
+    rgba(140, 175, 195, 0.42) 21.39%,
+    rgba(140, 173, 206, 0.7) 60.89%,
+    rgba(139, 171, 217, 0.7) 98.37%
+  );
+  border-radius: 50px 50px 0 0;
 }
 
-.login-card {
-    width: 100%;
-    max-width: 430px;
-    min-height: 65vh;
-    background: #c9d9ea;
-    margin-top: -10px;
-    border-top-left-radius: 48px;
-    border-top-right-radius: 48px;
-    padding: 42px 28px 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center
+.hn-login-title {
+  position: absolute;
+  width: 64px;
+  height: 36px;
+  left: 50%;
+  top: 181px;
+  transform: translateX(-50%);
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #457492;
 }
 
-.login-title {
-    font-size: 32px;
-    font-weight: 600;
-    color: #4e7a9b;
-    margin-bottom: 32px;
-    letter-spacing: .5px
+.hn-login-form {
+  position: absolute;
+  width: 100%;
+  top: 249px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.login-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center
+.hn-login-input {
+  width: 324px;
+  height: 42px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  background: #ffffff;
+  border: none;
+  outline: none;
+  border-radius: 20px;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #457492;
 }
 
-.login-input {
-    width: 100%;
-    max-width: 360px;
-    height: 58px;
-    border: none;
-    outline: none;
-    border-radius: 30px;
-    background: #fff;
-    padding: 0 24px;
-    font-size: 17px;
-    font-weight: 400;
-    font-family: Poppins,sans-serif;
-    color: #7f8c8d;
-    margin-bottom: 22px
+.hn-login-input::placeholder {
+  color: rgba(93, 147, 149, 0.46);
 }
 
-.login-input::placeholder {
-    color: #a9c0c3;
-    font-weight: 400
+.hn-submit-button {
+  width: 79px;
+  height: 42px;
+  margin-top: 9px;
+  border: none;
+  border-radius: 20px;
+  background: #457492;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #d9e3e5;
+  cursor: pointer;
 }
 
-.login-button {
-    margin-top: 18px;
-    width: 160px;
-    height: 58px;
-    border: none;
-    border-radius: 30px;
-    background: #4d7fa3;
-    color: #fff;
-    font-size: 17px;
-    font-weight: 500;
-    font-family: Poppins,sans-serif;
-    cursor: pointer
-}
-
-.login-button:hover {
-    opacity: .95
+.hn-submit-button:active {
+  transform: scale(0.98);
 }
