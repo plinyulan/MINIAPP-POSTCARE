@@ -1,19 +1,19 @@
-import React, { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LoginHN.css";
 import loginImg from "../img/Login.png";
 
 export default function LoginHN() {
   const navigate = useNavigate();
-  
-  const [hn, setHn] = useNavigate("");
-  const [password, setPassword] = useNavigate("");
+
+  const [hn, setHn] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("HN:", hn);
     console.log("Password:", password);
     navigate("/home");
-
   };
 
 
