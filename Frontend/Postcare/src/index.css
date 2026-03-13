@@ -81,6 +81,7 @@ body {
   font-size: 18px;
   color: #7f8c8d;
   margin-bottom: 22px;
+  font-family: "Poppins", sans-serif;
 }
 
 .login-input::placeholder {
@@ -97,6 +98,7 @@ body {
   color: #ffffff;
   font-size: 18px;
   cursor: pointer;
+  font-family: "Poppins", sans-serif;
 }
 
 .login-button:hover {
