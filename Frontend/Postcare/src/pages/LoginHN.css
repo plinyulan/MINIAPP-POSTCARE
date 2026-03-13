@@ -37,6 +37,7 @@ body {
   top: 68px;
   transform: translateX(-50%);
   object-fit: contain;
+  z-index: 2;
 }
 
 .hn-login-panel {
@@ -52,6 +53,7 @@ body {
     rgba(139, 171, 217, 0.7) 98.37%
   );
   border-radius: 50px 50px 0 0;
+   z-index: 1;
 }
 
 .hn-login-title {
