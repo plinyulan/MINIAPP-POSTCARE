@@ -1,43 +1,43 @@
 import React, { useState } from "react";
-import "../index.css";
-import loginImg from "../img/Login.png";
+import "./loginHN.css";
+import loginImage from "./img/Login.png"; // แก้ path ตามไฟล์จริงของเธอ
 
-function LoginHN({ onLoginSuccess }) {
+export default function LoginHN() {
   const [hn, setHn] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("HN:", hn);
+    console.log("Password:", password);
 
-    if (hn && password) {
-      onLoginSuccess();
-    }
+    // ตรงนี้ค่อยเอาไปต่อ backend / navigate หน้า home 
   };
 
   return (
     <div className="login-page">
       <div className="login-top">
-        <img src={loginImg} alt="Medical Login" className="login-image" />
+        <img src={loginImage} alt="Login" className="login-image" />
       </div>
 
       <div className="login-card">
         <h1 className="login-title">Login</h1>
 
-        <form onSubmit={handleSubmit} className="login-form">
+        <form className="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
             placeholder="HN number"
+            className="login-input"
             value={hn}
             onChange={(e) => setHn(e.target.value)}
-            className="login-input"
           />
 
           <input
             type="password"
             placeholder="Password"
+            className="login-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="login-input"
           />
 
           <button type="submit" className="login-button">
@@ -48,5 +48,3 @@ function LoginHN({ onLoginSuccess }) {
     </div>
   );
 }
-
-export default LoginHN;
