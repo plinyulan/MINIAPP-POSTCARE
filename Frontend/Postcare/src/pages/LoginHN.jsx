@@ -1,5 +1,5 @@
 import React, { useNavigate } from "react-router-dom";
-import "./loginHN.css";
+import "./LoginHN.css";
 import loginImg from "./img/Login.png"; // เปลี่ยน path ตามไฟล์จริง
 
 export default function LoginHN() {
@@ -13,7 +13,7 @@ export default function LoginHN() {
     console.log("HN:", hn);
     console.log("Password:", password);
     navigate("/home");
-    
+
   };
 
 
