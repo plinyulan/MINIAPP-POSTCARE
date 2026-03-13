@@ -1,0 +1,218 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  background: #fffefc;
+}
+
+.home-page {
+  width: 100%;
+  max-width: 393px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px 16px 100px;
+  background: #fffefc;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.profile-img {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.header-info p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.76);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.header-info p:nth-child(2),
+.header-info p:nth-child(3) {
+  font-size: 12px;
+}
+
+.appointment-banner {
+  margin-top: 28px;
+  background: linear-gradient(
+    90.21deg,
+    rgba(142, 170, 210, 0.7) 3.42%,
+    rgba(110, 145, 194, 0.7) 51.6%,
+    rgba(111, 161, 190, 0.7) 99.78%
+  );
+  border-radius: 30px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.banner-text {
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.banner-text p {
+  margin: 0 0 4px;
+}
+
+.banner-img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}
+
+.section-header {
+  margin-top: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+}
+
+.section-header button {
+  border: none;
+  background: #5d9395;
+  color: #fff;
+  border-radius: 10px;
+  padding: 2px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.calendar-row {
+  margin-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.calendar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.calendar-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #8cafc3;
+  color: #dfe8eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.calendar-circle.active {
+  background: #457492;
+}
+
+.calendar-item span {
+  font-size: 12px;
+  color: #8eaad2;
+  font-weight: 500;
+}
+
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.appointment-card {
+  background: linear-gradient(
+    90deg,
+    rgba(140, 200, 202, 0.38) 34%,
+    rgba(69, 99, 100, 0.076) 100%
+  );
+  border-radius: 20px;
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.appointment-left p {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #457492;
+  line-height: 1.5;
+}
+
+.appointment-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.status {
+  min-width: 80px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.approve {
+  border: 0.5px solid #039929;
+  color: #039929;
+  background: transparent;
+}
+
+.type-badge {
+  min-width: 60px;
+  text-align: center;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background: #457492;
+  color: #fff;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 40px);
+  max-width: 315px;
+  height: 57px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 24px;
+}
