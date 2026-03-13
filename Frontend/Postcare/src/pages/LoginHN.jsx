@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useNavigate } from "react-router-dom";
 import "./loginHN.css";
 import loginImg from "./img/Login.png"; // เปลี่ยน path ตามไฟล์จริง
 
 export default function LoginHN() {
-  const [hn, setHn] = useState("");
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  
+  const [hn, setHn] = useNavigate("");
+  const [password, setPassword] = useNavigate("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("HN:", hn);
     console.log("Password:", password);
+    navigate("/home");
+    
   };
+
 
   return (
     <div className="hn-login-page">

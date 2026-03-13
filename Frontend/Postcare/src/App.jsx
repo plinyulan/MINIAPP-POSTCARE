@@ -1,19 +1,16 @@
-import React, { useState } from "react";
-import LoginHN from "./pages/LoginHN";
-
-function HomePage() {
-  return <div>Home Page</div>;
-}
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import LoginHN from "./loginHN";
+import Home from "./Home";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  return isLoggedIn ? (
-    <HomePage />
-  ) : (
-    <LoginHN onLoginSuccess={() => setIsLoggedIn(true)} />
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginHN />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
 export default App;
-
