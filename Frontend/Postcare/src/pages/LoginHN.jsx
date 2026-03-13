@@ -1,30 +1,29 @@
 import React, { useState } from "react";
-import "./LoginPage.css";
-import img from "./img/Login.png";
+import "../index.css";
+import loginImg from "../img/Login.png";
 
-export default function LoginPage() {
+function LoginHN({ onLoginSuccess }) {
   const [hn, setHn] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("HN:", hn);
-    console.log("Password:", password);
 
-    // ตรงนี้ค่อยเอาไปเชื่อม backend ทีหลัง
-    // เช่น fetch / axios ไปที่ API login
+    if (hn && password) {
+      onLoginSuccess();
+    }
   };
 
   return (
     <div className="login-page">
       <div className="login-top">
-        <img src={medicalImg} alt="Medical Login" className="login-image" />
+        <img src={loginImg} alt="Medical Login" className="login-image" />
       </div>
 
-      <div className="login-form-wrapper">
+      <div className="login-card">
         <h1 className="login-title">Login</h1>
 
-        <form className="login-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
           <input
             type="text"
             placeholder="HN number"
@@ -49,3 +48,5 @@ export default function LoginPage() {
     </div>
   );
 }
+
+export default LoginHN;
