@@ -1,6 +1,15 @@
 import "./Home.css";
-import profileImg from "../img/profile.jpg"; // เปลี่ยนเป็นรูปจริงของเธอ
 import bannerImg from "../img/appointment.png"; // รูปปฏิทินในกล่องฟ้า
+
+
+<div
+  style={{
+    width: "57px",
+    height: "57px",
+    borderRadius: "50%",
+    background: "#d9d9d9"
+  }}
+></div>
 
 function Home() {
   const calendarDays = [
