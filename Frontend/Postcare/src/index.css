@@ -4,6 +4,8 @@
   box-sizing: border-box;
 }
 
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
 html,
 body,
 #root {
@@ -56,10 +58,11 @@ body {
 }
 
 .login-title {
-  font-size: 34px;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 600;
   color: #4e7a9b;
-  margin-bottom: 36px;
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
 }
 
 .login-form {
@@ -78,13 +81,16 @@ body {
   border-radius: 30px;
   background: #ffffff;
   padding: 0 24px;
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
   color: #7f8c8d;
   margin-bottom: 22px;
 }
 
 .login-input::placeholder {
   color: #a9c0c3;
+  font-weight: 400;
 }
 
 .login-button {
@@ -95,7 +101,9 @@ body {
   border-radius: 30px;
   background: #4d7fa3;
   color: #ffffff;
-  font-size: 18px;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
   cursor: pointer;
 }
 
