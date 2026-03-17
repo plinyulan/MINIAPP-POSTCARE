@@ -1,46 +1,65 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./LoginHN.css";
-import loginImg from "../img/Login.png";
+import axios from "axios";
+import logo from "../img/Login.png";
 
-export default function LoginHN() {
-  const navigate = useNavigate();
-
-  const [hn, setHn] = useState("");
+function LoginHN() {
+  const [hn, setHN] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("HN:", hn);
-    console.log("Password:", password);
+
+    // บังคับให้ขึ้นต้น HN
+    const username = hn.startsWith("HN") ? hn : `HN${hn}`;
+
+    try {
+      const res = await axios.post(
+        "https://postcare-blackend-462349025453.asia-southeast1.run.app/login",
+        {
+          username: username,
+          password: password,
+        },
+      );
+
+      console.log(res.data);
+
+      // login สำเร็จ
+      window.location.href = "/home";
+    } catch (error) {
+      alert("Login failed");
+    }
   };
 
-
   return (
-    <div className="hn-login-page">
-      <img src={loginImg} alt="POSTCARE Login" className="hn-login-image" />
+    <div className="login-container">
+      <img src={logo} className="login-img" />
 
-      <div className="hn-login-panel">
-        <h1 className="hn-login-title">Login</h1>
+      <div className="login-card">
+        <h2 className="login-title">Login</h2>
 
-        <form className="hn-login-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
-            className="hn-login-input"
             placeholder="HN number"
             value={hn}
-            onChange={(e) => setHn(e.target.value)}
+            onChange={(e) => {
+              let value = e.target.value
+              .replace("HN", "") // ลบ HN ถ้าพิมพ์มา
+              .replace(/\D/g, ""); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
+              setHN(value);
+            }}
           />
 
           <input
             type="password"
-            className="hn-login-input"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="input"
           />
 
-          <button type="submit" className="hn-submit-button">
+          <button type="submit" className="submit-btn">
             Submit
           </button>
         </form>
@@ -48,3 +67,5 @@ export default function LoginHN() {
     </div>
   );
 }
+
+export default LoginHN;

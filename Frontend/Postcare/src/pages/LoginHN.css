@@ -1,128 +1,63 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  font-family: "Poppins", sans-serif;
-  background: #ffffff;
-}
-
-body {
-  overflow-x: hidden;
-}
-
-.hn-login-page {
+.login-container {
   position: relative;
-  width: 100%;
-  max-width: 393px;
-  min-height: 852px;
-  margin: 0 auto;
+  width: 393px;
+  height: 852px;
   background: #ffffff;
-  overflow: hidden;
+  margin: auto;
 }
 
-.hn-login-image {
+.login-img {
   position: absolute;
   width: 308px;
   height: 315px;
-  left: 50%;
+  left: 48px;
   top: 68px;
-  transform: translateX(-50%);
-  object-fit: contain;
-  z-index: 2;
 }
 
-.hn-login-panel {
+.login-card {
   position: absolute;
-  width: 100%;
+  width: 393px;
   height: 598px;
-  left: 0;
   top: 254px;
+
   background: linear-gradient(
     149.99deg,
     rgba(140, 175, 195, 0.42) 21.39%,
     rgba(140, 173, 206, 0.7) 60.89%,
     rgba(139, 171, 217, 0.7) 98.37%
   );
-  border-radius: 50px 50px 0 0;
-   z-index: 1;
-}
 
-.hn-login-title {
-  position: absolute;
-  width: 64px;
-  height: 36px;
-  left: 50%;
-  top: 181px;
-  transform: translateX(-50%);
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 150%;
-  letter-spacing: -0.019em;
-  color: #457492;
-}
+  border-radius: 50px 50px 0px 0px;
 
-.hn-login-form {
-  position: absolute;
-  width: 100%;
-  top: 249px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 160px;
 }
 
-.hn-login-input {
+.login-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #457492;
+  margin-bottom: 30px;
+}
+
+.input {
   width: 324px;
   height: 42px;
+  border-radius: 20px;
+  border: none;
   margin-bottom: 20px;
-  padding: 0 20px;
-  background: #ffffff;
-  border: none;
-  outline: none;
-  border-radius: 20px;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  padding-left: 20px;
   font-size: 14px;
-  line-height: 150%;
-  letter-spacing: -0.019em;
-  color: #457492;
 }
 
-.hn-login-input::placeholder {
-  color: rgba(93, 147, 149, 0.46);
-}
-
-.hn-submit-button {
-  width: 79px;
+.submit-btn {
+  width: 101px;
   height: 42px;
-  margin-top: 9px;
-  border: none;
-  border-radius: 20px;
   background: #457492;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 150%;
-  letter-spacing: -0.019em;
+  border-radius: 20px;
+  border: none;
   color: #d9e3e5;
   cursor: pointer;
-}
-
-.hn-submit-button:active {
-  transform: scale(0.98);
 }
