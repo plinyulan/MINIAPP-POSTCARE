@@ -15,6 +15,7 @@
   height: 315px;
   left: 48px;
   top: 68px;
+  z-index: 2;
 }
 
 /* กล่องฟ้า */
@@ -33,6 +34,7 @@
   );
 
   border-radius: 50px 50px 0px 0px;
+  z-index: 1;
 }
 
 /* Login */
