@@ -41,14 +41,15 @@ function LoginHN() {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="HN number"
-            value={hn}
+            value={`HN${hn}`}
             onChange={(e) => {
               let value = e.target.value
-              .replace("HN", "") // ลบ HN ถ้าพิมพ์มา
-              .replace(/\D/g, ""); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
+                .replace("HN", "") // ตัด HN ออก
+                .replace(/\D/g, ""); // เอาเฉพาะตัวเลข
+
               setHN(value);
             }}
+            placeholder="HN number"
           />
 
           <input

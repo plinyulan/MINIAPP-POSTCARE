@@ -1,63 +1,147 @@
-.login-container {
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+}
+
+.page {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+}
+
+.login-screen {
   position: relative;
   width: 393px;
   height: 852px;
   background: #ffffff;
-  margin: auto;
+  overflow: hidden;
 }
 
-.login-img {
+.hero-image {
   position: absolute;
   width: 308px;
   height: 315px;
   left: 48px;
   top: 68px;
+  object-fit: contain;
 }
 
-.login-card {
+.bottom-panel {
   position: absolute;
+  left: 0;
+  top: 254px;
   width: 393px;
   height: 598px;
-  top: 254px;
-
   background: linear-gradient(
     149.99deg,
     rgba(140, 175, 195, 0.42) 21.39%,
     rgba(140, 173, 206, 0.7) 60.89%,
     rgba(139, 171, 217, 0.7) 98.37%
   );
-
-  border-radius: 50px 50px 0px 0px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 160px;
+  border-radius: 50px 50px 0 0;
 }
 
-.login-title {
-  font-size: 24px;
+.title {
+  position: absolute;
+  width: 64px;
+  height: 36px;
+  left: 165px;
+  top: 181px;
   font-weight: 600;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
   color: #457492;
-  margin-bottom: 30px;
 }
 
-.input {
+.form {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 249px;
+}
+
+.hn-wrapper {
+  position: absolute;
   width: 324px;
   height: 42px;
+  left: 35px;
+  top: 0;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hn-prefix {
+  width: 62px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #457492;
+  font-size: 14px;
+  font-weight: 600;
+  background: #f3f7f8;
+  border-right: 1px solid #e4ecee;
+}
+
+.hn-input {
+  width: calc(324px - 62px);
+  height: 42px;
+  border: none;
+  outline: none;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #457492;
+  background: transparent;
+}
+
+.hn-input::placeholder {
+  color: rgba(93, 147, 149, 0.46);
+}
+
+.password-input {
+  position: absolute;
+  width: 324px;
+  height: 42px;
+  left: 35px;
+  top: 62px;
+  background: #ffffff;
   border-radius: 20px;
   border: none;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  outline: none;
+  padding: 0 20px;
   font-size: 14px;
+  color: #457492;
+}
+
+.password-input::placeholder {
+  color: rgba(93, 147, 149, 0.46);
 }
 
 .submit-btn {
+  position: absolute;
   width: 101px;
   height: 42px;
+  left: 146px;
+  top: 136px;
   background: #457492;
   border-radius: 20px;
   border: none;
+  font-size: 14px;
   color: #d9e3e5;
   cursor: pointer;
 }
