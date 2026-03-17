@@ -7,48 +7,49 @@ function LoginHN() {
   const [hn, setHN] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleHNChange = (e) => {
+    let value = e.target.value
+      .replace(/^HN/i, "")
+      .replace(/\D/g, "");
+    setHN(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // บังคับให้ขึ้นต้น HN
-    const username = hn.startsWith("HN") ? hn : `HN${hn}`;
+    const username = `HN${hn}`;
 
     try {
       const res = await axios.post(
         "https://postcare-blackend-462349025453.asia-southeast1.run.app/login",
         {
-          username: username,
-          password: password,
-        },
+          username,
+          password,
+        }
       );
 
       console.log(res.data);
-
-      // login สำเร็จ
       window.location.href = "/home";
     } catch (error) {
+      console.error(error);
       alert("Login failed");
     }
   };
 
   return (
     <div className="container">
-
-      <img src={img} className="hero" />
-
+      <img src={logo} alt="Login" className="hero" />
       <div className="panel"></div>
-
       <h1 className="title">Login</h1>
 
-      {/* HN INPUT */}
       <input
+        type="text"
         className="hn-input"
         value={`HN${hn}`}
         onChange={handleHNChange}
         placeholder="HN number"
       />
 
-      {/* PASSWORD */}
       <input
         type="password"
         className="password-input"
@@ -57,11 +58,9 @@ function LoginHN() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      {/* BUTTON */}
       <button className="submit-btn" onClick={handleSubmit}>
         Submit
       </button>
-
     </div>
   );
 }
