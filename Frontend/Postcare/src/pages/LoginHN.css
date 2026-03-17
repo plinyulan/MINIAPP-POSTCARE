@@ -1,30 +1,39 @@
-
-.container {
-  position: relative;
-  width: 393px;
-  height: 852px;
-  margin: auto;
-  background: #ffffff;
-  font-family: "Poppins";
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* รูป */
+/* CONTAINER */
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 393px;
+  height: 100vh;
+  margin: auto;
+  background: #ffffff;
+  font-family: "Poppins", sans-serif;
+  overflow: hidden;
+}
+
+/* IMAGE */
 .hero {
   position: absolute;
   width: 308px;
-  height: 315px;
-  left: 48px;
-  top: 68px;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 40px;
   z-index: 2;
 }
 
-/* กล่องฟ้า */
+/* BLUE PANEL */
 .panel {
   position: absolute;
-  width: 393px;
-  height: 598px;
-  left: 0;
-  top: 254px;
+  width: 100%;
+  height: 70%;
+  bottom: 0;
 
   background: linear-gradient(
     149.99deg,
@@ -33,75 +42,87 @@
     rgba(139, 171, 217, 0.7) 98.37%
   );
 
-  border-radius: 50px 50px 0px 0px;
+  border-radius: 50px 50px 0 0;
   z-index: 1;
 }
 
-/* Login */
+/* TITLE */
 .title {
   position: absolute;
-  left: 165px;
-  top: 435px;
-  font-size: 24px;
+  top: 45%;
+  width: 100%;
+  text-align: center;
+
+  font-size: 28px;
   font-weight: 600;
   color: #457492;
+  z-index: 3;
 }
 
-/* HN */
-.hn-input {
-  position: absolute;
-  width: 324px;
-  height: 42px;
-  left: 35px;
-  top: 503px;
-
-  border-radius: 20px;
-  border: none;
-  padding: 0 20px;
-  font-size: 14px;
-
-  background: #ffffff;
-  color: #457492;
-}
-
-/* Password */
+/* INPUT COMMON */
+.hn-input,
 .password-input {
   position: absolute;
-  width: 324px;
-  height: 42px;
-  left: 35px;
-  top: 565px;
+  left: 50%;
+  transform: translateX(-50%);
 
-  border-radius: 20px;
+  width: 85%;
+  height: 50px;
+
+  border-radius: 30px;
   border: none;
+  outline: none;
+
   padding: 0 20px;
-  font-size: 14px;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
 
   background: #ffffff;
   color: #457492;
+
+  z-index: 3;
 }
 
-/* Submit */
+/* POSITION */
+.hn-input {
+  top: 55%;
+}
+
+.password-input {
+  top: 63%;
+}
+
+/* PLACEHOLDER */
+.hn-input::placeholder,
+.password-input::placeholder {
+  color: rgba(93, 147, 149, 0.5);
+}
+
+/* BUTTON */
 .submit-btn {
   position: absolute;
-  width: 101px;
-  height: 42px;
-  left: 146px;
-  top: 639px;
+  left: 50%;
+  transform: translateX(-50%);
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 72%;
 
-  background: #457492;
-  border-radius: 20px;
+  width: 160px;
+  height: 50px;
+
+  border-radius: 30px;
   border: none;
 
-  font-family: "Poppins";
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: -0.019em;
-  color: #D9E3E5;
+  background: #457492;
+  color: #ffffff;
+
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
 
   cursor: pointer;
+  z-index: 3;
+}
+
+/* BUTTON HOVER */
+.submit-btn:hover {
+  opacity: 0.9;
 }
