@@ -1,147 +1,107 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-html,
-body,
-#root {
-  width: 100%;
-  min-height: 100%;
-  font-family: "Poppins", sans-serif;
-  background: #ffffff;
-}
 
-.page {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background: #ffffff;
-}
 
-.login-screen {
+.container {
   position: relative;
   width: 393px;
   height: 852px;
+  margin: auto;
   background: #ffffff;
-  overflow: hidden;
+  font-family: "Poppins";
 }
 
-.hero-image {
+/* รูป */
+.hero {
   position: absolute;
   width: 308px;
   height: 315px;
   left: 48px;
   top: 68px;
-  object-fit: contain;
 }
 
-.bottom-panel {
+/* กล่องฟ้า */
+.panel {
   position: absolute;
-  left: 0;
-  top: 254px;
   width: 393px;
   height: 598px;
+  left: 0;
+  top: 254px;
+
   background: linear-gradient(
     149.99deg,
     rgba(140, 175, 195, 0.42) 21.39%,
     rgba(140, 173, 206, 0.7) 60.89%,
     rgba(139, 171, 217, 0.7) 98.37%
   );
-  border-radius: 50px 50px 0 0;
+
+  border-radius: 50px 50px 0px 0px;
 }
 
+/* Login */
 .title {
   position: absolute;
-  width: 64px;
-  height: 36px;
   left: 165px;
-  top: 181px;
-  font-weight: 600;
+  top: 435px;
   font-size: 24px;
-  line-height: 150%;
-  letter-spacing: -0.019em;
+  font-weight: 600;
   color: #457492;
 }
 
-.form {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 249px;
-}
-
-.hn-wrapper {
+/* HN */
+.hn-input {
   position: absolute;
   width: 324px;
   height: 42px;
   left: 35px;
-  top: 0;
-  background: #ffffff;
+  top: 503px;
+
   border-radius: 20px;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-}
-
-.hn-prefix {
-  width: 62px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #457492;
-  font-size: 14px;
-  font-weight: 600;
-  background: #f3f7f8;
-  border-right: 1px solid #e4ecee;
-}
-
-.hn-input {
-  width: calc(324px - 62px);
-  height: 42px;
   border: none;
-  outline: none;
-  padding: 0 16px;
+  padding: 0 20px;
   font-size: 14px;
+
+  background: #ffffff;
   color: #457492;
-  background: transparent;
 }
 
-.hn-input::placeholder {
-  color: rgba(93, 147, 149, 0.46);
-}
-
+/* Password */
 .password-input {
   position: absolute;
   width: 324px;
   height: 42px;
   left: 35px;
-  top: 62px;
-  background: #ffffff;
+  top: 565px;
+
   border-radius: 20px;
   border: none;
-  outline: none;
   padding: 0 20px;
   font-size: 14px;
+
+  background: #ffffff;
   color: #457492;
 }
 
-.password-input::placeholder {
-  color: rgba(93, 147, 149, 0.46);
-}
-
+/* Submit */
 .submit-btn {
   position: absolute;
   width: 101px;
   height: 42px;
   left: 146px;
-  top: 136px;
+  top: 639px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   background: #457492;
   border-radius: 20px;
   border: none;
+
+  font-family: "Poppins";
   font-size: 14px;
-  color: #d9e3e5;
+  font-weight: 400;
+  letter-spacing: -0.019em;
+  color: #D9E3E5;
+
   cursor: pointer;
 }

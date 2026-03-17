@@ -32,39 +32,36 @@ function LoginHN() {
   };
 
   return (
-    <div className="login-container">
-      <img src={logo} className="login-img" />
+    <div className="container">
 
-      <div className="login-card">
-        <h2 className="login-title">Login</h2>
+      <img src={img} className="hero" />
 
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={`HN${hn}`}
-            onChange={(e) => {
-              let value = e.target.value
-                .replace("HN", "") // ตัด HN ออก
-                .replace(/\D/g, ""); // เอาเฉพาะตัวเลข
+      <div className="panel"></div>
 
-              setHN(value);
-            }}
-            placeholder="HN number"
-          />
+      <h1 className="title">Login</h1>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="input"
-          />
+      {/* HN INPUT */}
+      <input
+        className="hn-input"
+        value={`HN${hn}`}
+        onChange={handleHNChange}
+        placeholder="HN number"
+      />
 
-          <button type="submit" className="submit-btn">
-            Submit
-          </button>
-        </form>
-      </div>
+      {/* PASSWORD */}
+      <input
+        type="password"
+        className="password-input"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      {/* BUTTON */}
+      <button className="submit-btn" onClick={handleSubmit}>
+        Submit
+      </button>
+
     </div>
   );
 }
