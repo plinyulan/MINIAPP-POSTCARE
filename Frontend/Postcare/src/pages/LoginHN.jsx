@@ -9,6 +9,10 @@ function LoginHN() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const handleHNChange = (e) => {
+    setHN(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,7 +33,7 @@ function LoginHN() {
       alert(error.response?.data?.message || "Login failed");
     }
   };
- 
+
   return (
     <div className="container">
       <img src={logo} alt="Login" className="hero" />
@@ -39,6 +43,7 @@ function LoginHN() {
       <input
         type="text"
         className="hn-input"
+        value={hn}
         onChange={handleHNChange}
         placeholder="HN number"
       />
