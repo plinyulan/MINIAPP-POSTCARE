@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Home.css";
-//import  from "../img/Login.png";
-
-
+import profileImg from "../img/profile.jpg";
+import calendarImg from "..img/Noti.png";
+import homeIcon from "../img/home.png";
+import calendarIcon from "../img/calendar.png";
+import taskIcon from "../img/taskdaily.png";
+import profileIcon from "../img/profile.png";
 
 function getSixDaysInWeek(baseDate = new Date()) {
   const date = new Date(baseDate);
@@ -27,28 +29,27 @@ function getSixDaysInWeek(baseDate = new Date()) {
   return days;
 }
 
-function parseDateTime(dateStr, timeStr) {
-  return new Date(`${dateStr}T${timeStr}`);
+function parseAppointmentDateTime(item) {
+  if (!item.appointment_date || !item.time_slot) return null;
+  return new Date(`${item.appointment_date}T${item.time_slot}`);
 }
 
 export default function Home() {
   const today = new Date();
   const [selectedDate, setSelectedDate] = useState(
-    today.toISOString().split("T")[0]
+    today.toISOString().split("T")[0],
   );
   const [appointments, setAppointments] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://postcare-blackend-462349025453.asia-southeast1.run.app/home")
+    fetch("http://localhost:3000/appointments")
       .then((res) => res.json())
       .then((data) => {
-        setAppointments(data);
-        setLoading(false);
+        setAppointments(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
-        console.error("Fetch error:", err);
-        setLoading(false);
+        console.error("Fetch appointments error:", err);
+        setAppointments([]);
       });
   }, []);
 
@@ -58,72 +59,187 @@ export default function Home() {
     const now = new Date();
 
     return appointments
-      .map((item) => ({
+      .map((item, index) => ({
         ...item,
-        dateTime: parseDateTime(item.appointment_date, item.time_slot),
+        displayId: item.id
+          ? `AP${String(item.id).padStart(2, "0")}`
+          : `AP${String(index + 1).padStart(2, "0")}`,
+        dateTime: parseAppointmentDateTime(item),
       }))
-      .filter((item) => item.dateTime >= now)
+      .filter((item) => item.dateTime && item.dateTime >= now)
       .sort((a, b) => a.dateTime - b.dateTime);
   }, [appointments]);
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate
+      (item) => item.appointment_date === selectedDate,
     );
   }, [upcomingAppointments, selectedDate]);
 
   const appointmentsToShow =
     selectedDayAppointments.length > 0
-      ? selectedDayAppointments
+      ? selectedDayAppointments.slice(0, 3)
       : upcomingAppointments.slice(0, 3);
 
   return (
-    <div>
-      <h2>Calendar</h2>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
-        {calendarDays.map((day) => (
-          <button
-            key={day.iso}
-            onClick={() => setSelectedDate(day.iso)}
-            style={{
-              padding: "10px",
-              borderRadius: "20px",
-              border: "none",
-              background: selectedDate === day.iso ? "#457492" : "#8CAFC3",
-              color: "white",
-              cursor: "pointer",
-            }}
-          >
-            <div>{day.date}</div>
-            <div>{day.day}</div>
-          </button>
-        ))}
-      </div>
-
-      <h2>Appointment</h2>
-
-      {loading ? (
-        <p>Loading...</p>
-      ) : appointmentsToShow.length > 0 ? (
-        appointmentsToShow.map((item) => (
-          <div
-            key={item.id}
-            style={{
-              marginBottom: "16px",
-              padding: "16px",
-              borderRadius: "16px",
-              background: "#e8f3f4",
-            }}
-          >
-            <p><strong>Patient:</strong> {item.patient_name}</p>
-            <p><strong>Service:</strong> {item.service_name}</p>
-            <p><strong>Date:</strong> {item.appointment_date}</p>
-            <p><strong>Time:</strong> {item.time_slot}</p>
+    <div className="home-shell">
+      <div className="home-page">
+        {/* Header */}
+        <div className="head-info">
+          <img src={profileImg} alt="profile" className="profile-avatar" />
+          <div className="patient-info">
+            <div className="hn-text">HN00001</div>
+            <div className="sub-text">Patient Type: OPD</div>
+            <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
           </div>
-        ))
-      ) : (
-        <p>No upcoming appointments</p>
-      )}
+        </div>
+
+        {/* Top card */}
+        <div className="top-appointment-card">
+          <div className="top-appointment-text">
+            <div>Ms. Pathumwadee Darukanprut</div>
+            <div>Attending physician:</div>
+            <div>Dr. Thanakrit Wattanachai</div>
+            <div>Department: General</div>
+          </div>
+
+          <img
+            src={calendarImg}
+            alt="calendar"
+            className="top-appointment-image"
+          />
+        </div>
+
+        {/* Calendar header */}
+        <div className="section-head calendar-head">
+          <div className="section-title">Calendar</div>
+          <button className="see-all-btn">See all</button>
+        </div>
+
+        {/* Calendar row */}
+        <div className="calendar-row">
+          {calendarDays.map((day) => (
+            <div
+              key={day.iso}
+              className="calendar-item"
+              onClick={() => setSelectedDate(day.iso)}
+            >
+              <div
+                className={`calendar-circle ${
+                  selectedDate === day.iso ? "active" : ""
+                }`}
+              >
+                {day.date}
+              </div>
+              <div className="calendar-day">
+                {day.day === "Thu"
+                  ? "Thru"
+                  : day.day === "Tue"
+                  ? "Tru"
+                  : day.day}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Appointment header */}
+        <div className="section-head appointment-head">
+          <div className="section-title">Appointment</div>
+          <button className="see-all-btn">See all</button>
+        </div>
+
+        {/* Appointment cards */}
+        <div className="appointment-list">
+          {appointmentsToShow.length > 0 ? (
+            appointmentsToShow.map((item) => (
+              <div
+                className="appointment-card"
+                key={`${item.id}-${item.time_slot}`}
+              >
+                <div className="appointment-left">
+                  <div className="ap-id">{item.displayId}</div>
+                  <div className="ap-line">
+                    Clinic: {item.service_name || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Doctor: {item.doctor_name || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Location: {item.location || "Prajomkao HS."}
+                  </div>
+                </div>
+
+                <div className="appointment-right">
+                  <div className="approve-badge">
+                    {item.status || "Approve"}
+                  </div>
+                  <div className="type-badge">{item.patient_type || "OPD"}</div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <>
+              <div className="appointment-card">
+                <div className="appointment-left">
+                  <div className="ap-id">AP01</div>
+                  <div className="ap-line">Clinic: X-ray (General)</div>
+                  <div className="ap-line">Doctor: -</div>
+                  <div className="ap-line">Location: Prajomkao HS.</div>
+                </div>
+                <div className="appointment-right">
+                  <div className="approve-badge">Approve</div>
+                  <div className="type-badge">OPD</div>
+                </div>
+              </div>
+
+              <div className="appointment-card">
+                <div className="appointment-left">
+                  <div className="ap-id">AP02</div>
+                  <div className="ap-line">Clinic: Blood presser(General)</div>
+                  <div className="ap-line">Doctor: -</div>
+                  <div className="ap-line">Location: Prajomkao HS.</div>
+                </div>
+                <div className="appointment-right">
+                  <div className="approve-badge">Approve</div>
+                  <div className="type-badge">OPD</div>
+                </div>
+              </div>
+
+              <div className="appointment-card">
+                <div className="appointment-left">
+                  <div className="ap-id">AP03</div>
+                  <div className="ap-line">Clinic: Diagnosis (General)</div>
+                  <div className="ap-line">Doctor: -</div>
+                  <div className="ap-line">Location: Prajomkao HS.</div>
+                </div>
+                <div className="appointment-right">
+                  <div className="approve-badge">Approve</div>
+                  <div className="type-badge">OPD</div>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Bottom nav */}
+        <div className="bottom-nav">
+          <button className="nav-item">
+            <img src={homeIcon} alt="home" className="nav-icon" />
+          </button>
+
+          <button className="nav-item">
+            <img src={calendarIcon} alt="calendar" className="nav-icon" />
+          </button>
+
+          <button className="nav-item">
+            <img src={taskIcon} alt="task" className="nav-icon" />
+          </button>
+
+          <button className="nav-item">
+            <img src={profileIcon} alt="profile" className="nav-icon" />
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
