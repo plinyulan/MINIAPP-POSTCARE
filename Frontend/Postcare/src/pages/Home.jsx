@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 //import  from "../img/Login.png";
