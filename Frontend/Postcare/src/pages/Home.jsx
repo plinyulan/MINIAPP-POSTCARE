@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./Home.css";
-import profileImg from "../img/profile.jpg";
+import profileIcon from "../img/profile.png";
 import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
