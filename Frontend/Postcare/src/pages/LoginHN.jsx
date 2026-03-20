@@ -2,22 +2,21 @@ import { useState } from "react";
 import "./LoginHN.css";
 import axios from "axios";
 import logo from "../img/Login.png";
+import { set } from "mongoose";
 
 function LoginHN() {
   const [hn, setHN] = useState("");
   const [password, setPassword] = useState("");
 
   const handleHNChange = (e) => {
-    let value = e.target.value
-      .replace(/^HN/i, "")
-      .replace(/\D/g, "");
-    setHN(value);
+
+    setHN(e.target.value);
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const username = `HN${hn}`;
 
     try {
       const res = await axios.post(
@@ -27,10 +26,13 @@ function LoginHN() {
           password,
         }
       );
+
+
+     console.log(res.data);
       navigate("/home");
     } catch (error) {
-      console.error(error);
-      alert("Login failed");
+      console.error("Login error:", error);
+      alert(error.response?.data?.message || "Login failed");
     }
   };
 
