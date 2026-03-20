@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./Home.css";
 import profileImg from "../img/profile.jpg";
-import calendarImg from "..img/Noti.png";
+import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
@@ -104,8 +104,8 @@ export default function Home() {
           </div>
 
           <img
-            src={calendarImg}
-            alt="calendar"
+            src={notiIcon}
+            alt="notification"
             className="top-appointment-image"
           />
         </div>
