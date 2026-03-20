@@ -45,7 +45,6 @@ function LoginHN() {
       <input
         type="text"
         className="hn-input"
-        value={`HN${hn}`}
         onChange={handleHNChange}
         placeholder="HN number"
       />
