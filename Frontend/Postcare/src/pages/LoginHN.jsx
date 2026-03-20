@@ -27,9 +27,7 @@ function LoginHN() {
           password,
         }
       );
-
-      console.log(res.data);
-      window.location.href = "/home";
+      navigate("/home");
     } catch (error) {
       console.error(error);
       alert("Login failed");
