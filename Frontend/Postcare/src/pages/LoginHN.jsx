@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./LoginHN.css";
 import axios from "axios";
 import logo from "../img/Login.png";
-import { set } from "mongoose";
+
 
 function LoginHN() {
   const [hn, setHN] = useState("");
@@ -22,8 +22,8 @@ function LoginHN() {
       const res = await axios.post(
         "https://postcare-blackend-462349025453.asia-southeast1.run.app/login",
         {
-          username,
-          password,
+          username: hn,
+          password: password,
         }
       );
 
