@@ -42,7 +42,7 @@ export default function Home() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/appointments")
+    fetch("https://postcare-blackend-462349025453.asia-southeast1.run.app/home")
       .then((res) => res.json())
       .then((data) => {
         setAppointments(Array.isArray(data) ? data : []);
