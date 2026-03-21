@@ -5,7 +5,7 @@ import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
-
+import profileIcon from "../img/profile.png";
 
 function getSixDaysInWeek(baseDate = new Date()) {
   const date = new Date(baseDate);
@@ -36,13 +36,13 @@ function parseAppointmentDateTime(item) {
 
 export default function Home() {
   const today = new Date();
-  const [selectedDate, setSelectedDate] = useState(
-    today.toISOString().split("T")[0],
-  );
+  const todayIso = today.toISOString().split("T")[0];
+
+  const [selectedDate, setSelectedDate] = useState(todayIso);
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch("https://postcare-blackend-462349025453.asia-southeast1.run.app/home")
+    fetch("https://postcare-backend-462349025453.asia-southeast1.run.app/appointments")
       .then((res) => res.json())
       .then((data) => {
         setAppointments(Array.isArray(data) ? data : []);
@@ -72,7 +72,7 @@ export default function Home() {
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate,
+      (item) => item.appointment_date === selectedDate
     );
   }, [upcomingAppointments, selectedDate]);
 
@@ -84,7 +84,6 @@ export default function Home() {
   return (
     <div className="home-shell">
       <div className="home-page">
-        {/* Header */}
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
@@ -94,7 +93,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Top card */}
         <div className="top-appointment-card">
           <div className="top-appointment-text">
             <div>Ms. Pathumwadee Darukanprut</div>
@@ -110,13 +108,13 @@ export default function Home() {
           />
         </div>
 
-        {/* Calendar header */}
         <div className="section-head calendar-head">
           <div className="section-title">Calendar</div>
-          <button className="see-all-btn">See all</button>
+          <button className="see-all-btn" type="button">
+            See all
+          </button>
         </div>
 
-        {/* Calendar row */}
         <div className="calendar-row">
           {calendarDays.map((day) => (
             <div
@@ -126,12 +124,13 @@ export default function Home() {
             >
               <div
                 className={`calendar-circle ${
-                  selectedDate === day.iso ? "active" : ""
-                }`}
+                  day.iso === todayIso ? "today" : ""
+                } ${selectedDate === day.iso ? "active" : ""}`}
               >
                 {day.date}
               </div>
-              <div className="calendar-day">
+
+              <div className={`calendar-day ${day.iso === todayIso ? "today-day" : ""}`}>
                 {day.day === "Thu"
                   ? "Thru"
                   : day.day === "Tue"
@@ -142,13 +141,13 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Appointment header */}
         <div className="section-head appointment-head">
           <div className="section-title">Appointment</div>
-          <button className="see-all-btn">See all</button>
+          <button className="see-all-btn" type="button">
+            See all
+          </button>
         </div>
 
-        {/* Appointment cards */}
         <div className="appointment-list">
           {appointmentsToShow.length > 0 ? (
             appointmentsToShow.map((item) => (
@@ -178,64 +177,29 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <>
-              <div className="appointment-card">
-                <div className="appointment-left">
-                  <div className="ap-id">AP01</div>
-                  <div className="ap-line">Clinic: X-ray (General)</div>
-                  <div className="ap-line">Doctor: -</div>
-                  <div className="ap-line">Location: Prajomkao HS.</div>
-                </div>
-                <div className="appointment-right">
-                  <div className="approve-badge">Approve</div>
-                  <div className="type-badge">OPD</div>
-                </div>
+            <div className="appointment-card">
+              <div className="appointment-left">
+                <div className="ap-id">No data</div>
+                <div className="ap-line">No upcoming appointments</div>
               </div>
-
-              <div className="appointment-card">
-                <div className="appointment-left">
-                  <div className="ap-id">AP02</div>
-                  <div className="ap-line">Clinic: Blood presser(General)</div>
-                  <div className="ap-line">Doctor: -</div>
-                  <div className="ap-line">Location: Prajomkao HS.</div>
-                </div>
-                <div className="appointment-right">
-                  <div className="approve-badge">Approve</div>
-                  <div className="type-badge">OPD</div>
-                </div>
-              </div>
-
-              <div className="appointment-card">
-                <div className="appointment-left">
-                  <div className="ap-id">AP03</div>
-                  <div className="ap-line">Clinic: Diagnosis (General)</div>
-                  <div className="ap-line">Doctor: -</div>
-                  <div className="ap-line">Location: Prajomkao HS.</div>
-                </div>
-                <div className="appointment-right">
-                  <div className="approve-badge">Approve</div>
-                  <div className="type-badge">OPD</div>
-                </div>
-              </div>
-            </>
+            </div>
           )}
         </div>
 
-        {/* Bottom nav */}
         <div className="bottom-nav">
-          <button className="nav-item">
+          <button className="nav-item" type="button">
             <img src={homeIcon} alt="home" className="nav-icon" />
           </button>
 
-          <button className="nav-item">
+          <button className="nav-item" type="button">
             <img src={calendarIcon} alt="calendar" className="nav-icon" />
           </button>
 
-          <button className="nav-item">
+          <button className="nav-item" type="button">
             <img src={taskIcon} alt="task" className="nav-icon" />
           </button>
 
-          <button className="nav-item">
+          <button className="nav-item" type="button">
             <img src={profileIcon} alt="profile" className="nav-icon" />
           </button>
         </div>
