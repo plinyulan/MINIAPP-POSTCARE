@@ -7,16 +7,13 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
-function getSixDaysInWeek(baseDate = new Date()) {
-  const date = new Date(baseDate);
-  const day = date.getDay();
-  const startOfWeek = new Date(date);
-  startOfWeek.setDate(date.getDate() - day);
-
+// Generate 6 days ending today
+function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
-  for (let i = 0; i < 6; i++) {
-    const d = new Date(startOfWeek);
-    d.setDate(startOfWeek.getDate() + i);
+
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(baseDate);
+    d.setDate(baseDate.getDate() - i);
 
     days.push({
       fullDate: d,
@@ -42,7 +39,9 @@ export default function Home() {
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    fetch("https://postcare-backend-462349025453.asia-southeast1.run.app/appointments")
+    fetch(
+      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments",
+    )
       .then((res) => res.json())
       .then((data) => {
         setAppointments(Array.isArray(data) ? data : []);
@@ -53,7 +52,7 @@ export default function Home() {
       });
   }, []);
 
-  const calendarDays = useMemo(() => getSixDaysInWeek(today), [today]);
+  const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
 
   const upcomingAppointments = useMemo(() => {
     const now = new Date();
@@ -72,7 +71,7 @@ export default function Home() {
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate
+      (item) => item.appointment_date === selectedDate,
     );
   }, [upcomingAppointments, selectedDate]);
 
@@ -116,29 +115,29 @@ export default function Home() {
         </div>
 
         <div className="calendar-row">
-          {calendarDays.map((day) => (
-            <div
-              key={day.iso}
-              className="calendar-item"
-              onClick={() => setSelectedDate(day.iso)}
-            >
-              <div
-                className={`calendar-circle ${
-                  day.iso === todayIso ? "today" : ""
-                } ${selectedDate === day.iso ? "active" : ""}`}
-              >
-                {day.date}
-              </div>
+          {calendarDays.map((day) => {
+            const isToday = day.iso === today.toISOString().split("T")[0];
 
-              <div className={`calendar-day ${day.iso === todayIso ? "today-day" : ""}`}>
-                {day.day === "Thu"
-                  ? "Thru"
-                  : day.day === "Tue"
-                  ? "Tru"
-                  : day.day}
+            return (
+              <div
+                key={day.iso}
+                className="calendar-item"
+                onClick={() => setSelectedDate(day.iso)}
+              >
+                <div className={`calendar-circle ${isToday ? "today" : ""}`}>
+                  {day.date}
+                </div>
+
+                <div className={`calendar-day ${isToday ? "today-day" : ""}`}>
+                  {day.day === "Thu"
+                    ? "Thru"
+                    : day.day === "Tue"
+                    ? "Tru"
+                    : day.day}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="section-head appointment-head">
