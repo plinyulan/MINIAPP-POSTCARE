@@ -5,7 +5,7 @@ import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
-import profileIcon from "../img/profile.png";
+import profileIcon from "../img/usercircle.png";
 
 function getSixDaysInWeek(baseDate = new Date()) {
   const date = new Date(baseDate);
