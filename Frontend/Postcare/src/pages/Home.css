@@ -308,8 +308,9 @@ body {
     transition: all 0.25s ease;
 }
 
-
+/* ===== Active Icon ===== */
 .nav-item.active .nav-icon {
     opacity: 1;
     transform: scale(1.05);
 }
+

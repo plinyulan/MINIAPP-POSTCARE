@@ -40,7 +40,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments"
+      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments",
     )
       .then((res) => res.json())
       .then((data) => {
@@ -71,7 +71,7 @@ export default function Home() {
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate
+      (item) => item.appointment_date === selectedDate,
     );
   }, [upcomingAppointments, selectedDate]);
 
@@ -109,7 +109,7 @@ export default function Home() {
 
         <div className="section-head calendar-head">
           <div className="section-title">Calendar</div>
-          <button className="see-all-btn" type="button">
+          <button className="see-all-btn" onClick={() => navigate("/calendar")}>
             See all
           </button>
         </div>
@@ -187,17 +187,21 @@ export default function Home() {
 
         <div className="bottom-nav">
           <button
-            type="button"
             className={`nav-item ${activeTab === "home" ? "active" : ""}`}
-            onClick={() => setActiveTab("home")}
+            onClick={() => {
+              setActiveTab("home");
+              navigate("/");
+            }}
           >
-            <img src={homeIcon} alt="home" className="nav-icon" />
+            <img src={calendarIcon} alt="calendar" className="nav-icon" />
           </button>
 
           <button
-            type="button"
             className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
-            onClick={() => setActiveTab("calendar")}
+            onClick={() => {
+              setActiveTab("calendar");
+              navigate("/calendar");
+            }}
           >
             <img src={calendarIcon} alt="calendar" className="nav-icon" />
           </button>
