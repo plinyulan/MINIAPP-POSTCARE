@@ -197,7 +197,7 @@ export default function Home() {
             className={`nav-item ${activeTab === "home" ? "active" : ""}`}
             onClick={() => {
               setActiveTab("home");
-              navigate("/");
+              navigate("/home");
             }}
           >
             <img src={homeIcon} alt="home" className="nav-icon" />
