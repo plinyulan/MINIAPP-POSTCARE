@@ -250,17 +250,54 @@ body {
 
 /* nav */
 .bottom-nav {
-  position: absolute;
-  left: 35px;
-  bottom: 18px;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
   width: 315px;
   height: 57px;
-  border-radius: 30px;
-  background: rgba(255, 255, 255, 0.88);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+
   display: flex;
   justify-content: space-around;
   align-items: center;
-  color: #8cafc3;
-  font-size: 24px;
+
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(20px);
+
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+
+  z-index: 999;
+}
+/*btn*/
+.nav-item {
+  width: 60px;
+  height: 41px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 40px;
+  border: none;
+  background: transparent;
+
+  transition: all 0.2s ease;
+}
+
+/*  Icon  */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+}
+
+/* Active State */
+.nav-item.active {
+  background: rgba(217, 217, 217, 0.3);
+}
+
+.nav-item.active .nav-icon {
+  opacity: 1;
 }
