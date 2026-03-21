@@ -7,6 +7,9 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
+//tab state for bottom nav, can be used in future when implementing different pages
+const [activeTab, setActiveTab] = useState("home");
+
 // Generate 6 days ending today
 function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
