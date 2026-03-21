@@ -86,7 +86,7 @@ export default function Home() {
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
-            <div className="hn-text">HN00001</div>
+            <div className="hn-text">HN12345</div>
             <div className="sub-text">Patient Type: OPD</div>
             <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
           </div>

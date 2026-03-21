@@ -86,7 +86,7 @@ body {
   width: 185px;
   color: #ffffff;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 150%;
   letter-spacing: -0.019em;
 }
@@ -114,14 +114,14 @@ body {
 
 .section-title {
   font-weight: 500;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 150%;
   letter-spacing: -0.019em;
   color: #000000;
 }
 
 .see-all-btn {
-  width: 66px;
+  width: 60px;
   height: 24px;
   border: none;
   background: #5d9395;
@@ -163,7 +163,7 @@ body {
   line-height: 150%;
 }
 
-.calendar-circle.active {
+.calendar-circle.today {
   background: #457492;
 }
 
@@ -172,6 +172,9 @@ body {
   font-size: 12px;
   line-height: 150%;
   color: #8eaad2;
+}
+.calendar-circle.today-day {
+  color: #457492;
 }
 
 /* appointments */
