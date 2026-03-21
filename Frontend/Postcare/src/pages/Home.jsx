@@ -7,10 +7,6 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
-//tab state for bottom nav, can be used in future when implementing different pages
-const [activeTab, setActiveTab] = useState("home");
-
-// Generate 6 days ending today
 function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
 
@@ -38,12 +34,13 @@ export default function Home() {
   const today = new Date();
   const todayIso = today.toISOString().split("T")[0];
 
+  const [activeTab, setActiveTab] = useState("home");
   const [selectedDate, setSelectedDate] = useState(todayIso);
   const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
     fetch(
-      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments",
+      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -74,7 +71,7 @@ export default function Home() {
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate,
+      (item) => item.appointment_date === selectedDate
     );
   }, [upcomingAppointments, selectedDate]);
 
@@ -119,7 +116,7 @@ export default function Home() {
 
         <div className="calendar-row">
           {calendarDays.map((day) => {
-            const isToday = day.iso === today.toISOString().split("T")[0];
+            const isToday = day.iso === todayIso;
 
             return (
               <div
@@ -189,19 +186,35 @@ export default function Home() {
         </div>
 
         <div className="bottom-nav">
-          <button className="nav-item" type="button">
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "home" ? "active" : ""}`}
+            onClick={() => setActiveTab("home")}
+          >
             <img src={homeIcon} alt="home" className="nav-icon" />
           </button>
 
-          <button className="nav-item" type="button">
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
+            onClick={() => setActiveTab("calendar")}
+          >
             <img src={calendarIcon} alt="calendar" className="nav-icon" />
           </button>
 
-          <button className="nav-item" type="button">
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "task" ? "active" : ""}`}
+            onClick={() => setActiveTab("task")}
+          >
             <img src={taskIcon} alt="task" className="nav-icon" />
           </button>
 
-          <button className="nav-item" type="button">
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
+            onClick={() => setActiveTab("profile")}
+          >
             <img src={profileIcon} alt="profile" className="nav-icon" />
           </button>
         </div>
