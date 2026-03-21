@@ -193,7 +193,7 @@ export default function Home() {
               navigate("/");
             }}
           >
-            <img src={calendarIcon} alt="calendar" className="nav-icon" />
+            <img src={homeIcon} alt="home" className="nav-icon" />
           </button>
 
           <button
