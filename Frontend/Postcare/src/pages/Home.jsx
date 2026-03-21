@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import profileImg from "../img/profile.jpg";
 import notiIcon from "../img/Noti.png";
@@ -31,6 +32,7 @@ function parseAppointmentDateTime(item) {
 }
 
 export default function Home() {
+  const navigate = useNavigate();
   const today = new Date();
   const todayIso = today.toISOString().split("T")[0];
 
@@ -40,7 +42,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch(
-      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments",
+      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments"
     )
       .then((res) => res.json())
       .then((data) => {
@@ -71,7 +73,7 @@ export default function Home() {
 
   const selectedDayAppointments = useMemo(() => {
     return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate,
+      (item) => item.appointment_date === selectedDate
     );
   }, [upcomingAppointments, selectedDate]);
 
@@ -109,7 +111,11 @@ export default function Home() {
 
         <div className="section-head calendar-head">
           <div className="section-title">Calendar</div>
-          <button className="see-all-btn" onClick={() => navigate("/calendar")}>
+          <button
+            className="see-all-btn"
+            type="button"
+            onClick={() => navigate("/calendar")}
+          >
             See all
           </button>
         </div>
@@ -187,6 +193,7 @@ export default function Home() {
 
         <div className="bottom-nav">
           <button
+            type="button"
             className={`nav-item ${activeTab === "home" ? "active" : ""}`}
             onClick={() => {
               setActiveTab("home");
@@ -197,6 +204,7 @@ export default function Home() {
           </button>
 
           <button
+            type="button"
             className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
             onClick={() => {
               setActiveTab("calendar");
