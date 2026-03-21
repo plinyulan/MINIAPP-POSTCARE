@@ -262,16 +262,57 @@ body {
   justify-content: space-around;
   align-items: center;
 
-  background: rgba(255, 255, 255, 0.4);
-  backdrop-filter: blur(40px);
-
   border-radius: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.35),
+    rgba(255, 255, 255, 0.12)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.35);
+
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+
+  box-shadow:
+    0 8px 30px rgba(31, 38, 135, 0.12),
+    inset 0 1px 1px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.08);
+
+  overflow: hidden;
   z-index: 999;
 }
-/*btn*/
+
+.bottom-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32),
+    rgba(255, 255, 255, 0.06)
+  );
+  pointer-events: none;
+}
+
+.bottom-nav::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 18px;
+  width: 120px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.28);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+/* Nav Item */
 .nav-item {
+  position: relative;
+  z-index: 1;
   width: 60px;
   height: 41px;
 
@@ -279,25 +320,45 @@ body {
   justify-content: center;
   align-items: center;
 
-  border-radius: 40px;
   border: none;
+  border-radius: 40px;
   background: transparent;
+  cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-/*  Icon  */
+/* ===== Icon ===== */
 .nav-icon {
   width: 24px;
   height: 24px;
-  opacity: 0.5;
+  object-fit: contain;
+  opacity: 0.58;
+  transition: all 0.25s ease;
 }
 
-/* Active State */
+/* Active */
 .nav-item.active {
-  background: rgba(217, 217, 217, 0.3);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.18)
+  );
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.55),
+    0 4px 12px rgba(255, 255, 255, 0.12);
 }
 
 .nav-item.active .nav-icon {
   opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Hover */
+.nav-item:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.nav-item:hover .nav-icon {
+  opacity: 0.9;
 }
