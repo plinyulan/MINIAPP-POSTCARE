@@ -1,6 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
+import profileImg from "../img/profile.jpg";
+import notiIcon from "../img/Noti.png";
+import homeIcon from "../img/home.png";
+import calendarIcon from "../img/calendar.png";
+import taskIcon from "../img/taskdaily.png";
+import profileIcon from "../img/usercircle.png";
+
 
 const monthNames = [
   "January",
@@ -39,36 +46,28 @@ export default function Calendar() {
         currentMonth === today.getMonth() &&
         date < today.getDate();
 
-      const isSelected = selectedDate === date;
-
       return {
         date,
         day: dayNames[jsDate.getDay()],
         isPastDate,
-        isSelected,
+        isSelected: selectedDate === date,
       };
     });
-  }, [daysInMonth, currentMonth, currentYear, selectedDate, today]);
+  }, [currentMonth, currentYear, selectedDate]);
 
   const handleDateClick = (dayObj) => {
     if (dayObj.isPastDate) return;
-
     setSelectedDate(dayObj.date);
-
     navigate("/service");
   };
 
   return (
     <div className="calendar-page">
       <div className="head-information">
-        <img
-          src="/src/img/profile.jpg"
-          alt="profile"
-          className="profile-image"
-        />
+        <img src={profileImg} alt="profile" className="profile-image" />
 
         <div className="patient-info">
-          <div className="hn-text">HN12345</div>
+          <div className="hn-text">HN00001</div>
           <div className="sub-text">Patient Type: OPD</div>
           <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
         </div>
@@ -76,7 +75,7 @@ export default function Calendar() {
 
       <div className="calendar-header">
         <h2 className="calendar-title">Calendar</h2>
-        <button className="month-dropdown">
+        <button className="month-dropdown" type="button">
           {monthNames[currentMonth]}
           <span className="month-arrow">⌄</span>
         </button>
@@ -86,17 +85,15 @@ export default function Calendar() {
         {days.map((item) => (
           <div key={item.date} className="calendar-item">
             <button
-              className={[
-                "calendar-date",
-                item.isSelected ? "selected" : "",
-                item.isPastDate ? "disabled" : "",
-              ].join(" ")}
+              type="button"
+              className={`calendar-date ${item.isSelected ? "selected" : ""} ${
+                item.isPastDate ? "disabled" : ""
+              }`}
               onClick={() => handleDateClick(item)}
               disabled={item.isPastDate}
             >
               {item.date}
             </button>
-
             <span className="calendar-day">{item.day}</span>
           </div>
         ))}
