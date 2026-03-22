@@ -6,7 +6,7 @@ import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
-import arrowDown from "../img/Vector.png";
+import arrowDown from "../img/arrowdown.png";
 
 const monthNames = [
   "January",
@@ -32,7 +32,6 @@ export default function Calendar() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear] = useState(today.getFullYear());
-  const [selectedDate, setSelectedDate] = useState(today.getDate());
   const [activeTab, setActiveTab] = useState("calendar");
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -88,7 +87,11 @@ export default function Calendar() {
             onClick={() => setShowDropdown(!showDropdown)}
           >
             {monthNames[currentMonth]}
-            <img src={arrowDown} alt="arrow" className="month-arrow" />
+            <img
+              src={arrowDown}
+              alt="arrow"
+              className={`month-arrow ${showDropdown ? "rotate" : ""}`}
+            />
           </button>
 
           {showDropdown && (
@@ -156,6 +159,7 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("task");
+            navigate("/task");
           }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
@@ -166,6 +170,7 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("profile");
+            navigate("/profile");
           }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />
