@@ -9,7 +9,7 @@ import profileIcon from "../img/usercircle.png";
 
 export default function Service() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("task");
+  const [activeTab, setActiveTab] = useState("calendar");
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
