@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
+
 import profileImg from "../img/profile.jpg";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
-import arrowDown from "../img/arrowdown.png";
+import arrowDown from "../img/Vector.png";
 
 const monthNames = [
   "January",
@@ -36,6 +37,10 @@ export default function Calendar() {
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
+  const isPastMonth =
+    currentYear < today.getFullYear() ||
+    (currentYear === today.getFullYear() && currentMonth < today.getMonth());
+
   const days = useMemo(() => {
     return Array.from({ length: daysInMonth }, (_, i) => {
       const date = i + 1;
@@ -56,12 +61,13 @@ export default function Calendar() {
         day: dayNames[jsDate.getDay()],
         isPastDate,
         isToday,
+        isPastMonth,
       };
     });
-  }, [daysInMonth, currentMonth, currentYear, today]);
+  }, [daysInMonth, currentMonth, currentYear, today, isPastMonth]);
 
   const handleDateClick = (dayObj) => {
-    if (dayObj.isPastDate) return;
+    if (dayObj.isPastDate || dayObj.isPastMonth) return;
     navigate("/services");
   };
 
@@ -96,18 +102,30 @@ export default function Calendar() {
 
           {showDropdown && (
             <div className="month-menu">
-              {monthNames.map((month, index) => (
-                <div
-                  key={index}
-                  className="month-item"
-                  onClick={() => {
-                    setCurrentMonth(index);
-                    setShowDropdown(false);
-                  }}
-                >
-                  {month}
-                </div>
-              ))}
+              {monthNames.map((month, index) => {
+                const isPastDropdownMonth =
+                  currentYear < today.getFullYear() ||
+                  (currentYear === today.getFullYear() &&
+                    index < today.getMonth());
+
+                const isCurrentDropdownMonth = index === currentMonth;
+
+                return (
+                  <div
+                    key={index}
+                    className={`month-item ${
+                      isPastDropdownMonth ? "disabled-month-item" : ""
+                    } ${isCurrentDropdownMonth ? "active-month-item" : ""}`}
+                    onClick={() => {
+                      if (isPastDropdownMonth) return;
+                      setCurrentMonth(index);
+                      setShowDropdown(false);
+                    }}
+                  >
+                    {month}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
@@ -118,14 +136,17 @@ export default function Calendar() {
           <div key={item.date} className="calendar-item">
             <button
               type="button"
-              className={`calendar-date ${item.isToday ? "selected" : ""} ${
-                item.isPastDate ? "disabled" : ""
+              className={`calendar-date ${
+                item.isToday && !item.isPastMonth ? "selected" : ""
+              } ${
+                item.isPastDate || item.isPastMonth ? "disabled" : ""
               }`}
               onClick={() => handleDateClick(item)}
-              disabled={item.isPastDate}
+              disabled={item.isPastDate || item.isPastMonth}
             >
               {item.date}
             </button>
+
             <span className="calendar-day">{item.day}</span>
           </div>
         ))}
@@ -159,7 +180,6 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("task");
-            navigate("/task");
           }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
@@ -170,7 +190,6 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("profile");
-            navigate("/profile");
           }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />
