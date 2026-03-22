@@ -26,7 +26,7 @@ export default function Service() {
     if (item.status?.toLowerCase() !== "available") return;
 
     if (item.service_name === "Blood presser") {
-      navigate("/bloodpresser");
+      navigate("/bloodpresser_room1");
     } else if (item.service_name === "Diagnosis") {
       navigate("/diagnosis");
     } else if (item.service_name === "X-ray") {
