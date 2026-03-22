@@ -2,12 +2,10 @@ import React, { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
 import profileImg from "../img/profile.jpg";
-import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
-
 
 const monthNames = [
   "January",
@@ -33,6 +31,7 @@ export default function Calendar() {
   const [currentMonth] = useState(today.getMonth());
   const [currentYear] = useState(today.getFullYear());
   const [selectedDate, setSelectedDate] = useState(today.getDate());
+  const [activeTab, setActiveTab] = useState("calendar");
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -53,12 +52,12 @@ export default function Calendar() {
         isSelected: selectedDate === date,
       };
     });
-  }, [currentMonth, currentYear, selectedDate]);
+  }, [daysInMonth, currentMonth, currentYear, selectedDate, today]);
 
   const handleDateClick = (dayObj) => {
     if (dayObj.isPastDate) return;
     setSelectedDate(dayObj.date);
-    navigate("/service");
+    navigate("/services");
   };
 
   return (
@@ -67,7 +66,7 @@ export default function Calendar() {
         <img src={profileImg} alt="profile" className="profile-image" />
 
         <div className="patient-info">
-          <div className="hn-text">HN00001</div>
+          <div className="hn-text">HN12345</div>
           <div className="sub-text">Patient Type: OPD</div>
           <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
         </div>
@@ -98,6 +97,7 @@ export default function Calendar() {
           </div>
         ))}
       </div>
+
       <div className="bottom-nav">
         <button
           type="button"
@@ -124,7 +124,9 @@ export default function Calendar() {
         <button
           type="button"
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-          onClick={() => setActiveTab("task")}
+          onClick={() => {
+            setActiveTab("task");
+          }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
         </button>
@@ -132,7 +134,9 @@ export default function Calendar() {
         <button
           type="button"
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-          onClick={() => setActiveTab("profile")}
+          onClick={() => {
+            setActiveTab("profile");
+          }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />
         </button>
