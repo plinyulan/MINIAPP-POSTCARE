@@ -55,12 +55,10 @@
   color: #000;
 }
 
-/* wrapper เอาไว้ให้ dropdown ลอย */
 .month-wrapper {
   position: relative;
 }
 
-/* ปุ่มหลัก (Frame 1000005290) */
 .month-btn {
   display: flex;
   flex-direction: row;
@@ -74,33 +72,34 @@
   background: rgba(17, 117, 189, 0.5);
   border-radius: 40px;
   border: none;
-
   cursor: pointer;
 }
 
-/* text March */
 .month-text {
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 12px;
   color: #d9e3e5;
 }
 
-/* arrow icon */
 .month-icon {
   width: 10px;
   height: 10px;
   object-fit: contain;
+  transition: transform 0.25s ease;
 }
 
-/* dropdown */
+.month-icon.rotate {
+  transform: rotate(180deg);
+}
+
 .month-menu {
   position: absolute;
   top: 38px;
   right: 0;
 
   width: 120px;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 
@@ -143,16 +142,18 @@
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .calendar-date.selected {
   background: #457492;
+  color: #dfe8eb;
 }
 
 .calendar-date.disabled {
-  background: #d7e2e8;
-  color: #ffffff;
-  opacity: 0.65;
+  background: #8cafc3;
+  color: #dfe8eb;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
@@ -162,7 +163,6 @@
   color: #8eaad2;
 }
 
-/* nav */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -210,4 +210,3 @@
   object-fit: contain;
   display: block;
 }
-
