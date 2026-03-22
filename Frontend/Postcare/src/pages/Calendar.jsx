@@ -47,18 +47,22 @@ export default function Calendar() {
         currentMonth === today.getMonth() &&
         date < today.getDate();
 
+      const isToday =
+        currentYear === today.getFullYear() &&
+        currentMonth === today.getMonth() &&
+        date === today.getDate();
+
       return {
         date,
         day: dayNames[jsDate.getDay()],
         isPastDate,
-        isSelected: selectedDate === date,
+        isToday,
       };
     });
-  }, [daysInMonth, currentMonth, currentYear, selectedDate, today]);
+  }, [daysInMonth, currentMonth, currentYear, today]);
 
   const handleDateClick = (dayObj) => {
     if (dayObj.isPastDate) return;
-    setSelectedDate(dayObj.date);
     navigate("/services");
   };
 
@@ -111,7 +115,7 @@ export default function Calendar() {
           <div key={item.date} className="calendar-item">
             <button
               type="button"
-              className={`calendar-date ${item.isSelected ? "selected" : ""} ${
+              className={`calendar-date ${item.isToday ? "selected" : ""} ${
                 item.isPastDate ? "disabled" : ""
               }`}
               onClick={() => handleDateClick(item)}
