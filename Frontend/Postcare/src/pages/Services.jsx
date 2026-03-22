@@ -9,7 +9,7 @@ import profileIcon from "../img/usercircle.png";
 
 export default function Service() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("calendar");
+  const [activeTab, setActiveTab] = useState("task");
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,12 +22,25 @@ export default function Service() {
     image: profileImg,
   };
 
+  const handleServiceClick = (item) => {
+    if (item.status?.toLowerCase() !== "available") return;
+
+    if (item.service_name === "Blood presser") {
+      navigate("/bloodpresser");
+    } else if (item.service_name === "Diagnosis") {
+      navigate("/diagnosis");
+    } else if (item.service_name === "X-ray") {
+      navigate("/xray");
+    }
+  };
+
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const res = await fetch(
-          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services",
+          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services"
         );
+
         if (!res.ok) {
           throw new Error("Failed to fetch services");
         }
@@ -47,7 +60,6 @@ export default function Service() {
 
   return (
     <div className="service-page">
-      {/* Header */}
       <div className="service-header">
         <img src={patient.image} alt="patient" className="service-avatar" />
 
@@ -62,7 +74,6 @@ export default function Service() {
 
       <h2 className="service-title">Service</h2>
 
-      {/* Content */}
       <div className="service-list">
         {loading && <p className="service-message">Loading...</p>}
         {error && <p className="service-message error">{error}</p>}
@@ -77,7 +88,11 @@ export default function Service() {
             const isAvailable = item.status?.toLowerCase() === "available";
 
             return (
-              <div className="service-card" key={item.id}>
+              <div
+                className="service-card"
+                key={item.id}
+                onClick={() => handleServiceClick(item)}
+              >
                 <div className="service-card-content">
                   <div className="service-card-left">
                     <p>ServiceID : {item.service_id}</p>
@@ -101,7 +116,6 @@ export default function Service() {
           })}
       </div>
 
-      {/* Bottom nav */}
       <div className="bottom-nav">
         <button
           type="button"
@@ -128,7 +142,9 @@ export default function Service() {
         <button
           type="button"
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-          onClick={() => setActiveTab("task")}
+          onClick={() => {
+            setActiveTab("task");
+          }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
         </button>
@@ -136,7 +152,9 @@ export default function Service() {
         <button
           type="button"
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-          onClick={() => setActiveTab("profile")}
+          onClick={() => {
+            setActiveTab("profile");
+          }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />
         </button>
