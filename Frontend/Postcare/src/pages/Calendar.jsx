@@ -6,6 +6,7 @@ import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
+import arrowDown from "../img/Vector.png";
 
 const monthNames = [
   "January",
@@ -28,7 +29,8 @@ export default function Calendar() {
   const navigate = useNavigate();
   const today = new Date();
 
-  const [currentMonth] = useState(today.getMonth());
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(today.getMonth());
   const [currentYear] = useState(today.getFullYear());
   const [selectedDate, setSelectedDate] = useState(today.getDate());
   const [activeTab, setActiveTab] = useState("calendar");
@@ -74,10 +76,34 @@ export default function Calendar() {
 
       <div className="calendar-header">
         <h2 className="calendar-title">Calendar</h2>
-        <button className="month-dropdown" type="button">
-          {monthNames[currentMonth]}
-          <span className="month-arrow">⌄</span>
-        </button>
+
+        <div className="month-wrapper">
+          <button
+            className="month-dropdown"
+            type="button"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            {monthNames[currentMonth]}
+            <img src={arrowDown} alt="arrow" className="month-arrow" />
+          </button>
+
+          {showDropdown && (
+            <div className="month-menu">
+              {monthNames.map((month, index) => (
+                <div
+                  key={index}
+                  className="month-item"
+                  onClick={() => {
+                    setCurrentMonth(index);
+                    setShowDropdown(false);
+                  }}
+                >
+                  {month}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="calendar-grid">
