@@ -8,6 +8,9 @@ import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
 export default function Service() {
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState("task");
+
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -23,7 +26,7 @@ export default function Service() {
     const fetchServices = async () => {
       try {
         const res = await fetch(
-          "https://postcare-backend-462349025453.asia-southeast1.run.app/services"
+          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services",
         );
         if (!res.ok) {
           throw new Error("Failed to fetch services");
