@@ -7,7 +7,7 @@ import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
-import arrowDown from "../img/Vector.png";
+import arrowDown from "../img/arrowdown.png";
 
 const monthNames = [
   "January",
