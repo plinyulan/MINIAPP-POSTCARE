@@ -1,7 +1,145 @@
-export default function CalendarPage() {
+import React, { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Calendar.css";
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+export default function Calendar() {
+  const navigate = useNavigate();
+  const today = new Date();
+
+  const [currentMonth] = useState(today.getMonth());
+  const [currentYear] = useState(today.getFullYear());
+  const [selectedDate, setSelectedDate] = useState(today.getDate());
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+  const days = useMemo(() => {
+    return Array.from({ length: daysInMonth }, (_, i) => {
+      const date = i + 1;
+      const jsDate = new Date(currentYear, currentMonth, date);
+
+      const isPastDate =
+        currentYear === today.getFullYear() &&
+        currentMonth === today.getMonth() &&
+        date < today.getDate();
+
+      const isSelected = selectedDate === date;
+
+      return {
+        date,
+        day: dayNames[jsDate.getDay()],
+        isPastDate,
+        isSelected,
+      };
+    });
+  }, [daysInMonth, currentMonth, currentYear, selectedDate, today]);
+
+  const handleDateClick = (dayObj) => {
+    if (dayObj.isPastDate) return;
+
+    setSelectedDate(dayObj.date);
+
+    navigate("/service");
+  };
+
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Calendar Page</h1>
+    <div className="calendar-page">
+      <div className="head-information">
+        <img
+          src="/src/img/profile.jpg"
+          alt="profile"
+          className="profile-image"
+        />
+
+        <div className="patient-info">
+          <div className="hn-text">HN12345</div>
+          <div className="sub-text">Patient Type: OPD</div>
+          <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
+        </div>
+      </div>
+
+      <div className="calendar-header">
+        <h2 className="calendar-title">Calendar</h2>
+        <button className="month-dropdown">
+          {monthNames[currentMonth]}
+          <span className="month-arrow">⌄</span>
+        </button>
+      </div>
+
+      <div className="calendar-grid">
+        {days.map((item) => (
+          <div key={item.date} className="calendar-item">
+            <button
+              className={[
+                "calendar-date",
+                item.isSelected ? "selected" : "",
+                item.isPastDate ? "disabled" : "",
+              ].join(" ")}
+              onClick={() => handleDateClick(item)}
+              disabled={item.isPastDate}
+            >
+              {item.date}
+            </button>
+
+            <span className="calendar-day">{item.day}</span>
+          </div>
+        ))}
+      </div>
+      <div className="bottom-nav">
+        <button
+          type="button"
+          className={`nav-item ${activeTab === "home" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("home");
+            navigate("/home");
+          }}
+        >
+          <img src={homeIcon} alt="home" className="nav-icon" />
+        </button>
+
+        <button
+          type="button"
+          className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
+          onClick={() => {
+            setActiveTab("calendar");
+            navigate("/calendar");
+          }}
+        >
+          <img src={calendarIcon} alt="calendar" className="nav-icon" />
+        </button>
+
+        <button
+          type="button"
+          className={`nav-item ${activeTab === "task" ? "active" : ""}`}
+          onClick={() => setActiveTab("task")}
+        >
+          <img src={taskIcon} alt="task" className="nav-icon" />
+        </button>
+
+        <button
+          type="button"
+          className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
+          onClick={() => setActiveTab("profile")}
+        >
+          <img src={profileIcon} alt="profile" className="nav-icon" />
+        </button>
+      </div>
     </div>
   );
 }
