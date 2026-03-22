@@ -13,7 +13,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/bloodpresser" element={<Bloodpresser />} />
+        <Route path="/bloodpresser_room1" element={<Bloodpresser />} />
       </Routes>
     </BrowserRouter>
   );
