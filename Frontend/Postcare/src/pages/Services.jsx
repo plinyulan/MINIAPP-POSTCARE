@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Service.css";
+import "./Services.css";
 import { useNavigate } from "react-router-dom";
 import profileImg from "../img/profile.jpg";
 import homeIcon from "../img/home.png";
