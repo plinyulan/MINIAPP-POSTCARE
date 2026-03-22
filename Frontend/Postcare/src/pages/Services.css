@@ -1,0 +1,176 @@
+/* Page */
+.service-page {
+  width: 100%;
+  max-width: 393px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #fffefc;
+  font-family: "Poppins", sans-serif;
+  padding: 24px 12px 100px;
+  box-sizing: border-box;
+}
+
+/* Header */
+.service-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.service-avatar {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.service-header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-hn {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.service-patient-type,
+.service-patient-name {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Title */
+.service-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* List */
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Card */
+.service-card {
+  width: 100%;
+  padding: 12px;
+  border-radius: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(140, 175, 195, 0.38) 34%,
+    rgba(69, 99, 100, 0.08) 100%
+  );
+}
+
+/* Card content */
+.service-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Left text */
+.service-card-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.service-card-left p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #457492;
+}
+
+/* Right badge */
+.service-card-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Badge */
+.service-badge {
+  min-width: 66px;
+  height: 20px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Available */
+.service-badge.available {
+  border: 1px solid #039929;
+  color: #039929;
+}
+
+/* Reserved */
+.service-badge.reserved {
+  border: 1px solid #8e8e93;
+  color: #8e8e93;
+}
+
+/* Messages */
+.service-message {
+  text-align: center;
+  font-size: 13px;
+  color: #457492;
+}
+
+.service-message.error {
+  color: red;
+}
+
+/* Bottom Nav */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 315px;
+  height: 57px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  padding: 0 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Nav item */
+.nav-item {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 40px;
+  cursor: pointer;
+}
+
+/* Active nav */
+.nav-item.active {
+  width: 66px;
+  background: rgba(217, 217, 217, 0.2);
+}
+
+/* Icon */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+}
