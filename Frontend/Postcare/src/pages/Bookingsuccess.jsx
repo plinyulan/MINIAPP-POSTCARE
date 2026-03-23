@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./BookingSuccess.css";
+import "./Bookingsuccess.css";
 
 import profileImg from "../img/profile.jpg";
 import roomImg from "../img/RoomService.png";
