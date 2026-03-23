@@ -7,14 +7,6 @@
   padding: 14px 0 24px;
   box-sizing: border-box;
 }
-.schedule-service-name {
-  margin-top: 8px;
-  margin-left: 60px;   
-  font-size: 14px;
-  color: #5f7f97;
-  font-weight: 600;
-  text-align: left;
-}
 
 .schedule-card {
   width: 393px;
@@ -115,10 +107,11 @@
 
 .schedule-service-name {
   margin-top: 10px;
+  margin-left: 60px;
   font-size: 14px;
   color: #5f7f97;
   font-weight: 600;
-  text-align: center;
+  text-align: left;
 }
 
 /* image */
