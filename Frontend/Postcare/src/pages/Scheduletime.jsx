@@ -1,13 +1,18 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Scheduletime.css";
 
 import profileImg from "../img/profile.jpg";
-import roomImg from "../img/RoomService.png"; 
-// ตอนนี้ใช้รูปเดียวก่อน ถ้ามีหลายรูปค่อยแยก room1 room2 room3
+import roomImg from "../img/RoomService.png";
+import homeIcon from "../img/home.png";
+import calendarIcon from "../img/calendar.png";
+import taskIcon from "../img/taskdaily.png";
+import profileIcon from "../img/usercircle.png";
 
-export default function ScheduleTime() {
+export default function Scheduletime() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("calendar");
 
   const patient = {
     hn: "HN00001",
@@ -16,6 +21,7 @@ export default function ScheduleTime() {
     image: profileImg,
   };
 
+  const selectedServiceName = location.state?.serviceName || "Blood presser";
   const [selectedRoom, setSelectedRoom] = useState(1);
 
   const roomData = {
@@ -65,23 +71,20 @@ export default function ScheduleTime() {
       slots: [
         { id: 17, time: "8:00-10:00", status: "reserved" },
         { id: 18, time: "10:00-12:00", status: "reserved" },
-        { id: 19, time: "13:00-15:00", status: "reserved" },
-        { id: 20, time: "15:00-17:00", status: "reserved" },
+        { id: 19, time: "13:00-15:00", status: "available" },
+        { id: 20, time: "15:00-17:00", status: "available" },
       ],
     },
   };
 
   const currentRoom = roomData[selectedRoom];
 
-  const handleBook = async (slot) => {
+  const handleBook = (slot) => {
     if (slot.status === "reserved") return;
 
-    // ตอนนี้จำลองว่าจองสำเร็จ
-    // ถ้าเชื่อม backend จริง ค่อย fetch POST ไป API ตรงนี้
-
-    navigate("/booking-success", {
+    navigate("/bookingsuccess", {
       state: {
-        serviceName: currentRoom.name,
+        serviceName: selectedServiceName,
         roomId: selectedRoom,
         time: slot.time,
         date: "2026-03-23",
@@ -120,7 +123,7 @@ export default function ScheduleTime() {
           </div>
         </div>
 
-        <div className="service-name">{currentRoom.name}</div>
+        <div className="service-name">{selectedServiceName}</div>
 
         <div className="room-image-wrap">
           <img src={currentRoom.image} alt="room" className="room-image" />
@@ -146,48 +149,48 @@ export default function ScheduleTime() {
           ))}
         </div>
 
-         <div className="bottom-nav">
-                <button
-                  type="button"
-                  className={`nav-item ${activeTab === "home" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveTab("home");
-                    navigate("/home");
-                  }}
-                >
-                  <img src={homeIcon} alt="home" className="nav-icon" />
-                </button>
-        
-                <button
-                  type="button"
-                  className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveTab("calendar");
-                    navigate("/calendar");
-                  }}
-                >
-                  <img src={calendarIcon} alt="calendar" className="nav-icon" />
-                </button>
-        
-                <button
-                  type="button"
-                  className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveTab("task");
-                  }}
-                >
-                  <img src={taskIcon} alt="task" className="nav-icon" />
-                </button>
-        
-                <button
-                  type="button"
-                  className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-                  onClick={() => {
-                    setActiveTab("profile");
-                  }}
-                >
-                  <img src={profileIcon} alt="profile" className="nav-icon" />
-                </button>
+        <div className="bottom-nav">
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "home" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("home");
+              navigate("/home");
+            }}
+          >
+            <img src={homeIcon} alt="home" className="nav-icon" />
+          </button>
+
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("calendar");
+              navigate("/calendar");
+            }}
+          >
+            <img src={calendarIcon} alt="calendar" className="nav-icon" />
+          </button>
+
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "task" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("task");
+            }}
+          >
+            <img src={taskIcon} alt="task" className="nav-icon" />
+          </button>
+
+          <button
+            type="button"
+            className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
+            onClick={() => {
+              setActiveTab("profile");
+            }}
+          >
+            <img src={profileIcon} alt="profile" className="nav-icon" />
+          </button>
         </div>
       </div>
     </div>
