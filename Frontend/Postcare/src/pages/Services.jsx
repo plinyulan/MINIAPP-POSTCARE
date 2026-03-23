@@ -7,7 +7,7 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
-export default function Service() {
+export default function Services() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("task");
 
@@ -37,7 +37,7 @@ export default function Service() {
     const fetchServices = async () => {
       try {
         const res = await fetch(
-          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services",
+          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services"
         );
 
         if (!res.ok) {

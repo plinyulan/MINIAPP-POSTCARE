@@ -6,7 +6,6 @@ import Services from "./pages/Services";
 import Scheduletime from "./pages/Scheduletime";
 import Bookingsuccess from "./pages/Bookingsuccess";
 
-
 function App() {
   return (
     <BrowserRouter>
@@ -17,7 +16,6 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/scheduletime" element={<Scheduletime />} />
         <Route path="/bookingsuccess" element={<Bookingsuccess />} />
-
       </Routes>
     </BrowserRouter>
   );

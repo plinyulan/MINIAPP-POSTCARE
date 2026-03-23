@@ -30,7 +30,7 @@ export default function ScheduleTime() {
       ],
     },
     2: {
-      name: "X-Ray",
+      name: "Blood presser",
       image: roomImg,
       slots: [
         { id: 5, time: "8:00-10:00", status: "reserved" },
@@ -50,7 +50,7 @@ export default function ScheduleTime() {
       ],
     },
     4: {
-      name: "Dental",
+      name: "X-ray",
       image: roomImg,
       slots: [
         { id: 13, time: "8:00-10:00", status: "available" },
@@ -60,13 +60,13 @@ export default function ScheduleTime() {
       ],
     },
     5: {
-      name: "Eye Check",
+      name: "X-ray",
       image: roomImg,
       slots: [
         { id: 17, time: "8:00-10:00", status: "reserved" },
         { id: 18, time: "10:00-12:00", status: "reserved" },
-        { id: 19, time: "13:00-15:00", status: "available" },
-        { id: 20, time: "15:00-17:00", status: "available" },
+        { id: 19, time: "13:00-15:00", status: "reserved" },
+        { id: 20, time: "15:00-17:00", status: "reserved" },
       ],
     },
   };
