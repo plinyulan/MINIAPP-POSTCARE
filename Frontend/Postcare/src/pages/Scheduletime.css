@@ -157,7 +157,7 @@
 /* slots */
 .schedule-slot-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr ;
   gap: 18px 18px;
   margin-top: 28px;
   padding: 0 30px;
