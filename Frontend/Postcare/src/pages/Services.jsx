@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./Services.css";
-import { useNavigate } from "react-router-dom";
+
 import profileImg from "../img/profile.jpg";
 import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
@@ -9,6 +10,7 @@ import profileIcon from "../img/usercircle.png";
 
 export default function Services() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("calendar");
 
   const [services, setServices] = useState([]);
@@ -29,6 +31,7 @@ export default function Services() {
       state: {
         serviceId: item.service_id,
         serviceName: item.service_name,
+        selectedDate: location.state?.selectedDate,
       },
     });
   };

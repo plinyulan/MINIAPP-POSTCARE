@@ -38,10 +38,9 @@ export default function Scheduletime() {
 
   const selectedServiceId = location.state?.serviceId || "01";
   const selectedServiceName = location.state?.serviceName || "Blood pressure";
+  const selectedDate = location.state?.selectedDate || getTodayBangkok();
 
   const [selectedRoom, setSelectedRoom] = useState(1);
-  const selectedDate = getTodayBangkok();
-
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotError, setSlotError] = useState("");
@@ -59,7 +58,9 @@ export default function Scheduletime() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.detail || data.message || "Failed to fetch available slots");
+        throw new Error(
+          data.detail || data.message || "Failed to fetch available slots"
+        );
       }
 
       setSlots(data);
@@ -80,7 +81,7 @@ export default function Scheduletime() {
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [selectedServiceId, selectedRoom]);
+  }, [selectedServiceId, selectedRoom, selectedDate]);
 
   const handleBook = async (slot) => {
     if (slot.status !== "available" || bookingLoading) return;
@@ -170,11 +171,7 @@ export default function Scheduletime() {
         <div className="schedule-service-name">{selectedServiceName}</div>
 
         <div className="schedule-room-image-wrap">
-          <img
-            src={roomImg}
-            alt="room"
-            className="schedule-room-image"
-          />
+          <img src={roomImg} alt="room" className="schedule-room-image" />
         </div>
 
         <div className="schedule-legend">
@@ -182,9 +179,7 @@ export default function Scheduletime() {
           <span className="schedule-legend-reserved">Reserved</span>
         </div>
 
-        {loadingSlots && (
-          <p className="schedule-message">Loading slots...</p>
-        )}
+        {loadingSlots && <p className="schedule-message">Loading slots...</p>}
 
         {!loadingSlots && slotError && (
           <p className="schedule-message schedule-error">{slotError}</p>

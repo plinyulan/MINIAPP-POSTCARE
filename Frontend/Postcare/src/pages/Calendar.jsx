@@ -10,18 +10,8 @@ import profileIcon from "../img/usercircle.png";
 import arrowDown from "../img/arrowdown.png";
 
 const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
 ];
 
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -41,6 +31,10 @@ export default function Calendar() {
     currentYear < today.getFullYear() ||
     (currentYear === today.getFullYear() && currentMonth < today.getMonth());
 
+  const formatDate = (year, month, day) => {
+    return `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+  };
+
   const days = useMemo(() => {
     return Array.from({ length: daysInMonth }, (_, i) => {
       const date = i + 1;
@@ -58,6 +52,7 @@ export default function Calendar() {
 
       return {
         date,
+        fullDate: formatDate(currentYear, currentMonth, date),
         day: dayNames[jsDate.getDay()],
         isPastDate,
         isToday,
@@ -68,7 +63,10 @@ export default function Calendar() {
 
   const handleDateClick = (dayObj) => {
     if (dayObj.isPastDate || dayObj.isPastMonth) return;
-    navigate("/services");
+
+    navigate("/services", {
+      state: { selectedDate: dayObj.fullDate },
+    });
   };
 
   return (
@@ -138,9 +136,7 @@ export default function Calendar() {
               type="button"
               className={`calendar-date ${
                 item.isToday && !item.isPastMonth ? "selected" : ""
-              } ${
-                item.isPastDate || item.isPastMonth ? "disabled" : ""
-              }`}
+              } ${item.isPastDate || item.isPastMonth ? "disabled" : ""}`}
               onClick={() => handleDateClick(item)}
               disabled={item.isPastDate || item.isPastMonth}
             >
