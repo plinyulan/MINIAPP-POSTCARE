@@ -12,6 +12,25 @@ import profileIcon from "../img/usercircle.png";
 const API_BASE =
   "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
+const serviceDurationMap = {
+  "01": 5,
+  "02": 5,
+  "03": 15,
+  "04": 15,
+  "05": 15,
+};
+
+const timeToMinutes = (timeStr) => {
+  const [hours, minutes] = timeStr.split(":").map(Number);
+  return hours * 60 + minutes;
+};
+
+const minutesToTime = (totalMinutes) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+};
+
 export default function Bookingsuccess() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,10 +48,18 @@ export default function Bookingsuccess() {
 
   const roomId = booking.roomId ?? 1;
   const serviceName = booking.serviceName ?? "";
-  const time = booking.time ?? "-";
   const date = booking.date ?? "";
   const department = "General";
   const doctorName = "Dr. Thanakrit Wattanachai";
+
+  const duration = serviceDurationMap[booking.serviceId] || 15;
+
+  const previewTime =
+    booking.session_start && booking.session_end
+      ? `${booking.session_start}-${minutesToTime(
+          timeToMinutes(booking.session_start) + duration
+        )}`
+      : booking.time ?? "-";
 
   const handleSubmit = async () => {
     if (
@@ -71,9 +98,8 @@ export default function Bookingsuccess() {
         throw new Error(result.detail || result.message || "Booking failed");
       }
 
-      navigate("/home", {
-        state: { bookingSuccess: true },
-      });
+      //alert("Booking successful");
+      navigate("/home");
     } catch (err) {
       alert(err.message || "Booking failed");
     } finally {
@@ -137,7 +163,7 @@ export default function Bookingsuccess() {
             <span className="booking-success-room-id">
               RoomID {String(roomId).padStart(2, "0")}:
             </span>
-            <span className="booking-success-time-pill">{time}</span>
+            <span className="booking-success-time-pill">{previewTime}</span>
           </div>
 
           <button
