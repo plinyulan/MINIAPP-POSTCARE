@@ -1,6 +1,6 @@
 .booking-success-page {
   min-height: 100vh;
-  background: #fffcf8;
+  background: #fffefc;
   display: flex;
   justify-content: center;
   padding: 0;
@@ -10,7 +10,7 @@
 .booking-success-card {
   width: 393px;
   min-height: 852px;
-  background: #fffcf8;
+  background: #fffefc;
   position: relative;
   padding: 20px 14px 110px;
   box-sizing: border-box;
@@ -121,6 +121,11 @@
   max-width: 100%;
   object-fit: contain;
   display: block;
+}
+
+/* ถ้ายังมี marker class ใน JSX หรือ CSS อื่น */
+.booking-success-room-marker {
+  display: none;
 }
 
 /* summary */
