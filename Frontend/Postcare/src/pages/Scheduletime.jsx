@@ -215,7 +215,7 @@ export default function Scheduletime() {
             }`}
             onClick={() => {
               setActiveTab("task");
-              navigate("/services");
+              navigate("/appointment");
             }}
           >
             <img src={taskIcon} alt="task" className="schedule-nav-icon" />

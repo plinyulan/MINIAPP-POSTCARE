@@ -176,6 +176,7 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("task");
+            navigate("/appointment");
           }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
