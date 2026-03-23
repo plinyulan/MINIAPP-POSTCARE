@@ -27,14 +27,25 @@ export default function Bookingsuccess() {
     image: profileImg,
   };
 
-  const roomId = booking.roomId ?? "-";
-  const serviceName = booking.serviceName ?? "-";
+  const roomId = booking.roomId ?? 1;
+  const serviceName = booking.serviceName ?? "";
   const time = booking.time ?? "-";
-  const date = booking.date ?? "-";
-  const department = booking.department ?? "General";
-  const doctorName = booking.doctorName ?? "Dr. Thanakrit Wattanachai";
+  const date = booking.date ?? "";
+  const department = "General";
+  const doctorName = "Dr. Thanakrit Wattanachai";
 
   const handleSubmit = async () => {
+    if (
+      !booking.serviceId ||
+      !booking.roomId ||
+      !booking.date ||
+      !booking.session_start ||
+      !booking.session_end
+    ) {
+      alert("Missing required fields");
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -47,8 +58,8 @@ export default function Bookingsuccess() {
           patient_id: 1,
           patient_name: patient.name,
           service_id: booking.serviceId,
-          room_id: roomId,
-          appointment_date: date,
+          room_id: booking.roomId,
+          appointment_date: booking.date,
           session_start: booking.session_start,
           session_end: booking.session_end,
         }),
@@ -60,7 +71,9 @@ export default function Bookingsuccess() {
         throw new Error(result.detail || result.message || "Booking failed");
       }
 
-      navigate("/home");
+      navigate("/home", {
+        state: { bookingSuccess: true },
+      });
     } catch (err) {
       alert(err.message || "Booking failed");
     } finally {

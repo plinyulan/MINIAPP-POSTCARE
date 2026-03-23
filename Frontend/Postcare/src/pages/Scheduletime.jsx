@@ -44,7 +44,6 @@ export default function Scheduletime() {
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotError, setSlotError] = useState("");
-  const [bookingLoading, setBookingLoading] = useState(false);
 
   const fetchAvailableSlots = async () => {
     try {
@@ -83,52 +82,22 @@ export default function Scheduletime() {
     return () => clearInterval(interval);
   }, [selectedServiceId, selectedRoom, selectedDate]);
 
-  const handleBook = async (slot) => {
-    if (slot.status !== "available" || bookingLoading) return;
+  const handleBook = (slot) => {
+    if (slot.status !== "available") return;
 
-    try {
-      setBookingLoading(true);
-
-      const res = await fetch(`${API_BASE}/appointments/book`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          patient_id: 1,
-          patient_name: patient.name,
-          service_id: selectedServiceId,
-          room_id: selectedRoom,
-          appointment_date: selectedDate,
-          session_start: slot.session_start,
-          session_end: slot.session_end,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.detail || data.message || "Booking failed");
-      }
-
-      navigate("/bookingsuccess", {
-        state: {
-          appointmentId: data.appointment.id,
-          serviceId: selectedServiceId,
-          serviceName: selectedServiceName,
-          roomId: selectedRoom,
-          time: `${data.appointment.slot_start.slice(0, 5)}-${data.appointment.slot_end.slice(0, 5)}`,
-          date: data.appointment.appointment_date,
-          patientName: patient.name,
-          hn: patient.hn,
-        },
-      });
-    } catch (error) {
-      console.error("handleBook error:", error);
-      alert(error.message || "Booking failed");
-    } finally {
-      setBookingLoading(false);
-    }
+    navigate("/bookingsuccess", {
+      state: {
+        serviceId: selectedServiceId,
+        serviceName: selectedServiceName,
+        roomId: selectedRoom,
+        session_start: slot.session_start,
+        session_end: slot.session_end,
+        time: `${slot.session_start}-${slot.session_end}`,
+        date: selectedDate,
+        patientName: patient.name,
+        hn: patient.hn,
+      },
+    });
   };
 
   return (
@@ -199,7 +168,7 @@ export default function Scheduletime() {
                     ? "schedule-slot-available"
                     : "schedule-slot-reserved"
                 }`}
-                disabled={slot.status !== "available" || bookingLoading}
+                disabled={slot.status !== "available"}
                 onClick={() => handleBook(slot)}
               >
                 {slot.session_start}-{slot.session_end}
