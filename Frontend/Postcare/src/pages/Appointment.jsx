@@ -47,7 +47,7 @@ export default function Appointment() {
       }
     } catch (err) {
       console.error(err);
-      setError("โหลดข้อมูลการจองไม่สำเร็จ");
+      setError("not found appointment");
     } finally {
       setLoading(false);
     }
@@ -156,21 +156,27 @@ export default function Appointment() {
       <div className="bottom-nav">
         <button
           className={`nav-item ${activeTab === "home" ? "active" : ""}`}
-          onClick={() => setActiveTab("home")}
+         onClick={() => {setActiveTab("home");
+              navigate("/home");
+            }}
         >
           <img src={homeIcon} alt="home" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
-          onClick={() => setActiveTab("calendar")}
+          onClick={() => {setActiveTab("calendar");
+              navigate("/calendar");
+            }}
         >
           <img src={calendarIcon} alt="calendar" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-          onClick={() => setActiveTab("task")}
+          onClick={() => {setActiveTab("task");
+              navigate("/appointment");
+            }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
         </button>

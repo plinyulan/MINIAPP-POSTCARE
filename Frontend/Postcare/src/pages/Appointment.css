@@ -1,0 +1,266 @@
+.appointment-page {
+  min-height: 100vh;
+  background: #f9f8f6;
+  padding: 22px 8px 110px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* header */
+.appointment-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.patient-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.patient-info h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #3d3d3d;
+}
+
+.patient-info p {
+  margin: 2px 0;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #3d3d3d;
+  font-weight: 400;
+}
+
+/* title */
+.appointment-title {
+  margin: 0 0 22px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #121212;
+}
+
+/* appointment list card */
+.appointment-card {
+  width: 100%;
+  min-height: 120px;
+  background: #dce8ea;
+  border-radius: 22px;
+  padding: 22px 18px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.appointment-card:active {
+  transform: scale(0.99);
+}
+
+.appointment-card.active {
+  border: 2px solid #7ea0b8;
+}
+
+.appointment-card-left {
+  flex: 1;
+}
+
+.appointment-card-left p {
+  margin: 0 0 6px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #4a7697;
+  font-weight: 400;
+}
+
+.ap-code {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+
+.appointment-card-right {
+  min-width: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  padding-top: 2px;
+}
+
+.approve-badge {
+  height: 28px;
+  padding: 0 12px;
+  border: 1.5px solid #17b13b;
+  border-radius: 999px;
+  background: #f7fffa;
+  color: #17b13b;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.opd-badge {
+  min-width: 70px;
+  height: 28px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: #47779d;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* detail box */
+.appointment-detail-box {
+  width: 100%;
+  min-height: 360px;
+  background: #dce8ea;
+  border-radius: 22px;
+  padding: 16px 14px 28px;
+  box-sizing: border-box;
+  margin-top: -6px;
+  position: relative;
+}
+
+.appointment-detail-box::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  right: 10px;
+  border-top: 2px dashed #d1dce2;
+}
+
+.detail-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.detail-top h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #4a7697;
+}
+
+.detail-content p {
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #4a7697;
+  font-weight: 400;
+}
+
+.detail-content strong {
+  font-weight: 500;
+  color: #4a7697;
+}
+
+.service-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 14px;
+  border: 1.5px solid #7ba0aa;
+  border-radius: 999px;
+  background: #eef7f7;
+  color: #5d8994;
+  font-size: 14px;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+/* loading / error */
+.loading-text,
+.error-text {
+  font-size: 14px;
+  margin: 14px 0;
+  color: #4a7697;
+}
+
+/* bottom nav */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 315px;
+  height: 57px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  border-radius: 30px;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  padding: 0 12px;
+  box-sizing: border-box;
+  z-index: 999;
+}
+
+.nav-item {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  width: 66px;
+  height: 41px;
+  background: rgba(217, 217, 217, 0.28);
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+/* mobile tweak */
+@media (max-width: 420px) {
+  .appointment-page {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .appointment-card {
+    padding: 20px 16px;
+  }
+
+  .appointment-detail-box {
+    padding: 16px 14px 24px;
+  }
+}
