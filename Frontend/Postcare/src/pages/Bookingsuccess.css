@@ -1,0 +1,91 @@
+.success-page {
+  min-height: 100vh;
+  background: #fffcf8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.success-card {
+  width: 360px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 28px 22px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 56px;
+  margin-bottom: 12px;
+}
+
+.success-title {
+  margin: 0;
+  font-size: 28px;
+  color: #1e1e1e;
+}
+
+.success-subtitle {
+  margin-top: 8px;
+  color: #6a6a6a;
+  font-size: 14px;
+}
+
+.booking-detail {
+  margin-top: 24px;
+  background: #f8fafb;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-row span {
+  color: #7b7b7b;
+}
+
+.detail-row strong {
+  color: #222;
+}
+
+.success-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.primary-btn,
+.secondary-btn {
+  height: 44px;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background: #6c9ea2;
+  color: white;
+  border: none;
+}
+
+.secondary-btn {
+  background: transparent;
+  color: #6c9ea2;
+  border: 1px solid #6c9ea2;
+}

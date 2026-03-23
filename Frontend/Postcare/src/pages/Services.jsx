@@ -25,12 +25,16 @@ export default function Service() {
   const handleServiceClick = (item) => {
     if (item.status?.toLowerCase() !== "available") return;
 
-    if (item.service_name === "Blood presser") {
-      navigate("/bloodpresser_room1");
-    } else if (item.service_name === "Diagnosis") {
-      navigate("/diagnosis");
-    } else if (item.service_name === "X-ray") {
-      navigate("/xray");
+    const serviceName = String(item.service_name || "")
+      .trim()
+      .toLowerCase();
+
+    if (serviceName === "blood presser") {
+      navigate(`/bloodpresser_room${item.service_id}`);
+    } else if (serviceName === "diagnosis") {
+      navigate(`/diagnosis_room${item.service_id}`);
+    } else if (serviceName === "x-ray" || serviceName === "xray") {
+      navigate(`/xray_room${item.service_id}`);
     }
   };
 

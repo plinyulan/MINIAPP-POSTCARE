@@ -3,7 +3,7 @@ import LoginHN from "./pages/LoginHN";
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import Services from "./pages/Services";
-import Bloodpresserroom1 from "./pages/Bloodpresserroom1";
+import Bloodpresserroom1 from "./pages/Scheduletime";
 
 function App() {
   return (
