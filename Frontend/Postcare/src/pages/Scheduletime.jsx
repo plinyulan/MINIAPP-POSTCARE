@@ -110,7 +110,6 @@ export default function Scheduletime() {
             <p>{patient.name}</p>
           </div>
         </div>
-
         <h3 className="schedule-section-title">Schedule time</h3>
 
         <div className="schedule-room-header">
@@ -215,7 +214,11 @@ export default function Scheduletime() {
               setActiveTab("profile");
             }}
           >
-            <img src={profileIcon} alt="profile" className="schedule-nav-icon" />
+            <img
+              src={profileIcon}
+              alt="profile"
+              className="schedule-nav-icon"
+            />
           </button>
         </div>
       </div>

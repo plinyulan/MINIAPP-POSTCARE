@@ -1,32 +1,14 @@
-.schedule-page {
-  min-height: 100vh;
-  background: #fffcf8;
-  display: flex;
-  justify-content: center;
-  padding: 20px 0;
-  box-sizing: border-box;
-}
-
-.schedule-card {
-  width: 393px;
-  min-height: 852px;
-  background: #fffcf8;
-  position: relative;
-  padding: 27px 12px 100px;
-  box-sizing: border-box;
-}
-
 .schedule-patient-info {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
   margin-top: 0;
 }
 
 .schedule-patient-avatar {
-  width: 57px;
-  height: 57px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -42,17 +24,27 @@
 
 .schedule-patient-text h2 {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: #2f2f2f;
+  font-size: 16px;
+  font-weight: 700;
+  color: #3f3f3f;
   line-height: 1.2;
 }
 
 .schedule-patient-text p {
-  margin: 3px 0 0;
-  font-size: 14px;
-  color: #3c3c3c;
-  line-height: 1.3;
+  margin: 4px 0 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3f3f3f;
+  line-height: 1.25;
+}
+
+.schedule-card {
+  width: 393px;
+  min-height: 852px;
+  background: #fffcf8;
+  position: relative;
+  padding: 18px 12px 100px;
+  box-sizing: border-box;
 }
 
 .schedule-section-title {
