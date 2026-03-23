@@ -40,7 +40,7 @@ export default function Scheduletime() {
   const selectedServiceName = location.state?.serviceName || "Blood pressure";
 
   const [selectedRoom, setSelectedRoom] = useState(1);
-  const [selectedDate, setSelectedDate] = useState(getTodayBangkok());
+  const selectedDate = getTodayBangkok();
 
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
@@ -80,7 +80,7 @@ export default function Scheduletime() {
     }, 60000);
 
     return () => clearInterval(interval);
-  }, [selectedServiceId, selectedRoom, selectedDate]);
+  }, [selectedServiceId, selectedRoom]);
 
   const handleBook = async (slot) => {
     if (slot.status !== "available" || bookingLoading) return;
@@ -149,20 +149,6 @@ export default function Scheduletime() {
 
         <h3 className="schedule-section-title">Schedule time</h3>
 
-        <div className="schedule-date-picker">
-          <label htmlFor="appointment-date" className="schedule-date-label">
-            Date
-          </label>
-          <input
-            id="appointment-date"
-            type="date"
-            value={selectedDate}
-            min={getTodayBangkok()}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="schedule-date-input"
-          />
-        </div>
-
         <div className="schedule-room-header">
           <span className="schedule-room-label">Room</span>
 
@@ -194,7 +180,6 @@ export default function Scheduletime() {
         <div className="schedule-legend">
           <span className="schedule-legend-available">Available</span>
           <span className="schedule-legend-reserved">Reserved</span>
-          <span className="schedule-legend-expired">Expired</span>
         </div>
 
         {loadingSlots && (
@@ -217,8 +202,6 @@ export default function Scheduletime() {
                 className={`schedule-slot-btn ${
                   slot.status === "available"
                     ? "schedule-slot-available"
-                    : slot.status === "expired"
-                    ? "schedule-slot-expired"
                     : "schedule-slot-reserved"
                 }`}
                 disabled={slot.status !== "available" || bookingLoading}
