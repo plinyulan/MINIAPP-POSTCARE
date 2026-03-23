@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./ScheduleTime.css";
+import "./Scheduletime.css";
 
 import profileImg from "../img/profile.jpg";
 import roomImg from "../img/RoomService.png"; 
