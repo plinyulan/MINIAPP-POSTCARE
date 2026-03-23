@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Scheduletime.css";
 
@@ -28,14 +28,23 @@ export default function Scheduletime() {
   const selectedServiceName = location.state?.serviceName || "Blood pressure";
 
   const [selectedRoom, setSelectedRoom] = useState(1);
-  const [selectedDate] = useState("2026-03-23");
+
+  const [selectedDate] = useState(() => {
+    const now = new Date(
+      new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
+    );
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  });
 
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotError, setSlotError] = useState("");
   const [bookingLoading, setBookingLoading] = useState(false);
-
-  const roomImage = useMemo(() => roomImg, []);
 
   const fetchAvailableSlots = async () => {
     try {
@@ -64,10 +73,16 @@ export default function Scheduletime() {
 
   useEffect(() => {
     fetchAvailableSlots();
+
+    const interval = setInterval(() => {
+      fetchAvailableSlots();
+    }, 60000);
+
+    return () => clearInterval(interval);
   }, [selectedServiceId, selectedRoom, selectedDate]);
 
   const handleBook = async (slot) => {
-    if (slot.status === "reserved" || bookingLoading) return;
+    if (slot.status !== "available" || bookingLoading) return;
 
     try {
       setBookingLoading(true);
@@ -96,6 +111,8 @@ export default function Scheduletime() {
 
       navigate("/bookingsuccess", {
         state: {
+          appointmentId: data.appointment.id,
+          serviceId: selectedServiceId,
           serviceName: selectedServiceName,
           roomId: selectedRoom,
           time: `${data.appointment.slot_start.slice(0, 5)}-${data.appointment.slot_end.slice(0, 5)}`,
@@ -153,7 +170,7 @@ export default function Scheduletime() {
 
         <div className="schedule-room-image-wrap">
           <img
-            src={roomImage}
+            src={roomImg}
             alt="room"
             className="schedule-room-image"
           />
@@ -172,7 +189,11 @@ export default function Scheduletime() {
           <p className="schedule-message schedule-error">{slotError}</p>
         )}
 
-        {!loadingSlots && !slotError && (
+        {!loadingSlots && !slotError && slots.length === 0 && (
+          <p className="schedule-message">No available sessions</p>
+        )}
+
+        {!loadingSlots && !slotError && slots.length > 0 && (
           <div className="schedule-slot-grid">
             {slots.map((slot, index) => (
               <button
@@ -180,9 +201,11 @@ export default function Scheduletime() {
                 className={`schedule-slot-btn ${
                   slot.status === "available"
                     ? "schedule-slot-available"
+                    : slot.status === "expired"
+                    ? "schedule-slot-expired"
                     : "schedule-slot-reserved"
                 }`}
-                disabled={slot.status === "reserved" || bookingLoading}
+                disabled={slot.status !== "available" || bookingLoading}
                 onClick={() => handleBook(slot)}
               >
                 {slot.session_start}-{slot.session_end}
@@ -255,3 +278,4 @@ export default function Scheduletime() {
     </div>
   );
 }
+
