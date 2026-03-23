@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import "./BookingSuccess.css";
+import "./Bookingsuccess.css";
 
 export default function BookingSuccess() {
   const location = useLocation();
