@@ -25,24 +25,19 @@ export default function Service() {
   const handleServiceClick = (item) => {
     if (item.status?.toLowerCase() !== "available") return;
 
-    const serviceName = String(item.service_name || "")
-      .trim()
-      .toLowerCase();
-
-    if (serviceName === "blood presser") {
-      navigate(`/bloodpresser_room${item.service_id}`);
-    } else if (serviceName === "diagnosis") {
-      navigate(`/diagnosis_room${item.service_id}`);
-    } else if (serviceName === "x-ray" || serviceName === "xray") {
-      navigate(`/xray_room${item.service_id}`);
-    }
+    navigate("/scheduletime", {
+      state: {
+        serviceId: item.service_id,
+        serviceName: item.service_name,
+      },
+    });
   };
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const res = await fetch(
-          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services"
+          "https://postcare-blackend-462349025453.asia-southeast1.run.app/services",
         );
 
         if (!res.ok) {

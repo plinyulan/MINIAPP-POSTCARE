@@ -3,7 +3,9 @@ import LoginHN from "./pages/LoginHN";
 import Home from "./pages/Home";
 import Calendar from "./pages/Calendar";
 import Services from "./pages/Services";
-import Bloodpresserroom1 from "./pages/Scheduletime";
+import Scheduletime from "./pages/Scheduletime";
+import Bookingsuccess from "./pages/Bookingsuccess";
+
 
 function App() {
   return (
@@ -13,7 +15,9 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/bloodpresser_room1" element={<Bloodpresserroom1 />} />
+        <Route path="/scheduletime" element={<Scheduletime />} />
+        <Route path="/bookingsuccess" element={<Bookingsuccess />} />
+
       </Routes>
     </BrowserRouter>
   );
