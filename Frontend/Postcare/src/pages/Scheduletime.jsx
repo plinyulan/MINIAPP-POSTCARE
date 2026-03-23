@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Scheduletime.css";
 
@@ -8,6 +8,9 @@ import homeIcon from "../img/home.png";
 import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
+
+const API_BASE =
+  "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
 export default function Scheduletime() {
   const navigate = useNavigate();
@@ -21,77 +24,92 @@ export default function Scheduletime() {
     image: profileImg,
   };
 
+  const selectedServiceId = location.state?.serviceId || "01";
   const selectedServiceName = location.state?.serviceName || "Blood pressure";
-  const [selectedRoom, setSelectedRoom] = useState(1);
 
-  const roomData = {
-    1: {
-      name: "Blood pressure",
-      image: roomImg,
-      slots: [
-        { id: 1, time: "8:00-10:00", status: "available" },
-        { id: 2, time: "10:00-12:00", status: "available" },
-        { id: 3, time: "13:00-15:00", status: "available" },
-        { id: 4, time: "15:00-17:00", status: "reserved" },
-      ],
-    },
-    2: {
-      name: "Blood pressure",
-      image: roomImg,
-      slots: [
-        { id: 5, time: "8:00-10:00", status: "reserved" },
-        { id: 6, time: "10:00-12:00", status: "available" },
-        { id: 7, time: "13:00-15:00", status: "available" },
-        { id: 8, time: "15:00-17:00", status: "available" },
-      ],
-    },
-    3: {
-      name: "Diagnosis",
-      image: roomImg,
-      slots: [
-        { id: 9, time: "8:00-10:00", status: "available" },
-        { id: 10, time: "10:00-12:00", status: "reserved" },
-        { id: 11, time: "13:00-15:00", status: "available" },
-        { id: 12, time: "15:00-17:00", status: "available" },
-      ],
-    },
-    4: {
-      name: "X-ray",
-      image: roomImg,
-      slots: [
-        { id: 13, time: "8:00-10:00", status: "available" },
-        { id: 14, time: "10:00-12:00", status: "available" },
-        { id: 15, time: "13:00-15:00", status: "reserved" },
-        { id: 16, time: "15:00-17:00", status: "available" },
-      ],
-    },
-    5: {
-      name: "X-ray",
-      image: roomImg,
-      slots: [
-        { id: 17, time: "8:00-10:00", status: "reserved" },
-        { id: 18, time: "10:00-12:00", status: "reserved" },
-        { id: 19, time: "13:00-15:00", status: "available" },
-        { id: 20, time: "15:00-17:00", status: "available" },
-      ],
-    },
+  const [selectedRoom, setSelectedRoom] = useState(1);
+  const [selectedDate] = useState("2026-03-23");
+
+  const [slots, setSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [slotError, setSlotError] = useState("");
+  const [bookingLoading, setBookingLoading] = useState(false);
+
+  const roomImage = useMemo(() => roomImg, []);
+
+  const fetchAvailableSlots = async () => {
+    try {
+      setLoadingSlots(true);
+      setSlotError("");
+
+      const res = await fetch(
+        `${API_BASE}/available-slots?service_id=${selectedServiceId}&room_id=${selectedRoom}&date=${selectedDate}`
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to fetch available slots");
+      }
+
+      setSlots(data);
+    } catch (error) {
+      console.error("fetchAvailableSlots error:", error);
+      setSlots([]);
+      setSlotError(error.message || "Unable to load available slots");
+    } finally {
+      setLoadingSlots(false);
+    }
   };
 
-  const currentRoom = roomData[selectedRoom];
+  useEffect(() => {
+    fetchAvailableSlots();
+  }, [selectedServiceId, selectedRoom, selectedDate]);
 
-  const handleBook = (slot) => {
-    if (slot.status === "reserved") return;
+  const handleBook = async (slot) => {
+    if (slot.status === "reserved" || bookingLoading) return;
 
-    navigate("/bookingsuccess", {
-      state: {
-        serviceName: selectedServiceName,
-        roomId: selectedRoom,
-        time: slot.time,
-        date: new Date().toLocaleDateString(),
-        patientName: patient.name,
-        hn: patient.hn,
-      },
-    });
+    try {
+      setBookingLoading(true);
+
+      const res = await fetch(`${API_BASE}/appointments/book`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          patient_id: 1,
+          patient_name: patient.name,
+          service_id: selectedServiceId,
+          room_id: selectedRoom,
+          appointment_date: selectedDate,
+          session_start: slot.session_start,
+          session_end: slot.session_end,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.detail || data.message || "Booking failed");
+      }
+
+      navigate("/bookingsuccess", {
+        state: {
+          serviceName: selectedServiceName,
+          roomId: selectedRoom,
+          time: `${data.appointment.slot_start.slice(0, 5)}-${data.appointment.slot_end.slice(0, 5)}`,
+          date: data.appointment.appointment_date,
+          patientName: patient.name,
+          hn: patient.hn,
+        },
+      });
+    } catch (error) {
+      console.error("handleBook error:", error);
+      alert(error.message || "Booking failed");
+    } finally {
+      setBookingLoading(false);
+    }
   };
 
   return (
@@ -110,6 +128,7 @@ export default function Scheduletime() {
             <p>{patient.name}</p>
           </div>
         </div>
+
         <h3 className="schedule-section-title">Schedule time</h3>
 
         <div className="schedule-room-header">
@@ -134,7 +153,7 @@ export default function Scheduletime() {
 
         <div className="schedule-room-image-wrap">
           <img
-            src={currentRoom.image}
+            src={roomImage}
             alt="room"
             className="schedule-room-image"
           />
@@ -145,22 +164,32 @@ export default function Scheduletime() {
           <span className="schedule-legend-reserved">Reserved</span>
         </div>
 
-        <div className="schedule-slot-grid">
-          {currentRoom.slots.map((slot) => (
-            <button
-              key={slot.id}
-              className={`schedule-slot-btn ${
-                slot.status === "available"
-                  ? "schedule-slot-available"
-                  : "schedule-slot-reserved"
-              }`}
-              disabled={slot.status === "reserved"}
-              onClick={() => handleBook(slot)}
-            >
-              {slot.time}
-            </button>
-          ))}
-        </div>
+        {loadingSlots && (
+          <p className="schedule-message">Loading slots...</p>
+        )}
+
+        {!loadingSlots && slotError && (
+          <p className="schedule-message schedule-error">{slotError}</p>
+        )}
+
+        {!loadingSlots && !slotError && (
+          <div className="schedule-slot-grid">
+            {slots.map((slot, index) => (
+              <button
+                key={`${slot.session_start}-${slot.session_end}-${index}`}
+                className={`schedule-slot-btn ${
+                  slot.status === "available"
+                    ? "schedule-slot-available"
+                    : "schedule-slot-reserved"
+                }`}
+                disabled={slot.status === "reserved" || bookingLoading}
+                onClick={() => handleBook(slot)}
+              >
+                {slot.session_start}-{slot.session_end}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="schedule-bottom-nav">
           <button
@@ -200,6 +229,7 @@ export default function Scheduletime() {
             }`}
             onClick={() => {
               setActiveTab("task");
+              navigate("/services");
             }}
           >
             <img src={taskIcon} alt="task" className="schedule-nav-icon" />
