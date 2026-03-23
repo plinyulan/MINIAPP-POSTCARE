@@ -149,28 +149,51 @@
   backdrop-filter: blur(10px);
 }
 
-/* Nav item */
+/* nav */
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+
+  width: 315px;
+  height: 57px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+
+  z-index: 999;
+}
+
 .nav-item {
   width: 41px;
   height: 41px;
-  margin: 0 auto;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   border: none;
   background: transparent;
   border-radius: 40px;
+  padding: 0;
   cursor: pointer;
 }
 
-/* Active nav */
 .nav-item.active {
   width: 66px;
   background: rgba(217, 217, 217, 0.2);
 }
 
-/* Icon */
 .nav-icon {
   width: 24px;
   height: 24px;
+  object-fit: contain;
+  display: block;
 }
