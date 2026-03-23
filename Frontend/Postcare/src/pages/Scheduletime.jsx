@@ -36,7 +36,7 @@ export default function Scheduletime() {
       ],
     },
     2: {
-      name: "X-Ray",
+      name: "Blood presser",
       image: roomImg,
       slots: [
         { id: 5, time: "8:00-10:00", status: "reserved" },
@@ -56,7 +56,7 @@ export default function Scheduletime() {
       ],
     },
     4: {
-      name: "Dental",
+      name: "X-ray",
       image: roomImg,
       slots: [
         { id: 13, time: "8:00-10:00", status: "available" },
@@ -66,7 +66,7 @@ export default function Scheduletime() {
       ],
     },
     5: {
-      name: "Eye Check",
+      name: "X-ray",
       image: roomImg,
       slots: [
         { id: 17, time: "8:00-10:00", status: "reserved" },
@@ -87,7 +87,7 @@ export default function Scheduletime() {
         serviceName: selectedServiceName,
         roomId: selectedRoom,
         time: slot.time,
-        date: "2026-03-23",
+        date: new Date().toLocaleDateString(),
         patientName: patient.name,
         hn: patient.hn,
       },
