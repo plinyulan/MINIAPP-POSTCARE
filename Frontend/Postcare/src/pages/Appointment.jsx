@@ -33,8 +33,9 @@ export default function Appointment() {
     try {
       setLoading(true);
       setError("");
+      
 
-      const res = await fetch(`${API_BASE}/appointment/book/${patient.hn}`);
+      const res = await fetch(`${API_BASE}/appointment/book`);
       if (!res.ok) {
         throw new Error("Failed to fetch booked appointments");
       }
