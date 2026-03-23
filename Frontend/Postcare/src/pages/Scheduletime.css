@@ -16,17 +16,15 @@
   box-sizing: border-box;
 }
 
-/* patient header */
-.patient-info {
+.schedule-patient-info {
   display: flex;
-  flex-direction: row;
   align-items: center;
   gap: 14px;
   width: 100%;
   margin-top: 0;
 }
 
-.patient-avatar {
+.schedule-patient-avatar {
   width: 57px;
   height: 57px;
   border-radius: 50%;
@@ -34,7 +32,7 @@
   flex-shrink: 0;
 }
 
-.patient-text {
+.schedule-patient-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -42,7 +40,7 @@
   text-align: left;
 }
 
-.patient-text h2 {
+.schedule-patient-text h2 {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
@@ -50,14 +48,14 @@
   line-height: 1.2;
 }
 
-.patient-text p {
+.schedule-patient-text p {
   margin: 3px 0 0;
   font-size: 14px;
   color: #3c3c3c;
   line-height: 1.3;
 }
 
-.section-title {
+.schedule-section-title {
   margin-top: 24px;
   margin-bottom: 0;
   font-size: 18px;
@@ -66,25 +64,25 @@
   text-align: left;
 }
 
-.room-header {
+.schedule-room-header {
   display: flex;
   align-items: center;
   gap: 18px;
   margin-top: 20px;
 }
 
-.room-label {
+.schedule-room-label {
   font-size: 16px;
   font-weight: 600;
   color: #1f1f1f;
 }
 
-.room-buttons {
+.schedule-room-buttons {
   display: flex;
   gap: 10px;
 }
 
-.room-btn {
+.schedule-room-btn {
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -97,11 +95,11 @@
   padding: 0;
 }
 
-.room-btn.active {
+.schedule-room-btn.active {
   background: #6c9ea2;
 }
 
-.service-name {
+.schedule-service-name {
   margin-top: 12px;
   margin-left: 102px;
   font-size: 14px;
@@ -110,27 +108,27 @@
   text-align: left;
 }
 
-.room-image-wrap {
+.schedule-room-image-wrap {
   display: flex;
   justify-content: center;
   margin-top: 24px;
 }
 
-.room-image {
+.schedule-room-image {
   width: 300px;
   max-width: 100%;
   object-fit: contain;
 }
 
-.legend {
+.schedule-legend {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   margin-top: 28px;
 }
 
-.legend-available,
-.legend-reserved {
+.schedule-legend-available,
+.schedule-legend-reserved {
   padding: 4px 10px;
   border-radius: 14px;
   font-size: 12px;
@@ -138,17 +136,17 @@
   line-height: 1;
 }
 
-.legend-available {
+.schedule-legend-available {
   border: 1px solid #4f9b53;
   color: #4f9b53;
 }
 
-.legend-reserved {
+.schedule-legend-reserved {
   border: 1px solid #aeb8c5;
   color: #aeb8c5;
 }
 
-.slot-grid {
+.schedule-slot-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 22px 20px;
@@ -157,7 +155,7 @@
   box-sizing: border-box;
 }
 
-.slot-btn {
+.schedule-slot-btn {
   height: 40px;
   border-radius: 20px;
   background: transparent;
@@ -166,18 +164,18 @@
   cursor: pointer;
 }
 
-.slot-btn.available {
+.schedule-slot-available {
   border: 1.5px solid #57a15f;
   color: #57a15f;
 }
 
-.slot-btn.reserved {
+.schedule-slot-reserved {
   border: 1.5px solid #b8c2ce;
   color: #b8c2ce;
   cursor: not-allowed;
 }
 
-.bottom-nav {
+.schedule-bottom-nav {
   position: fixed;
   left: 50%;
   bottom: 18px;
@@ -192,11 +190,31 @@
   padding: 0 12px;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
+  z-index: 999;
 }
 
-.bottom-nav button {
+.schedule-nav-item {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: transparent;
-  font-size: 22px;
+  border-radius: 40px;
+  padding: 0;
   cursor: pointer;
 }
+
+.schedule-nav-item.active {
+  width: 66px;
+  background: rgba(217, 217, 217, 0.2);
+}
+
+.schedule-nav-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+

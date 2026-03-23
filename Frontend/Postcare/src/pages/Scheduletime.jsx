@@ -15,7 +15,7 @@ export default function Scheduletime() {
   const [activeTab, setActiveTab] = useState("calendar");
 
   const patient = {
-    hn: "HN00001",
+    hn: "HN12345",
     type: "OPD",
     name: "Ms. Pathumwadee Darukanprut",
     image: profileImg,
@@ -36,7 +36,7 @@ export default function Scheduletime() {
       ],
     },
     2: {
-      name: "Blood presser",
+      name: "X-Ray",
       image: roomImg,
       slots: [
         { id: 5, time: "8:00-10:00", status: "reserved" },
@@ -56,7 +56,7 @@ export default function Scheduletime() {
       ],
     },
     4: {
-      name: "X-ray",
+      name: "Dental",
       image: roomImg,
       slots: [
         { id: 13, time: "8:00-10:00", status: "available" },
@@ -66,7 +66,7 @@ export default function Scheduletime() {
       ],
     },
     5: {
-      name: "X-ray",
+      name: "Eye Check",
       image: roomImg,
       slots: [
         { id: 17, time: "8:00-10:00", status: "reserved" },
@@ -97,24 +97,32 @@ export default function Scheduletime() {
   return (
     <div className="schedule-page">
       <div className="schedule-card">
-        <div className="patient-info">
-          <img src={patient.image} alt="patient" className="patient-avatar" />
-          <div className="patient-text">
+        <div className="schedule-patient-info">
+          <img
+            src={patient.image}
+            alt="patient"
+            className="schedule-patient-avatar"
+          />
+
+          <div className="schedule-patient-text">
             <h2>{patient.hn}</h2>
             <p>Patient Type: {patient.type}</p>
             <p>{patient.name}</p>
           </div>
         </div>
 
-        <h3 className="section-title">Schedule time</h3>
+        <h3 className="schedule-section-title">Schedule time</h3>
 
-        <div className="room-header">
-          <span className="room-label">Room</span>
-          <div className="room-buttons">
+        <div className="schedule-room-header">
+          <span className="schedule-room-label">Room</span>
+
+          <div className="schedule-room-buttons">
             {[1, 2, 3, 4, 5].map((room) => (
               <button
                 key={room}
-                className={`room-btn ${selectedRoom === room ? "active" : ""}`}
+                className={`schedule-room-btn ${
+                  selectedRoom === room ? "active" : ""
+                }`}
                 onClick={() => setSelectedRoom(room)}
               >
                 {room}
@@ -123,23 +131,29 @@ export default function Scheduletime() {
           </div>
         </div>
 
-        <div className="service-name">{selectedServiceName}</div>
+        <div className="schedule-service-name">{selectedServiceName}</div>
 
-        <div className="room-image-wrap">
-          <img src={currentRoom.image} alt="room" className="room-image" />
+        <div className="schedule-room-image-wrap">
+          <img
+            src={currentRoom.image}
+            alt="room"
+            className="schedule-room-image"
+          />
         </div>
 
-        <div className="legend">
-          <span className="legend-available">Available</span>
-          <span className="legend-reserved">Reserved</span>
+        <div className="schedule-legend">
+          <span className="schedule-legend-available">Available</span>
+          <span className="schedule-legend-reserved">Reserved</span>
         </div>
 
-        <div className="slot-grid">
+        <div className="schedule-slot-grid">
           {currentRoom.slots.map((slot) => (
             <button
               key={slot.id}
-              className={`slot-btn ${
-                slot.status === "available" ? "available" : "reserved"
+              className={`schedule-slot-btn ${
+                slot.status === "available"
+                  ? "schedule-slot-available"
+                  : "schedule-slot-reserved"
               }`}
               disabled={slot.status === "reserved"}
               onClick={() => handleBook(slot)}
@@ -149,47 +163,59 @@ export default function Scheduletime() {
           ))}
         </div>
 
-        <div className="bottom-nav">
+        <div className="schedule-bottom-nav">
           <button
             type="button"
-            className={`nav-item ${activeTab === "home" ? "active" : ""}`}
+            className={`schedule-nav-item ${
+              activeTab === "home" ? "active" : ""
+            }`}
             onClick={() => {
               setActiveTab("home");
               navigate("/home");
             }}
           >
-            <img src={homeIcon} alt="home" className="nav-icon" />
+            <img src={homeIcon} alt="home" className="schedule-nav-icon" />
           </button>
 
           <button
             type="button"
-            className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
+            className={`schedule-nav-item ${
+              activeTab === "calendar" ? "active" : ""
+            }`}
             onClick={() => {
               setActiveTab("calendar");
               navigate("/calendar");
             }}
           >
-            <img src={calendarIcon} alt="calendar" className="nav-icon" />
+            <img
+              src={calendarIcon}
+              alt="calendar"
+              className="schedule-nav-icon"
+            />
           </button>
 
           <button
             type="button"
-            className={`nav-item ${activeTab === "task" ? "active" : ""}`}
+            className={`schedule-nav-item ${
+              activeTab === "task" ? "active" : ""
+            }`}
             onClick={() => {
               setActiveTab("task");
             }}
           >
-            <img src={taskIcon} alt="task" className="nav-icon" />
+            <img src={taskIcon} alt="task" className="schedule-nav-icon" />
           </button>
 
           <button
             type="button"
-            className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
+            className={`schedule-nav-item ${
+              activeTab === "profile" ? "active" : ""
+            }`}
             onClick={() => {
               setActiveTab("profile");
             }}
           >
-            <img src={profileIcon} alt="profile" className="nav-icon" />
+            <img src={profileIcon} alt="profile" className="schedule-nav-icon" />
           </button>
         </div>
       </div>
