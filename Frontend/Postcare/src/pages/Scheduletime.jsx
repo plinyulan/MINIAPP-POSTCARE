@@ -21,12 +21,12 @@ export default function Scheduletime() {
     image: profileImg,
   };
 
-  const selectedServiceName = location.state?.serviceName || "Blood presser";
+  const selectedServiceName = location.state?.serviceName || "Blood pressure";
   const [selectedRoom, setSelectedRoom] = useState(1);
 
   const roomData = {
     1: {
-      name: "Blood presser",
+      name: "Blood pressure",
       image: roomImg,
       slots: [
         { id: 1, time: "8:00-10:00", status: "available" },
@@ -36,7 +36,7 @@ export default function Scheduletime() {
       ],
     },
     2: {
-      name: "Blood presser",
+      name: "Blood pressure",
       image: roomImg,
       slots: [
         { id: 5, time: "8:00-10:00", status: "reserved" },
