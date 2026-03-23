@@ -130,8 +130,9 @@ export default function Bookingsuccess() {
           <button
             className="booking-success-submit-btn"
             onClick={handleSubmit}
+            disabled={loading}
           >
-            Submit
+            {loading ? "Loading..." : "Submit"}
           </button>
         </div>
 
