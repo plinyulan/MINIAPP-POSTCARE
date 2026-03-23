@@ -12,6 +12,18 @@ import profileIcon from "../img/usercircle.png";
 const API_BASE =
   "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
+const getTodayBangkok = () => {
+  const now = new Date(
+    new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
+  );
+
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 export default function Scheduletime() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,18 +40,7 @@ export default function Scheduletime() {
   const selectedServiceName = location.state?.serviceName || "Blood pressure";
 
   const [selectedRoom, setSelectedRoom] = useState(1);
-
-  const [selectedDate] = useState(() => {
-    const now = new Date(
-      new Date().toLocaleString("en-US", { timeZone: "Asia/Bangkok" })
-    );
-
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-  });
+  const [selectedDate, setSelectedDate] = useState(getTodayBangkok());
 
   const [slots, setSlots] = useState([]);
   const [loadingSlots, setLoadingSlots] = useState(false);
@@ -58,7 +59,7 @@ export default function Scheduletime() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || "Failed to fetch available slots");
+        throw new Error(data.detail || data.message || "Failed to fetch available slots");
       }
 
       setSlots(data);
@@ -148,6 +149,20 @@ export default function Scheduletime() {
 
         <h3 className="schedule-section-title">Schedule time</h3>
 
+        <div className="schedule-date-picker">
+          <label htmlFor="appointment-date" className="schedule-date-label">
+            Date
+          </label>
+          <input
+            id="appointment-date"
+            type="date"
+            value={selectedDate}
+            min={getTodayBangkok()}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="schedule-date-input"
+          />
+        </div>
+
         <div className="schedule-room-header">
           <span className="schedule-room-label">Room</span>
 
@@ -179,6 +194,7 @@ export default function Scheduletime() {
         <div className="schedule-legend">
           <span className="schedule-legend-available">Available</span>
           <span className="schedule-legend-reserved">Reserved</span>
+          <span className="schedule-legend-expired">Expired</span>
         </div>
 
         {loadingSlots && (
@@ -278,4 +294,3 @@ export default function Scheduletime() {
     </div>
   );
 }
-
