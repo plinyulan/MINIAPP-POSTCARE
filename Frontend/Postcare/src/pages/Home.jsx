@@ -45,7 +45,7 @@ export default function Home() {
 
   const patient = {
     id: localStorage.getItem("patientId"),
-    hn: localStorage.getItem("hn") || "HN00001",
+    hn: localStorage.getItem("hn") || "HN12345",
     name:
       localStorage.getItem("patientName") ||
       "Ms. Pathumwadee Darukanprut",
@@ -134,7 +134,6 @@ export default function Home() {
 
         <div
           className="top-appointment-card"
-          onClick={() => navigate("/service")}
         >
           <div className="top-appointment-text">
             <div>{patient.name}</div>
