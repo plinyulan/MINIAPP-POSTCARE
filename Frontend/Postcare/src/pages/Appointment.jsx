@@ -121,7 +121,11 @@ export default function Appointment() {
 
       {!loading && selectedAppointment && (
         <>
-          {renderAppointmentCard(selectedAppointment, 0, true)}
+          {renderAppointmentCard(
+            selectedAppointment,
+            appointments.findIndex((item) => item.id === selectedAppointment.id),
+            true
+          )}
 
           <div className="appointment-detail-box">
             <div className="detail-top">
