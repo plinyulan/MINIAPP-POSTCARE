@@ -20,7 +20,7 @@ body {
   max-width: 393px;
   min-height: 100vh;
   margin: 0 auto;
-  background: #f7f6f4;
+  background: #ffffff;
   padding: 24px 10px 120px;
   position: relative;
 }
@@ -42,9 +42,9 @@ body {
 
 .patient-info h2 {
   margin: 0;
-  font-size: 20px;
+  font-size: 14px;
   line-height: 1.1;
-  font-weight: 600;
+  font-weight: 400;
   color: #3d3d3d;
 }
 
