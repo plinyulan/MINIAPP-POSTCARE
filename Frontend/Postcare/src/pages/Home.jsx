@@ -50,7 +50,7 @@ export default function Home() {
       try {
         setLoadingAppointments(true);
 
-        const res = await fetch(`${API_BASE}/appointments/book/${localStorage.getItem("patientId")}`);
+        const res = await fetch(`${API_BASE}/appointments/book/${patient.id}`);
         const data = await res.json();
 
         console.log("appointments from db:", data);

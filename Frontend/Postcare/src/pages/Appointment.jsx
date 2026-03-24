@@ -21,7 +21,7 @@ export default function Appointment() {
 
   const patient = {
     id: localStorage.getItem("patientId"),
-    hn: localStorage.getItem("hn") || "HN00001",
+    hn: localStorage.getItem("hn") || "HN12345",
     name:
       localStorage.getItem("patientName") ||
       "Ms. Pathumwadee Darukanprut",
