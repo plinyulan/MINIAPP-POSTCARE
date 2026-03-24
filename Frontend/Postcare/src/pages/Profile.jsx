@@ -16,27 +16,17 @@ export default function Profile() {
   const [activeTab, setActiveTab] = useState("profile");
   const [patient, setPatient] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   const hn = localStorage.getItem("hn") || "HN12345";
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        setLoading(true);
-        setError("");
-
         const res = await fetch(`${API_BASE}/patients/hn/${hn}`);
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch profile");
-        }
-
         const data = await res.json();
         setPatient(data);
-      } catch (err) {
-        console.error("fetch profile error:", err);
-        setError("โหลดข้อมูลไม่สำเร็จ");
+      } catch (error) {
+        console.error("fetch profile error:", error);
       } finally {
         setLoading(false);
       }
@@ -46,27 +36,26 @@ export default function Profile() {
   }, [hn]);
 
   if (loading) return <div className="profile-page">Loading...</div>;
-  if (error) return <div className="profile-page">{error}</div>;
   if (!patient) return <div className="profile-page">No data</div>;
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
+      <div className="profile-top">
         <img
           src={patient.profile_image || defaultProfileImg}
           alt="profile"
-          className="profile-avatar"
+          className="profile-top-avatar"
           onError={(e) => {
             e.target.src = defaultProfileImg;
           }}
         />
 
-        <h2 className="profile-hn">{patient.hn}</h2>
-        <p className="profile-type">Patient Type: {patient.patient_type}</p>
-        <p className="profile-name">{patient.full_name}</p>
+        <h2 className="profile-top-hn">{patient.hn}</h2>
+        <p className="profile-top-type">Patient Type: {patient.patient_type}</p>
+        <p className="profile-top-name">{patient.full_name}</p>
       </div>
 
-      <div className="profile-card">
+      <div className="profile-info-card">
         <h3>Personal Information:</h3>
         <p>Age: {patient.age || "-"}</p>
         <p>Gender: {patient.gender || "-"}</p>
@@ -76,7 +65,7 @@ export default function Profile() {
           Birthday:{" "}
           {patient.birthday
             ? new Date(patient.birthday).toLocaleDateString("en-GB", {
-                day: "2-digit",
+                day: "numeric",
                 month: "long",
                 year: "numeric",
               })
@@ -85,50 +74,50 @@ export default function Profile() {
         <p>Address: {patient.address || "-"}</p>
       </div>
 
-      <div className="profile-card medical-card">
+      <div className="profile-medical-card">
         <h3>Medical Information:</h3>
         <p>DoctorName: {patient.doctor_name || "-"}</p>
       </div>
 
-      <div className="bottom-nav">
+      <div className="profile-bottom-nav">
         <button
-          className={`nav-item ${activeTab === "home" ? "active" : ""}`}
+          className={`profile-nav-item ${activeTab === "home" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("home");
             navigate("/home");
           }}
         >
-          <img src={homeIcon} alt="home" className="nav-icon" />
+          <img src={homeIcon} alt="home" className="profile-nav-icon" />
         </button>
 
         <button
-          className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
+          className={`profile-nav-item ${activeTab === "calendar" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("calendar");
             navigate("/services");
           }}
         >
-          <img src={calendarIcon} alt="calendar" className="nav-icon" />
+          <img src={calendarIcon} alt="calendar" className="profile-nav-icon" />
         </button>
 
         <button
-          className={`nav-item ${activeTab === "task" ? "active" : ""}`}
+          className={`profile-nav-item ${activeTab === "task" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("task");
             navigate("/appointment");
           }}
         >
-          <img src={taskIcon} alt="task" className="nav-icon" />
+          <img src={taskIcon} alt="task" className="profile-nav-icon" />
         </button>
 
         <button
-          className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
+          className={`profile-nav-item ${activeTab === "profile" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("profile");
             navigate("/profile");
           }}
         >
-          <img src={profileIcon} alt="profile" className="nav-icon" />
+          <img src={profileIcon} alt="profile" className="profile-nav-icon" />
         </button>
       </div>
     </div>

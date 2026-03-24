@@ -1,20 +1,15 @@
-* {
-  box-sizing: border-box;
-}
-
 .profile-page {
   position: relative;
   width: 393px;
   min-height: 852px;
   margin: 0 auto;
   background: #fffefc;
-  overflow-x: hidden;
   font-family: "Poppins", sans-serif;
   padding-bottom: 110px;
+  overflow-x: hidden;
 }
 
-.profile-header {
-  position: relative;
+.profile-top {
   width: 100%;
   padding-top: 74px;
   display: flex;
@@ -22,17 +17,15 @@
   align-items: center;
 }
 
-.profile-avatar {
+.profile-top-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-.profile-hn {
+.profile-top-hn {
   margin: 22px 0 0;
-  width: 227px;
-  min-height: 21px;
   font-weight: 500;
   font-size: 14px;
   line-height: 150%;
@@ -41,10 +34,8 @@
   color: #457492;
 }
 
-.profile-type {
+.profile-top-type {
   margin: 0;
-  width: 227px;
-  min-height: 18px;
   font-weight: 500;
   font-size: 12px;
   line-height: 150%;
@@ -53,10 +44,8 @@
   color: #457492;
 }
 
-.profile-name {
+.profile-top-name {
   margin: 0;
-  width: 227px;
-  min-height: 18px;
   font-weight: 500;
   font-size: 12px;
   line-height: 150%;
@@ -65,7 +54,7 @@
   color: #457492;
 }
 
-.profile-card {
+.profile-info-card {
   width: 351px;
   margin: 41px auto 0;
   background: rgba(140, 175, 195, 0.25);
@@ -73,7 +62,8 @@
   padding: 11px 18px 13px 18px;
 }
 
-.profile-card h3 {
+.profile-info-card h3,
+.profile-medical-card h3 {
   margin: 0 0 10px 0;
   font-weight: 500;
   font-size: 14px;
@@ -82,7 +72,8 @@
   color: #457492;
 }
 
-.profile-card p {
+.profile-info-card p,
+.profile-medical-card p {
   margin: 0 0 10px 15px;
   font-weight: 500;
   font-size: 14px;
@@ -91,19 +82,16 @@
   color: #457492;
 }
 
-.profile-card p:last-child {
-  margin-bottom: 0;
-}
-
-.medical-card {
+.profile-medical-card {
   width: 348px;
   min-height: 95px;
-  margin-top: 17px;
+  margin: 17px auto 0;
   background: rgba(142, 170, 210, 0.2);
+  border-radius: 20px;
   padding: 11px 18px 16px 18px;
 }
 
-.bottom-nav {
+.profile-bottom-nav {
   position: fixed;
   left: 50%;
   bottom: 18px;
@@ -116,14 +104,13 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   display: grid;
-  grid-template-columns: 66px 66px 66px 66px;
-  justify-content: space-between;
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   padding: 0 12px;
   z-index: 999;
 }
 
-.nav-item {
+.profile-nav-item {
   width: 41px;
   height: 41px;
   margin: 0 auto;
@@ -132,24 +119,24 @@
   justify-content: center;
   border: none;
   background: transparent;
-  border-radius: 40px;
+  border-radius: 999px;
   padding: 0;
   cursor: pointer;
 }
 
-.nav-item.active {
+.profile-nav-item.active {
   width: 66px;
   background: rgba(217, 217, 217, 0.2);
 }
 
-.nav-icon {
+.profile-nav-icon {
   width: 24px;
   height: 24px;
   object-fit: contain;
   opacity: 0.75;
 }
 
-.nav-item.active .nav-icon {
+.profile-nav-item.active .profile-nav-icon {
   opacity: 1;
 }
 
