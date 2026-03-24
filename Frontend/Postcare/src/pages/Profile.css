@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .profile-page {
   position: relative;
   width: 393px;
@@ -66,7 +70,6 @@
   margin: 41px auto 0;
   background: rgba(140, 175, 195, 0.25);
   border-radius: 20px;
-  box-sizing: border-box;
   padding: 11px 18px 13px 18px;
 }
 
@@ -107,16 +110,17 @@
   transform: translateX(-50%);
   width: 315px;
   height: 57px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   display: grid;
   grid-template-columns: 66px 66px 66px 66px;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
-  box-sizing: border-box;
   z-index: 999;
-  backdrop-filter: blur(8px);
 }
 
 .nav-item {

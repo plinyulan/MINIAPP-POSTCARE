@@ -107,7 +107,7 @@ body {
   padding: 0 12px;
   border: 1.5px solid #16b43b;
   border-radius: 999px;
-  background: #ffffff00;
+  background: transparent;
   color: #16b43b;
   font-size: 12px;
   font-weight: 500;
@@ -199,8 +199,10 @@ body {
   transform: translateX(-50%);
   width: 315px;
   height: 57px;
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
