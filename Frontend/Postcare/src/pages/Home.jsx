@@ -39,6 +39,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("home");
   const [selectedDate, setSelectedDate] = useState(todayIso);
   const [appointments, setAppointments] = useState([]);
+  const [loadingAppointments, setLoadingAppointments] = useState(true);
 
   useEffect(() => {
     fetch(
@@ -51,6 +52,9 @@ export default function Home() {
       .catch((err) => {
         console.error("Fetch appointments error:", err);
         setAppointments([]);
+      })
+      .finally(() => {
+        setLoadingAppointments(false);
       });
   }, []);
 
@@ -82,6 +86,8 @@ export default function Home() {
       ? selectedDayAppointments.slice(0, 3)
       : upcomingAppointments.slice(0, 3);
 
+  const nextAppointment = upcomingAppointments[0];
+
   return (
     <div className="home-shell">
       <div className="home-page">
@@ -94,12 +100,25 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="top-appointment-card">
+        <div
+          className="top-appointment-card"
+          onClick={() => navigate("/service")}
+          style={{ cursor: "pointer" }}
+        >
           <div className="top-appointment-text">
-            <div>Ms. Pathumwadee Darukanprut</div>
-            <div>Attending physician:</div>
-            <div>Dr. Thanakrit Wattanachai</div>
-            <div>Department: General</div>
+            {nextAppointment ? (
+              <>
+                <div>{nextAppointment.patient_name || "Ms. Pathumwadee Darukanprut"}</div>
+                <div>Attending physician:</div>
+                <div>{nextAppointment.doctor_name || "-"}</div>
+                <div>Department: {nextAppointment.service_name || "General"}</div>
+              </>
+            ) : (
+              <>
+                <div>No upcoming appointment</div>
+                <div>Please select a service</div>
+              </>
+            )}
           </div>
 
           <img
@@ -123,6 +142,7 @@ export default function Home() {
         <div className="calendar-row">
           {calendarDays.map((day) => {
             const isToday = day.iso === todayIso;
+            const isSelected = day.iso === selectedDate;
 
             return (
               <div
@@ -130,11 +150,19 @@ export default function Home() {
                 className="calendar-item"
                 onClick={() => setSelectedDate(day.iso)}
               >
-                <div className={`calendar-circle ${isToday ? "today" : ""}`}>
+                <div
+                  className={`calendar-circle ${
+                    isToday || isSelected ? "today" : ""
+                  }`}
+                >
                   {day.date}
                 </div>
 
-                <div className={`calendar-day ${isToday ? "today-day" : ""}`}>
+                <div
+                  className={`calendar-day ${
+                    isToday || isSelected ? "today-day" : ""
+                  }`}
+                >
                   {day.day === "Thu"
                     ? "Thru"
                     : day.day === "Tue"
@@ -148,17 +176,30 @@ export default function Home() {
 
         <div className="section-head appointment-head">
           <div className="section-title">Appointment</div>
-          <button className="see-all-btn" type="button">
+          <button
+            className="see-all-btn"
+            type="button"
+            onClick={() => navigate("/appointment")}
+          >
             See all
           </button>
         </div>
 
         <div className="appointment-list">
-          {appointmentsToShow.length > 0 ? (
+          {loadingAppointments ? (
+            <div className="appointment-card">
+              <div className="appointment-left">
+                <div className="ap-id">Loading...</div>
+                <div className="ap-line">Please wait</div>
+              </div>
+            </div>
+          ) : appointmentsToShow.length > 0 ? (
             appointmentsToShow.map((item) => (
               <div
                 className="appointment-card"
                 key={`${item.id}-${item.time_slot}`}
+                onClick={() => navigate("/appointment")}
+                style={{ cursor: "pointer" }}
               >
                 <div className="appointment-left">
                   <div className="ap-id">{item.displayId}</div>
@@ -167,6 +208,12 @@ export default function Home() {
                   </div>
                   <div className="ap-line">
                     Doctor: {item.doctor_name || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Date: {item.appointment_date || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Time: {item.time_slot || "-"}
                   </div>
                   <div className="ap-line">
                     Location: {item.location || "Prajomkao HS."}
@@ -217,7 +264,7 @@ export default function Home() {
           <button
             type="button"
             className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-           onClick={() => {
+            onClick={() => {
               setActiveTab("task");
               navigate("/appointment");
             }}
