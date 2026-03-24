@@ -18,9 +18,10 @@ export default function Appointment() {
 
   const patient = {
     id: localStorage.getItem("patientId"),
-    hn: localStorage.getItem("hn") || "HN00001",
+    hn: localStorage.getItem("hn") || "HN12345",
     name:
-      localStorage.getItem("patientName") || "Ms. Pathumwadee Darukanprut",
+      localStorage.getItem("patientName") ||
+      "Ms. Pathumwadee Darukanprut",
     type: localStorage.getItem("patientType") || "OPD",
     image: profileImg,
   };
@@ -60,7 +61,11 @@ export default function Appointment() {
       key={item.id}
       className={`appointment-card ${isDetailView ? "detail-selected" : ""}`}
       onClick={() => {
-        if (!isDetailView) setSelectedAppointment(item);
+        if (isDetailView) {
+          setSelectedAppointment(null);
+        } else {
+          setSelectedAppointment(item);
+        }
       }}
     >
       <div className="appointment-card-left">
@@ -122,7 +127,8 @@ export default function Appointment() {
 
             <div className="detail-content">
               <p>
-                <strong>Date:</strong> {formatDate(selectedAppointment.appointment_date)}{" "}
+                <strong>Date:</strong>{" "}
+                {formatDate(selectedAppointment.appointment_date)}{" "}
                 {selectedAppointment.slot_start?.slice(0, 5)}-
                 {selectedAppointment.slot_end?.slice(0, 5)}
               </p>
@@ -145,16 +151,10 @@ export default function Appointment() {
               </p>
 
               <p>
-                <strong>Detail:</strong> Room {selectedAppointment.room_id || "-"}
+                <strong>Detail:</strong>{" "}
+                Room {selectedAppointment.room_id || "-"}
               </p>
             </div>
-
-            <button
-              className="back-to-list-btn"
-              onClick={() => setSelectedAppointment(null)}
-            >
-              Back
-            </button>
           </div>
         </>
       )}
@@ -162,27 +162,27 @@ export default function Appointment() {
       <div className="bottom-nav">
         <button
           className={`nav-item ${activeTab === "home" ? "active" : ""}`}
-           onClick={() => {setActiveTab("home");
+            onClick={() => {setActiveTab("home");
               navigate("/home");
-          }}
+            }}
         >
           <img src={homeIcon} alt="home" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
-           onClick={() => {setActiveTab("calendar");
+          onClick={() => {setActiveTab("calendar");
               navigate("/calendar");
-          }}
+            }}
         >
           <img src={calendarIcon} alt="calendar" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-          onClick={() => {setActiveTab("task");
-              navigate("/appointment");
-          }}
+         onClick={() => {setActiveTab("task");
+             navigate("/appointment");
+            }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
         </button>

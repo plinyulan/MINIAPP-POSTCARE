@@ -2,10 +2,17 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
   margin: 0;
-  background: #f7f6f4;
+  min-height: 100%;
   font-family: "Poppins", sans-serif;
+  background: #f7f6f4;
+}
+
+body {
+  background: #f7f6f4;
 }
 
 .appointment-page {
@@ -123,7 +130,6 @@ body {
   justify-content: center;
 }
 
-/* ตอนอยู่หน้า detail ให้การ์ดบนไม่มีปุ่ม approve */
 .detail-selected {
   margin-bottom: 16px;
 }
@@ -178,18 +184,6 @@ body {
   background: #eef7f7;
   color: #5e8a93;
   font-size: 14px;
-}
-
-.back-to-list-btn {
-  width: 100%;
-  height: 46px;
-  border: none;
-  border-radius: 14px;
-  background: #4a789b;
-  color: #fff;
-  font-size: 15px;
-  font-weight: 600;
-  margin-top: 8px;
 }
 
 .loading-text,
