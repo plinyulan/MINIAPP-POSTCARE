@@ -255,6 +255,7 @@ export default function Bookingsuccess() {
             }`}
             onClick={() => {
               setActiveTab("profile");
+              navigate("/profile");
             }}
           >
             <img

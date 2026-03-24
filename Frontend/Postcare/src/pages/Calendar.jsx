@@ -187,6 +187,7 @@ export default function Calendar() {
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
           onClick={() => {
             setActiveTab("profile");
+            navigate("/profile");
           }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />

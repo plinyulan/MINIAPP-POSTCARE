@@ -228,6 +228,7 @@ export default function Scheduletime() {
             }`}
             onClick={() => {
               setActiveTab("profile");
+              navigate("/profile");
             }}
           >
             <img

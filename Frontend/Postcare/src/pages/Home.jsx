@@ -228,7 +228,10 @@ export default function Home() {
           <button
             type="button"
             className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-            onClick={() => setActiveTab("profile")}
+            onClick={() => {
+              setActiveTab("profile");
+              navigate("/profile");
+            }}
           >
             <img src={profileIcon} alt="profile" className="nav-icon" />
           </button>
