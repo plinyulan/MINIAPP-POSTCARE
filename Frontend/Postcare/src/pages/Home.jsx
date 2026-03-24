@@ -10,7 +10,7 @@ import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
 const API_BASE =
-  "https://postcare-blackend-462349025453.asia-southeast1.run.app";
+  "https://postcare-backend-462349025453.asia-southeast1.run.app";
 
 function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
@@ -102,14 +102,7 @@ export default function Home() {
   }, [patient.id]);
 
   const appointmentsToShow = useMemo(() => {
-    return appointments
-      .map((item, index) => ({
-        ...item,
-        displayId: item.id
-          ? `AP${String(item.id).padStart(2, "0")}`
-          : `AP${String(index + 1).padStart(2, "0")}`,
-        appointment_date: normalizeDateOnly(item.appointment_date),
-      }))
+    return [...appointments]
       .sort((a, b) => {
         const dateA = new Date(
           `${normalizeDateOnly(a.appointment_date)}T${a.slot_start || "00:00:00"}`
@@ -119,7 +112,12 @@ export default function Home() {
         );
         return dateA - dateB;
       })
-      .slice(0, 3);
+      .slice(0, 3)
+      .map((item, index) => ({
+        ...item,
+        displayId: `AP${String(index + 1).padStart(2, "0")}`,
+        appointment_date: normalizeDateOnly(item.appointment_date),
+      }));
   }, [appointments]);
 
   return (
@@ -303,4 +301,3 @@ export default function Home() {
     </div>
   );
 }
-

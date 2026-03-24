@@ -180,7 +180,6 @@ body {
 .appointment-list {
     display: flex;
     flex-direction: column;
-    gap: 15px;
     padding: 0 8px;
 }
 
