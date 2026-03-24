@@ -10,7 +10,7 @@ import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
 const API_BASE =
-  "https://postcare-backend-462349025453.asia-southeast1.run.app";
+  "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
 function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
