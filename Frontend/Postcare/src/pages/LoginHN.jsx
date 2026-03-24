@@ -17,7 +17,7 @@ export default function LoginHN() {
     e.preventDefault();
 
     if (!hn || !password) {
-      alert("Please enter HN and password");
+      alert("Please enter HN number and password");
       return;
     }
 
@@ -62,45 +62,33 @@ export default function LoginHN() {
   return (
     <div className="loginhn-page">
       <div className="loginhn-phone">
-        <div className="loginhn-hero">
-          <img src={loginImg} alt="POSTCARE" className="loginhn-image" />
-        </div>
+        <img src={loginImg} alt="POSTCARE" className="loginhn-image" />
 
-        <div className="loginhn-panel">
-          <h1 className="loginhn-title">Login</h1>
+        <div className="loginhn-bottom"></div>
 
-          <form className="loginhn-form" onSubmit={handleSubmit}>
-            <div className="loginhn-field">
-              <label className="loginhn-label">HN number</label>
-              <input
-                type="text"
-                className="loginhn-input"
-                placeholder="Enter HN number"
-                value={hn}
-                onChange={(e) => setHn(e.target.value)}
-              />
-            </div>
+        <h1 className="loginhn-title">Login</h1>
 
-            <div className="loginhn-field">
-              <label className="loginhn-label">Password</label>
-              <input
-                type="password"
-                className="loginhn-input"
-                placeholder="Enter password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        <form className="loginhn-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            className="loginhn-input loginhn-input-hn"
+            placeholder="HN number"
+            value={hn}
+            onChange={(e) => setHn(e.target.value)}
+          />
 
-            <button
-              type="submit"
-              className="loginhn-button"
-              disabled={loading}
-            >
-              {loading ? "Loading..." : "Login"}
-            </button>
-          </form>
-        </div>
+          <input
+            type="password"
+            className="loginhn-input loginhn-input-password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button type="submit" className="loginhn-button" disabled={loading}>
+            {loading ? "Loading..." : "Submit"}
+          </button>
+        </form>
       </div>
     </div>
   );

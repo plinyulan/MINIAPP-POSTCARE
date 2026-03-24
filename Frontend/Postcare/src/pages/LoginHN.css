@@ -2,8 +2,11 @@
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
   margin: 0;
+  min-height: 100%;
   font-family: "Poppins", sans-serif;
   background: #ffffff;
 }
@@ -23,7 +26,6 @@ body {
   overflow: hidden;
 }
 
-/* รูปด้านบน */
 .loginhn-image {
   position: absolute;
   width: 308px;
@@ -34,34 +36,30 @@ body {
   z-index: 3;
 }
 
-/* กล่องพื้นล่าง */
 .loginhn-bottom {
   position: absolute;
   width: 393px;
   height: 598px;
   left: 0;
   top: 254px;
-  border-radius: 50px 50px 0 0;
   background: linear-gradient(
     149.99deg,
     rgba(140, 175, 195, 0.42) 21.39%,
     rgba(140, 173, 206, 0.7) 60.89%,
     rgba(139, 171, 217, 0.7) 98.37%
   );
+  border-radius: 50px 50px 0 0;
   z-index: 1;
 }
 
-/* overlay จาง */
 .loginhn-bottom::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50px 50px 0 0;
   background: rgba(0, 0, 0, 0.004);
-  z-index: 0;
+  border-radius: 50px 50px 0 0;
 }
 
-/* หัวข้อ */
 .loginhn-title {
   position: absolute;
   width: 64px;
@@ -69,8 +67,6 @@ body {
   left: 165px;
   top: 435px;
   margin: 0;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
   font-weight: 600;
   font-size: 24px;
   line-height: 150%;
@@ -79,13 +75,11 @@ body {
   z-index: 4;
 }
 
-/* ฟอร์ม */
 .loginhn-form {
   position: relative;
   z-index: 4;
 }
 
-/* input รวม */
 .loginhn-input {
   position: absolute;
   width: 324px;
@@ -93,34 +87,27 @@ body {
   left: 35px;
   border: none;
   outline: none;
-  background: #ffffff;
   border-radius: 20px;
+  background: #ffffff;
   padding: 0 20px;
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  font-weight: 400;
   font-size: 14px;
   line-height: 150%;
   letter-spacing: -0.019em;
   color: #457492;
-  z-index: 4;
 }
 
 .loginhn-input::placeholder {
   color: rgba(93, 147, 149, 0.46);
 }
 
-/* input HN */
 .loginhn-input-hn {
   top: 503px;
 }
 
-/* input Password */
 .loginhn-input-password {
   top: 565px;
 }
 
-/* ปุ่ม submit */
 .loginhn-button {
   position: absolute;
   width: 101px;
@@ -128,24 +115,13 @@ body {
   left: 146px;
   top: 639px;
   border: none;
-  cursor: pointer;
-  background: #457492;
   border-radius: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 20px;
-  gap: 10px;
-
-  font-family: "Poppins", sans-serif;
-  font-style: normal;
-  font-weight: 400;
+  background: #457492;
+  color: #d9e3e5;
   font-size: 14px;
   line-height: 150%;
   letter-spacing: -0.019em;
-  color: #d9e3e5;
-  z-index: 4;
+  cursor: pointer;
 }
 
 .loginhn-button:disabled {
