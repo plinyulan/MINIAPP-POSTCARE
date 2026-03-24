@@ -30,11 +30,9 @@ function getSixDaysEndingToday(baseDate = new Date()) {
   return days;
 }
 
-function parseAppointmentDateTime(item) {
-  if (!item?.appointment_date) return null;
-
-  const time = item.time_slot || "00:00:00";
-  return new Date(`${item.appointment_date}T${time}`);
+function normalizeDateOnly(value) {
+  if (!value) return "";
+  return String(value).split("T")[0];
 }
 
 export default function Home() {
@@ -56,6 +54,7 @@ export default function Home() {
         const data = await res.json();
 
         console.log("appointments from db:", data);
+
         setAppointments(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Fetch appointments error:", error);
@@ -68,28 +67,26 @@ export default function Home() {
     fetchAppointments();
   }, []);
 
-  const upcomingAppointments = useMemo(() => {
-    const now = new Date();
-
-    return appointments
-      .map((item, index) => {
-        const dateTime = parseAppointmentDateTime(item);
-
-        return {
-          ...item,
-          displayId: item.id
-            ? `AP${String(item.id).padStart(2, "0")}`
-            : `AP${String(index + 1).padStart(2, "0")}`,
-          dateTime,
-        };
-      })
-      .filter((item) => item.dateTime && item.dateTime >= now)
-      .sort((a, b) => a.dateTime - b.dateTime);
-  }, [appointments]);
-
   const appointmentsToShow = useMemo(() => {
-    return upcomingAppointments.slice(0, 3);
-  }, [upcomingAppointments]);
+    return appointments
+      .map((item, index) => ({
+        ...item,
+        displayId: item.id
+          ? `AP${String(item.id).padStart(2, "0")}`
+          : `AP${String(index + 1).padStart(2, "0")}`,
+        appointment_date: normalizeDateOnly(item.appointment_date),
+      }))
+      .sort((a, b) => {
+        const dateA = new Date(
+          `${normalizeDateOnly(a.appointment_date)}T${a.time_slot || "00:00:00"}`
+        );
+        const dateB = new Date(
+          `${normalizeDateOnly(b.appointment_date)}T${b.time_slot || "00:00:00"}`
+        );
+        return dateA - dateB;
+      })
+      .slice(0, 3);
+  }, [appointments]);
 
   return (
     <div className="home-shell">
@@ -97,7 +94,7 @@ export default function Home() {
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
-            <div className="hn-text">HN00001</div>
+            <div className="hn-text">HN12345</div>
             <div className="sub-text">Patient Type: OPD</div>
             <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
           </div>
