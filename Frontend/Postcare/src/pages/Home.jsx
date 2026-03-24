@@ -14,19 +14,15 @@ const API_BASE =
 
 function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
-
   for (let i = 5; i >= 0; i--) {
     const d = new Date(baseDate);
     d.setDate(baseDate.getDate() - i);
-
     days.push({
-      fullDate: d,
       date: d.getDate(),
       day: d.toLocaleDateString("en-US", { weekday: "short" }),
       iso: d.toISOString().split("T")[0],
     });
   }
-
   return days;
 }
 
@@ -46,11 +42,11 @@ export default function Home() {
   const patient = {
     id: localStorage.getItem("patientId"),
     hn: localStorage.getItem("hn") || "HN00001",
-    name:
-      localStorage.getItem("patientName") ||
-      "Ms. Pathumwadee Darukanprut",
+    name: localStorage.getItem("patientName") || "Ms. Pathumwadee Darukanprut",
     type: localStorage.getItem("patientType") || "OPD",
   };
+
+  console.log("patient from localStorage:", patient);
 
   const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
 
@@ -60,12 +56,17 @@ export default function Home() {
         if (!patient.id) {
           console.error("No patientId found in localStorage");
           setAppointments([]);
+          setLoadingAppointments(false);
           return;
         }
 
         setLoadingAppointments(true);
 
-        const res = await fetch(`${API_BASE}/book/${patient.id}`);
+        const url = `${API_BASE}/book/${patient.id}`;
+        console.log("fetching:", url);
+
+        const res = await fetch(url);
+        console.log("response status:", res.status);
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
@@ -134,21 +135,12 @@ export default function Home() {
             <div>Dr. Thanakrit Wattanachai</div>
             <div>Department: General</div>
           </div>
-
-          <img
-            src={notiIcon}
-            alt="notification"
-            className="top-appointment-image"
-          />
+          <img src={notiIcon} alt="notification" className="top-appointment-image" />
         </div>
 
         <div className="section-head calendar-head">
           <div className="section-title">Calendar</div>
-          <button
-            className="see-all-btn"
-            type="button"
-            onClick={() => navigate("/calendar")}
-          >
+          <button className="see-all-btn" type="button" onClick={() => navigate("/calendar")}>
             See all
           </button>
         </div>
@@ -156,23 +148,15 @@ export default function Home() {
         <div className="calendar-row">
           {calendarDays.map((day, index) => {
             const isLast = index === calendarDays.length - 1;
-
             return (
               <div
                 key={day.iso}
                 className={`calendar-item ${isLast ? "clickable" : "disabled"}`}
                 onClick={isLast ? () => navigate("/calendar") : undefined}
               >
-                <div className={`calendar-circle ${isLast ? "today" : ""}`}>
-                  {day.date}
-                </div>
-
+                <div className={`calendar-circle ${isLast ? "today" : ""}`}>{day.date}</div>
                 <div className={`calendar-day ${isLast ? "today-day" : ""}`}>
-                  {day.day === "Thu"
-                    ? "Thru"
-                    : day.day === "Tue"
-                    ? "Tru"
-                    : day.day}
+                  {day.day === "Thu" ? "Thru" : day.day === "Tue" ? "Tru" : day.day}
                 </div>
               </div>
             );
@@ -181,11 +165,7 @@ export default function Home() {
 
         <div className="section-head appointment-head">
           <div className="section-title">Appointment</div>
-          <button
-            className="see-all-btn"
-            type="button"
-            onClick={() => navigate("/appointment")}
-          >
+          <button className="see-all-btn" type="button" onClick={() => navigate("/appointment")}>
             See all
           </button>
         </div>
@@ -207,28 +187,14 @@ export default function Home() {
               >
                 <div className="appointment-left">
                   <div className="ap-id">{item.displayId}</div>
-
-                  <div className="ap-line">
-                    Clinic: {item.service_name || item.clinic_name || "-"}
-                  </div>
-
-                  <div className="ap-line">
-                    Doctor: {item.doctor_name || "-"}
-                  </div>
-
-                  <div className="ap-line">
-                    Location: {item.location || "Prachomklao HS."}
-                  </div>
+                  <div className="ap-line">Clinic: {item.service_name || item.clinic_name || "-"}</div>
+                  <div className="ap-line">Doctor: {item.doctor_name || "-"}</div>
+                  <div className="ap-line">Location: {item.location || "Prachomklao HS."}</div>
                 </div>
 
                 <div className="appointment-right">
-                  <div className="approve-badge">
-                    {item.status || "Approve"}
-                  </div>
-
-                  <div className="type-badge">
-                    {item.patient_type || patient.type || "OPD"}
-                  </div>
+                  <div className="approve-badge">{item.status || "Approve"}</div>
+                  <div className="type-badge">{item.patient_type || patient.type || "OPD"}</div>
                 </div>
               </div>
             ))
