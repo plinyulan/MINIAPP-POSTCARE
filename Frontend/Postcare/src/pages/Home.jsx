@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+
 import profileImg from "../img/profile.jpg";
 import notiIcon from "../img/Noti.png";
 import homeIcon from "../img/home.png";
@@ -11,12 +12,12 @@ import profileIcon from "../img/usercircle.png";
 const API_BASE =
   "https://postcare-backend-462349025453.asia-southeast1.run.app";
 
-function getSixDaysStartingToday(baseDate = new Date()) {
+function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 5; i >= 0; i--) {
     const d = new Date(baseDate);
-    d.setDate(baseDate.getDate() + i);
+    d.setDate(baseDate.getDate() - i);
 
     days.push({
       fullDate: d,
@@ -44,7 +45,7 @@ export default function Home() {
   const [appointments, setAppointments] = useState([]);
   const [loadingAppointments, setLoadingAppointments] = useState(true);
 
-  const calendarDays = useMemo(() => getSixDaysStartingToday(today), [today]);
+  const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -55,7 +56,6 @@ export default function Home() {
         const data = await res.json();
 
         console.log("appointments from db:", data);
-
         setAppointments(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Fetch appointments error:", error);
@@ -97,7 +97,7 @@ export default function Home() {
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
-            <div className="hn-text">HN12345</div>
+            <div className="hn-text">HN00001</div>
             <div className="sub-text">Patient Type: OPD</div>
             <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
           </div>
@@ -105,6 +105,7 @@ export default function Home() {
 
         <div
           className="top-appointment-card"
+          onClick={() => navigate("/service")}
         >
           <div className="top-appointment-text">
             <div>Ms. Pathumwadee Darukanprut</div>
@@ -133,12 +134,13 @@ export default function Home() {
 
         <div className="calendar-row">
           {calendarDays.map((day, index) => {
-            const isLast = index === calendarDays.length - 2; 
+            const isLast = index === calendarDays.length - 1;
 
             return (
               <div
                 key={day.iso}
                 className={`calendar-item ${isLast ? "clickable" : "disabled"}`}
+                onClick={isLast ? () => navigate("/calendar") : undefined}
               >
                 <div className={`calendar-circle ${isLast ? "today" : ""}`}>
                   {day.date}
