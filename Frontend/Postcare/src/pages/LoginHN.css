@@ -5,107 +5,150 @@
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: #f7f6f4;
+  background: #ffffff;
 }
 
 .loginhn-page {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  background: #f7f6f4;
+  background: #ffffff;
 }
 
 .loginhn-phone {
-  width: 100%;
-  max-width: 393px;
-  min-height: 100vh;
-  background: #f7f6f4;
   position: relative;
+  width: 393px;
+  min-height: 852px;
+  background: #ffffff;
   overflow: hidden;
 }
 
-.loginhn-top {
-  width: 100%;
-  background: #f7f6f4;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  padding-top: 28px;
-  position: relative;
-  z-index: 2;
-}
-
+/* รูปด้านบน */
 .loginhn-image {
-  width: 100%;
-  max-width: 340px;
-  height: auto;
+  position: absolute;
+  width: 308px;
+  height: 315px;
+  left: 48px;
+  top: 68px;
   object-fit: contain;
-  display: block;
+  z-index: 3;
 }
 
+/* กล่องพื้นล่าง */
 .loginhn-bottom {
-  margin-top: -34px;
-  min-height: calc(100vh - 330px);
-  background: #d9e8f4;
-  border-top-left-radius: 46px;
-  border-top-right-radius: 46px;
-  padding: 78px 34px 48px;
-  position: relative;
+  position: absolute;
+  width: 393px;
+  height: 598px;
+  left: 0;
+  top: 254px;
+  border-radius: 50px 50px 0 0;
+  background: linear-gradient(
+    149.99deg,
+    rgba(140, 175, 195, 0.42) 21.39%,
+    rgba(140, 173, 206, 0.7) 60.89%,
+    rgba(139, 171, 217, 0.7) 98.37%
+  );
   z-index: 1;
 }
 
+/* overlay จาง */
+.loginhn-bottom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50px 50px 0 0;
+  background: rgba(0, 0, 0, 0.004);
+  z-index: 0;
+}
+
+/* หัวข้อ */
 .loginhn-title {
-  margin: 0 0 34px;
-  text-align: center;
-  font-size: 28px;
-  line-height: 1.2;
+  position: absolute;
+  width: 64px;
+  height: 36px;
+  left: 165px;
+  top: 435px;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
   font-weight: 600;
-  color: #4f7fa3;
+  font-size: 24px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #457492;
+  z-index: 4;
 }
 
+/* ฟอร์ม */
 .loginhn-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 28px;
+  position: relative;
+  z-index: 4;
 }
 
+/* input รวม */
 .loginhn-input {
-  width: 100%;
-  height: 54px;
+  position: absolute;
+  width: 324px;
+  height: 42px;
+  left: 35px;
   border: none;
-  border-radius: 999px;
-  background: #ffffff;
-  padding: 0 28px;
-  font-size: 15px;
-  color: #5a7a8d;
   outline: none;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 0 20px;
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #457492;
+  z-index: 4;
 }
 
 .loginhn-input::placeholder {
-  color: #b6cfd6;
+  color: rgba(93, 147, 149, 0.46);
 }
 
+/* input HN */
+.loginhn-input-hn {
+  top: 503px;
+}
+
+/* input Password */
+.loginhn-input-password {
+  top: 565px;
+}
+
+/* ปุ่ม submit */
 .loginhn-button {
-  margin-top: 6px;
-  min-width: 140px;
-  height: 56px;
+  position: absolute;
+  width: 101px;
+  height: 42px;
+  left: 146px;
+  top: 639px;
   border: none;
-  border-radius: 999px;
-  background: #4a7a9e;
-  color: #ffffff;
-  font-size: 18px;
-  font-weight: 500;
   cursor: pointer;
+  background: #457492;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: -0.019em;
+  color: #d9e3e5;
+  z-index: 4;
 }
 
 .loginhn-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
-}
-
-@media (min-width: 394px) {
-  .loginhn-phone {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
-  }
 }
