@@ -14,16 +14,15 @@ body {
   min-height: 100vh;
   margin: 0 auto;
   background: #f7f6f4;
-  padding: 24px 8px 120px;
+  padding: 24px 10px 120px;
   position: relative;
 }
 
-/* header */
 .appointment-header {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  margin-bottom: 26px;
+  margin-bottom: 28px;
 }
 
 .patient-avatar {
@@ -34,55 +33,39 @@ body {
   flex-shrink: 0;
 }
 
-.patient-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .patient-info h2 {
   margin: 0;
   font-size: 20px;
-  line-height: 1.15;
+  line-height: 1.1;
   font-weight: 600;
-  color: #3c3c3c;
+  color: #3d3d3d;
 }
 
 .patient-info p {
   margin: 3px 0 0;
   font-size: 14px;
   line-height: 1.35;
-  font-weight: 400;
-  color: #3c3c3c;
+  color: #3d3d3d;
 }
 
-/* title */
 .appointment-title {
-  margin: 0 0 16px;
+  margin: 0 0 18px;
   font-size: 18px;
-  line-height: 1.2;
   font-weight: 600;
-  color: #111111;
+  color: #111;
 }
 
-/* appointment card */
 .appointment-card {
   width: 100%;
-  min-height: 142px;
+  min-height: 146px;
   background: #dce9eb;
   border-radius: 24px;
-  padding: 24px 18px;
-  margin-bottom: 16px;
+  padding: 24px 20px;
+  margin-bottom: 18px;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px;
+  gap: 12px;
   cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.appointment-card.active {
-  border: 2px solid #7da0bb;
 }
 
 .appointment-card-left {
@@ -93,33 +76,32 @@ body {
   margin: 0 0 6px;
   font-size: 14px;
   line-height: 1.45;
-  font-weight: 400;
-  color: #4d789a;
+  color: #4f7898;
 }
 
 .ap-code {
-  margin-bottom: 10px !important;
   font-size: 15px !important;
   font-weight: 600 !important;
+  margin-bottom: 10px !important;
 }
 
 .appointment-card-right {
-  width: 82px;
+  min-width: 82px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   gap: 10px;
-  padding-top: 2px;
+  padding-top: 3px;
 }
 
 .approve-badge {
   min-width: 78px;
   height: 28px;
   padding: 0 12px;
-  border: 1.5px solid #18b53d;
+  border: 1.5px solid #16b43b;
   border-radius: 999px;
   background: #f8fff9;
-  color: #18b53d;
+  color: #16b43b;
   font-size: 12px;
   font-weight: 500;
   display: inline-flex;
@@ -132,8 +114,8 @@ body {
   height: 28px;
   padding: 0 12px;
   border-radius: 999px;
-  background: #49779b;
-  color: #ffffff;
+  background: #4a789b;
+  color: #fff;
   font-size: 12px;
   font-weight: 500;
   display: inline-flex;
@@ -141,24 +123,27 @@ body {
   justify-content: center;
 }
 
-/* detail box */
+/* ตอนอยู่หน้า detail ให้การ์ดบนไม่มีปุ่ม approve */
+.detail-selected {
+  margin-bottom: 16px;
+}
+
 .appointment-detail-box {
   width: 100%;
-  min-height: 425px;
+  min-height: 450px;
   background: #dce9eb;
-  border-radius: 24px;
-  padding: 16px 14px 28px;
+  border-radius: 20px;
+  padding: 16px 14px 24px;
   position: relative;
-  margin-top: -4px;
 }
 
 .appointment-detail-box::before {
   content: "";
   position: absolute;
-  top: -9px;
+  top: -10px;
   left: 8px;
   right: 8px;
-  border-top: 2px dashed #cfdce1;
+  border-top: 2px dashed #d1dde2;
 }
 
 .detail-top {
@@ -171,22 +156,15 @@ body {
 .detail-top h4 {
   margin: 0;
   font-size: 16px;
-  line-height: 1.2;
   font-weight: 500;
-  color: #4d789a;
+  color: #4f7898;
 }
 
 .detail-content p {
   margin: 0 0 28px;
   font-size: 15px;
-  line-height: 1.45;
-  font-weight: 400;
-  color: #4d789a;
-}
-
-.detail-content strong {
-  font-weight: 500;
-  color: #4d789a;
+  line-height: 1.5;
+  color: #4f7898;
 }
 
 .service-chip {
@@ -195,23 +173,31 @@ body {
   justify-content: center;
   min-height: 30px;
   padding: 0 14px;
-  border: 1.5px solid #7da0a8;
+  border: 1.5px solid #82a7af;
   border-radius: 999px;
   background: #eef7f7;
-  color: #5e8993;
+  color: #5e8a93;
   font-size: 14px;
-  font-weight: 400;
 }
 
-/* states */
+.back-to-list-btn {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  background: #4a789b;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
 .loading-text,
 .error-text {
-  margin: 12px 0;
+  color: #4f7898;
   font-size: 14px;
-  color: #4d789a;
 }
 
-/* optional mobile nav */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -219,7 +205,7 @@ body {
   transform: translateX(-50%);
   width: 315px;
   height: 57px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(8px);
   border-radius: 30px;
   display: grid;
@@ -250,11 +236,4 @@ body {
   width: 24px;
   height: 24px;
   object-fit: contain;
-}
-
-/* desktop preview ให้อยู่กลาง ไม่ยืด */
-@media (min-width: 394px) {
-  .appointment-page {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.03);
-  }
 }

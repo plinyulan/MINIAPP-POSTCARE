@@ -4,8 +4,8 @@
 
 body {
   margin: 0;
-  background: #f7f6f4;
   font-family: "Poppins", sans-serif;
+  background: #f7f6f4;
 }
 
 .loginhn-page {
@@ -20,98 +20,83 @@ body {
   max-width: 393px;
   min-height: 100vh;
   background: #f7f6f4;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
 }
 
-.loginhn-hero {
+.loginhn-top {
   width: 100%;
-  padding: 28px 18px 0;
+  background: #f7f6f4;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-end;
+  padding-top: 28px;
+  position: relative;
+  z-index: 2;
 }
 
 .loginhn-image {
   width: 100%;
-  max-width: 330px;
+  max-width: 340px;
   height: auto;
   object-fit: contain;
   display: block;
 }
 
-.loginhn-panel {
-  margin-top: auto;
-  background: #ffffff;
-  border-radius: 34px 34px 0 0;
-  padding: 28px 24px 40px;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.04);
+.loginhn-bottom {
+  margin-top: -34px;
+  min-height: calc(100vh - 330px);
+  background: #d9e8f4;
+  border-top-left-radius: 46px;
+  border-top-right-radius: 46px;
+  padding: 78px 34px 48px;
+  position: relative;
+  z-index: 1;
 }
 
 .loginhn-title {
-  margin: 0 0 22px;
-  font-size: 34px;
-  line-height: 1.1;
-  font-weight: 700;
-  color: #111111;
+  margin: 0 0 34px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 600;
+  color: #4f7fa3;
 }
 
 .loginhn-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-}
-
-.loginhn-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.loginhn-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #5a5a5a;
+  align-items: center;
+  gap: 28px;
 }
 
 .loginhn-input {
   width: 100%;
-  height: 52px;
-  border: 1.5px solid #d8e2e8;
-  border-radius: 16px;
-  padding: 0 16px;
+  height: 54px;
+  border: none;
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 0 28px;
   font-size: 15px;
-  color: #333333;
-  background: #fdfefe;
+  color: #5a7a8d;
   outline: none;
 }
 
 .loginhn-input::placeholder {
-  color: #a0aab2;
-}
-
-.loginhn-input:focus {
-  border-color: #7fa8c3;
-  box-shadow: 0 0 0 3px rgba(127, 168, 195, 0.14);
+  color: #b6cfd6;
 }
 
 .loginhn-button {
-  margin-top: 8px;
-  width: 100%;
-  height: 54px;
+  margin-top: 6px;
+  min-width: 140px;
+  height: 56px;
   border: none;
-  border-radius: 18px;
-  background: #4d86b0;
+  border-radius: 999px;
+  background: #4a7a9e;
   color: #ffffff;
-  font-size: 17px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
   cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.loginhn-button:hover {
-  opacity: 0.95;
 }
 
 .loginhn-button:disabled {
