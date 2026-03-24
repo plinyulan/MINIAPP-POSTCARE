@@ -8,12 +8,15 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
-function getSixDaysEndingToday(baseDate = new Date()) {
+const API_BASE =
+  "https://postcare-backend-462349025453.asia-southeast1.run.app";
+
+function getSixDaysStartingToday(baseDate = new Date()) {
   const days = [];
 
-  for (let i = 5; i >= 0; i--) {
+  for (let i = 0; i < 6; i++) {
     const d = new Date(baseDate);
-    d.setDate(baseDate.getDate() - i);
+    d.setDate(baseDate.getDate() + i);
 
     days.push({
       fullDate: d,
@@ -27,66 +30,66 @@ function getSixDaysEndingToday(baseDate = new Date()) {
 }
 
 function parseAppointmentDateTime(item) {
-  if (!item.appointment_date || !item.time_slot) return null;
-  return new Date(`${item.appointment_date}T${item.time_slot}`);
+  if (!item?.appointment_date) return null;
+
+  const time = item.time_slot || "00:00:00";
+  return new Date(`${item.appointment_date}T${time}`);
 }
 
 export default function Home() {
   const navigate = useNavigate();
   const today = new Date();
-  const todayIso = today.toISOString().split("T")[0];
 
   const [activeTab, setActiveTab] = useState("home");
-  const [selectedDate, setSelectedDate] = useState(todayIso);
   const [appointments, setAppointments] = useState([]);
   const [loadingAppointments, setLoadingAppointments] = useState(true);
 
-  useEffect(() => {
-    fetch(
-      "https://postcare-backend-462349025453.asia-southeast1.run.app/appointments"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setAppointments(Array.isArray(data) ? data : []);
-      })
-      .catch((err) => {
-        console.error("Fetch appointments error:", err);
-        setAppointments([]);
-      })
-      .finally(() => {
-        setLoadingAppointments(false);
-      });
-  }, []);
+  const calendarDays = useMemo(() => getSixDaysStartingToday(today), [today]);
 
-  const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        setLoadingAppointments(true);
+
+        const res = await fetch(`${API_BASE}/appointments`);
+        const data = await res.json();
+
+        console.log("appointments from db:", data);
+
+        setAppointments(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Fetch appointments error:", error);
+        setAppointments([]);
+      } finally {
+        setLoadingAppointments(false);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
 
   const upcomingAppointments = useMemo(() => {
     const now = new Date();
 
     return appointments
-      .map((item, index) => ({
-        ...item,
-        displayId: item.id
-          ? `AP${String(item.id).padStart(2, "0")}`
-          : `AP${String(index + 1).padStart(2, "0")}`,
-        dateTime: parseAppointmentDateTime(item),
-      }))
+      .map((item, index) => {
+        const dateTime = parseAppointmentDateTime(item);
+
+        return {
+          ...item,
+          displayId: item.id
+            ? `AP${String(item.id).padStart(2, "0")}`
+            : `AP${String(index + 1).padStart(2, "0")}`,
+          dateTime,
+        };
+      })
       .filter((item) => item.dateTime && item.dateTime >= now)
       .sort((a, b) => a.dateTime - b.dateTime);
   }, [appointments]);
 
-  const selectedDayAppointments = useMemo(() => {
-    return upcomingAppointments.filter(
-      (item) => item.appointment_date === selectedDate
-    );
-  }, [upcomingAppointments, selectedDate]);
-
-  const appointmentsToShow =
-    selectedDayAppointments.length > 0
-      ? selectedDayAppointments.slice(0, 3)
-      : upcomingAppointments.slice(0, 3);
-
-  const nextAppointment = upcomingAppointments[0];
+  const appointmentsToShow = useMemo(() => {
+    return upcomingAppointments.slice(0, 3);
+  }, [upcomingAppointments]);
 
   return (
     <div className="home-shell">
@@ -102,23 +105,12 @@ export default function Home() {
 
         <div
           className="top-appointment-card"
-          onClick={() => navigate("/service")}
-          style={{ cursor: "pointer" }}
         >
           <div className="top-appointment-text">
-            {nextAppointment ? (
-              <>
-                <div>{nextAppointment.patient_name || "Ms. Pathumwadee Darukanprut"}</div>
-                <div>Attending physician:</div>
-                <div>{nextAppointment.doctor_name || "-"}</div>
-                <div>Department: {nextAppointment.service_name || "General"}</div>
-              </>
-            ) : (
-              <>
-                <div>No upcoming appointment</div>
-                <div>Please select a service</div>
-              </>
-            )}
+            <div>Ms. Pathumwadee Darukanprut</div>
+            <div>Attending physician:</div>
+            <div>Dr. Thanakrit Wattanachai</div>
+            <div>Department: General</div>
           </div>
 
           <img
@@ -140,29 +132,19 @@ export default function Home() {
         </div>
 
         <div className="calendar-row">
-          {calendarDays.map((day) => {
-            const isToday = day.iso === todayIso;
-            const isSelected = day.iso === selectedDate;
+          {calendarDays.map((day, index) => {
+            const isLast = index === calendarDays.length - 2; 
 
             return (
               <div
                 key={day.iso}
-                className="calendar-item"
-                onClick={() => setSelectedDate(day.iso)}
+                className={`calendar-item ${isLast ? "clickable" : "disabled"}`}
               >
-                <div
-                  className={`calendar-circle ${
-                    isToday || isSelected ? "today" : ""
-                  }`}
-                >
+                <div className={`calendar-circle ${isLast ? "today" : ""}`}>
                   {day.date}
                 </div>
 
-                <div
-                  className={`calendar-day ${
-                    isToday || isSelected ? "today-day" : ""
-                  }`}
-                >
+                <div className={`calendar-day ${isLast ? "today-day" : ""}`}>
                   {day.day === "Thu"
                     ? "Thru"
                     : day.day === "Tue"
@@ -194,29 +176,25 @@ export default function Home() {
               </div>
             </div>
           ) : appointmentsToShow.length > 0 ? (
-            appointmentsToShow.map((item) => (
+            appointmentsToShow.map((item, index) => (
               <div
                 className="appointment-card"
-                key={`${item.id}-${item.time_slot}`}
+                key={`${item.id || index}-${item.time_slot || index}`}
                 onClick={() => navigate("/appointment")}
-                style={{ cursor: "pointer" }}
               >
                 <div className="appointment-left">
                   <div className="ap-id">{item.displayId}</div>
+
                   <div className="ap-line">
-                    Clinic: {item.service_name || "-"}
+                    Clinic: {item.service_name || item.clinic_name || "-"}
                   </div>
+
                   <div className="ap-line">
                     Doctor: {item.doctor_name || "-"}
                   </div>
+
                   <div className="ap-line">
-                    Date: {item.appointment_date || "-"}
-                  </div>
-                  <div className="ap-line">
-                    Time: {item.time_slot || "-"}
-                  </div>
-                  <div className="ap-line">
-                    Location: {item.location || "Prajomkao HS."}
+                    Location: {item.location || "Prachomklao HS."}
                   </div>
                 </div>
 
@@ -224,7 +202,10 @@ export default function Home() {
                   <div className="approve-badge">
                     {item.status || "Approve"}
                   </div>
-                  <div className="type-badge">{item.patient_type || "OPD"}</div>
+
+                  <div className="type-badge">
+                    {item.patient_type || "OPD"}
+                  </div>
                 </div>
               </div>
             ))
