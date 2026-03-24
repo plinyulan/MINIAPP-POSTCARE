@@ -42,9 +42,9 @@ body {
 
 .patient-info h2 {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.1;
-  font-weight: 400;
+  font-weight: 500;
   color: #3d3d3d;
 }
 
@@ -107,7 +107,7 @@ body {
   padding: 0 12px;
   border: 1.5px solid #16b43b;
   border-radius: 999px;
-  background: #f8fff9;
+  background: #ffffff00;
   color: #16b43b;
   font-size: 12px;
   font-weight: 500;
