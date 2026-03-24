@@ -43,19 +43,46 @@ export default function Home() {
   const [appointments, setAppointments] = useState([]);
   const [loadingAppointments, setLoadingAppointments] = useState(true);
 
+  const patient = {
+    id: localStorage.getItem("patientId"),
+    hn: localStorage.getItem("hn") || "HN00001",
+    name:
+      localStorage.getItem("patientName") ||
+      "Ms. Pathumwadee Darukanprut",
+    type: localStorage.getItem("patientType") || "OPD",
+  };
+
   const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
+        if (!patient.id) {
+          console.error("No patientId found in localStorage");
+          setAppointments([]);
+          return;
+        }
+
         setLoadingAppointments(true);
 
-        const res = await fetch(`${API_BASE}/appointments/book/${patient.id}`);
-        const data = await res.json();
+        const res = await fetch(`${API_BASE}/book/${patient.id}`);
 
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+
+        const data = await res.json();
         console.log("appointments from db:", data);
 
-        setAppointments(Array.isArray(data) ? data : []);
+        if (Array.isArray(data)) {
+          setAppointments(data);
+        } else if (Array.isArray(data?.appointments)) {
+          setAppointments(data.appointments);
+        } else if (data) {
+          setAppointments([data]);
+        } else {
+          setAppointments([]);
+        }
       } catch (error) {
         console.error("Fetch appointments error:", error);
         setAppointments([]);
@@ -65,7 +92,7 @@ export default function Home() {
     };
 
     fetchAppointments();
-  }, []);
+  }, [patient.id]);
 
   const appointmentsToShow = useMemo(() => {
     return appointments
@@ -94,17 +121,15 @@ export default function Home() {
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
-            <div className="hn-text">HN12345</div>
-            <div className="sub-text">Patient Type: OPD</div>
-            <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
+            <div className="hn-text">{patient.hn}</div>
+            <div className="sub-text">Patient Type: {patient.type}</div>
+            <div className="sub-text">{patient.name}</div>
           </div>
         </div>
 
-        <div
-          className="top-appointment-card"
-        >
+        <div className="top-appointment-card" onClick={() => navigate("/service")}>
           <div className="top-appointment-text">
-            <div>Ms. Pathumwadee Darukanprut</div>
+            <div>{patient.name}</div>
             <div>Attending physician:</div>
             <div>Dr. Thanakrit Wattanachai</div>
             <div>Department: General</div>
@@ -202,7 +227,7 @@ export default function Home() {
                   </div>
 
                   <div className="type-badge">
-                    {item.patient_type || "OPD"}
+                    {item.patient_type || patient.type || "OPD"}
                   </div>
                 </div>
               </div>
