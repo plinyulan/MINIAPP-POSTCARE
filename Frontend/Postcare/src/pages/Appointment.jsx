@@ -13,8 +13,7 @@ export default function Appointment() {
   const patient = {
     id: localStorage.getItem("patientId"),
     hn: localStorage.getItem("hn") || "HN00001",
-    name:
-      localStorage.getItem("patientName") || "Ms. Pathumwadee Darukanprut",
+    name: localStorage.getItem("patientName") || "Ms. Pathumwadee Darukanprut",
     type: localStorage.getItem("patientType") || "OPD",
     image: profileImg,
   };
@@ -112,13 +111,15 @@ export default function Appointment() {
 
           <div className="detail-content">
             <p>
-              <strong>Date:</strong> {formatDate(selectedAppointment.appointment_date)}{" "}
+              <strong>Date:</strong>{" "}
+              {formatDate(selectedAppointment.appointment_date)}{" "}
               {selectedAppointment.slot_start?.slice(0, 5)}-
               {selectedAppointment.slot_end?.slice(0, 5)}
             </p>
 
             <p>
-              <strong>Name:</strong> {selectedAppointment.patient_name || patient.name}
+              <strong>Name:</strong>{" "}
+              {selectedAppointment.patient_name || patient.name}
             </p>
 
             <p>
@@ -129,7 +130,8 @@ export default function Appointment() {
             </p>
 
             <p>
-              <strong>ServiceID:</strong> {selectedAppointment.service_id || "-"}
+              <strong>ServiceID:</strong>{" "}
+              {selectedAppointment.service_id || "-"}
             </p>
 
             <p>

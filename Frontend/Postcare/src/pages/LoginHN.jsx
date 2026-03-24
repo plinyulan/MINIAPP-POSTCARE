@@ -11,11 +11,19 @@ export default function LoginHN() {
 
   const [hn, setHn] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!hn || !password) {
+      alert("Please enter HN and password");
+      return;
+    }
+
     try {
+      setLoading(true);
+
       const res = await fetch(`${API_BASE}/login`, {
         method: "POST",
         headers: {
@@ -23,7 +31,7 @@ export default function LoginHN() {
         },
         body: JSON.stringify({
           username: hn,
-          password: password,
+          password,
         }),
       });
 
@@ -44,39 +52,55 @@ export default function LoginHN() {
 
       navigate("/home");
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("login error:", error);
       alert("Server error");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="hn-login-page">
-      <img src={loginImg} alt="POSTCARE Login" className="hn-login-image" />
+    <div className="loginhn-page">
+      <div className="loginhn-phone">
+        <div className="loginhn-hero">
+          <img src={loginImg} alt="POSTCARE" className="loginhn-image" />
+        </div>
 
-      <div className="hn-login-panel">
-        <h1 className="hn-login-title">Login</h1>
+        <div className="loginhn-panel">
+          <h1 className="loginhn-title">Login</h1>
 
-        <form className="hn-login-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            className="hn-login-input"
-            placeholder="HN number"
-            value={hn}
-            onChange={(e) => setHn(e.target.value)}
-          />
+          <form className="loginhn-form" onSubmit={handleSubmit}>
+            <div className="loginhn-field">
+              <label className="loginhn-label">HN number</label>
+              <input
+                type="text"
+                className="loginhn-input"
+                placeholder="Enter HN number"
+                value={hn}
+                onChange={(e) => setHn(e.target.value)}
+              />
+            </div>
 
-          <input
-            type="password"
-            className="hn-login-input"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <div className="loginhn-field">
+              <label className="loginhn-label">Password</label>
+              <input
+                type="password"
+                className="loginhn-input"
+                placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
-          <button type="submit" className="hn-login-button">
-            Login
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="loginhn-button"
+              disabled={loading}
+            >
+              {loading ? "Loading..." : "Login"}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
