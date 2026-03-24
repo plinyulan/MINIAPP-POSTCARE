@@ -8,12 +8,12 @@ import calendarIcon from "../img/calendar.png";
 import taskIcon from "../img/taskdaily.png";
 import profileIcon from "../img/usercircle.png";
 
-function getSixDaysStartingToday(baseDate = new Date()) {
+function getSixDaysEndingToday(baseDate = new Date()) {
   const days = [];
 
-  for (let i = 0; i < 6; i++) {
+  for (let i = 5; i >= 0; i--) {
     const d = new Date(baseDate);
-    d.setDate(baseDate.getDate() + i);
+    d.setDate(baseDate.getDate() - i);
 
     days.push({
       fullDate: d,
@@ -34,13 +34,12 @@ function parseAppointmentDateTime(item) {
 export default function Home() {
   const navigate = useNavigate();
   const today = new Date();
+  const todayIso = today.toISOString().split("T")[0];
 
   const [activeTab, setActiveTab] = useState("home");
+  const [selectedDate, setSelectedDate] = useState(todayIso);
   const [appointments, setAppointments] = useState([]);
   const [loadingAppointments, setLoadingAppointments] = useState(true);
-
-  const calendarDays = useMemo(() => getSixDaysStartingToday(today), [today]);
-  const selectedDate = calendarDays[4]?.iso || ""; // เลือกอันที่ 5 ให้ตรงกับตัวอย่างวันที่ 14
 
   useEffect(() => {
     fetch(
@@ -59,6 +58,8 @@ export default function Home() {
       });
   }, []);
 
+  const calendarDays = useMemo(() => getSixDaysEndingToday(today), [today]);
+
   const upcomingAppointments = useMemo(() => {
     const now = new Date();
 
@@ -74,15 +75,18 @@ export default function Home() {
       .sort((a, b) => a.dateTime - b.dateTime);
   }, [appointments]);
 
-  const filteredAppointments = useMemo(() => {
-    const sameDay = upcomingAppointments.filter(
+  const selectedDayAppointments = useMemo(() => {
+    return upcomingAppointments.filter(
       (item) => item.appointment_date === selectedDate
     );
-
-    return sameDay.length > 0
-      ? sameDay.slice(0, 3)
-      : upcomingAppointments.slice(0, 3);
   }, [upcomingAppointments, selectedDate]);
+
+  const appointmentsToShow =
+    selectedDayAppointments.length > 0
+      ? selectedDayAppointments.slice(0, 3)
+      : upcomingAppointments.slice(0, 3);
+
+  const nextAppointment = upcomingAppointments[0];
 
   return (
     <div className="home-shell">
@@ -90,7 +94,7 @@ export default function Home() {
         <div className="head-info">
           <img src={profileImg} alt="profile" className="profile-avatar" />
           <div className="patient-info">
-            <div className="hn-text">HN00001</div>
+            <div className="hn-text">HN12345</div>
             <div className="sub-text">Patient Type: OPD</div>
             <div className="sub-text">Ms. Pathumwadee Darukanprut</div>
           </div>
@@ -99,12 +103,22 @@ export default function Home() {
         <div
           className="top-appointment-card"
           onClick={() => navigate("/service")}
+          style={{ cursor: "pointer" }}
         >
           <div className="top-appointment-text">
-            <div>Ms. Pathumwadee Darukanprut</div>
-            <div>Attending physician:</div>
-            <div>Dr. Thanakrit Wattanachai</div>
-            <div>Department: General</div>
+            {nextAppointment ? (
+              <>
+                <div>{nextAppointment.patient_name || "Ms. Pathumwadee Darukanprut"}</div>
+                <div>Attending physician:</div>
+                <div>{nextAppointment.doctor_name || "-"}</div>
+                <div>Department: {nextAppointment.service_name || "General"}</div>
+              </>
+            ) : (
+              <>
+                <div>No upcoming appointment</div>
+                <div>Please select a service</div>
+              </>
+            )}
           </div>
 
           <img
@@ -126,20 +140,29 @@ export default function Home() {
         </div>
 
         <div className="calendar-row">
-          {calendarDays.map((day, index) => {
-            const isActive = index === 4;
+          {calendarDays.map((day) => {
+            const isToday = day.iso === todayIso;
+            const isSelected = day.iso === selectedDate;
 
             return (
               <div
                 key={day.iso}
-                className={`calendar-item ${isActive ? "clickable" : "disabled"}`}
-                onClick={isActive ? () => {} : undefined}
+                className="calendar-item"
+                onClick={() => setSelectedDate(day.iso)}
               >
-                <div className={`calendar-circle ${isActive ? "today" : ""}`}>
+                <div
+                  className={`calendar-circle ${
+                    isToday || isSelected ? "today" : ""
+                  }`}
+                >
                   {day.date}
                 </div>
 
-                <div className={`calendar-day ${isActive ? "today-day" : ""}`}>
+                <div
+                  className={`calendar-day ${
+                    isToday || isSelected ? "today-day" : ""
+                  }`}
+                >
                   {day.day === "Thu"
                     ? "Thru"
                     : day.day === "Tue"
@@ -170,21 +193,27 @@ export default function Home() {
                 <div className="ap-line">Please wait</div>
               </div>
             </div>
-          ) : filteredAppointments.length > 0 ? (
-            filteredAppointments.map((item) => (
+          ) : appointmentsToShow.length > 0 ? (
+            appointmentsToShow.map((item) => (
               <div
                 className="appointment-card"
                 key={`${item.id}-${item.time_slot}`}
                 onClick={() => navigate("/appointment")}
+                style={{ cursor: "pointer" }}
               >
                 <div className="appointment-left">
                   <div className="ap-id">{item.displayId}</div>
                   <div className="ap-line">
                     Clinic: {item.service_name || "-"}
-                    {item.department ? ` (${item.department})` : ""}
                   </div>
                   <div className="ap-line">
                     Doctor: {item.doctor_name || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Date: {item.appointment_date || "-"}
+                  </div>
+                  <div className="ap-line">
+                    Time: {item.time_slot || "-"}
                   </div>
                   <div className="ap-line">
                     Location: {item.location || "Prajomkao HS."}
