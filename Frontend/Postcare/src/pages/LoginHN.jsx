@@ -34,18 +34,14 @@ export default function LoginHN() {
         return;
       }
 
-      console.log("LOGIN SUCCESS:", data);
-
-      // 🔥 ตรงนี้คือหัวใจ
       localStorage.setItem("patientId", data.user.id);
       localStorage.setItem("hn", data.user.hn);
-      localStorage.setItem("patientType", data.user.patient_type || "OPD");
+      localStorage.setItem("patientType", "OPD");
       localStorage.setItem(
         "patientName",
-        data.user.full_name || data.user.patient_name || ""
+        data.user.full_name || data.user.patient_name || data.user.name || ""
       );
 
-      // ไปหน้า home
       navigate("/home");
     } catch (error) {
       console.error("Login error:", error);
