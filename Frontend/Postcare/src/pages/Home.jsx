@@ -50,7 +50,7 @@ export default function Home() {
       try {
         setLoadingAppointments(true);
 
-        const res = await fetch(`${API_BASE}/appointments`);
+        const res = await fetch(`${API_BASE}/appointments/book/${localStorage.getItem("patientId")}`);
         const data = await res.json();
 
         console.log("appointments from db:", data);
@@ -102,7 +102,6 @@ export default function Home() {
 
         <div
           className="top-appointment-card"
-          onClick={() => navigate("/service")}
         >
           <div className="top-appointment-text">
             <div>Ms. Pathumwadee Darukanprut</div>
