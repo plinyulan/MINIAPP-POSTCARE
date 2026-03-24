@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Appointment.css";
 import profileImg from "../img/profile.jpg";
 
@@ -11,6 +12,8 @@ const API_BASE =
   "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
 export default function Appointment() {
+  const navigate = useNavigate();
+
   const [appointments, setAppointments] = useState([]);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +21,7 @@ export default function Appointment() {
 
   const patient = {
     id: localStorage.getItem("patientId"),
-    hn: localStorage.getItem("hn") || "HN12345",
+    hn: localStorage.getItem("hn") || "HN00001",
     name:
       localStorage.getItem("patientName") ||
       "Ms. Pathumwadee Darukanprut",
@@ -32,6 +35,11 @@ export default function Appointment() {
 
   const fetchAppointments = async () => {
     try {
+      if (!patient.id) {
+        setAppointments([]);
+        return;
+      }
+
       const res = await fetch(`${API_BASE}/appointments/book/${patient.id}`);
       const data = await res.json();
 
@@ -162,34 +170,40 @@ export default function Appointment() {
       <div className="bottom-nav">
         <button
           className={`nav-item ${activeTab === "home" ? "active" : ""}`}
-            onClick={() => {setActiveTab("home");
-              navigate("/home");
-            }}
+          onClick={() => {
+            setActiveTab("home");
+            navigate("/home");
+          }}
         >
           <img src={homeIcon} alt="home" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "calendar" ? "active" : ""}`}
-          onClick={() => {setActiveTab("calendar");
-              navigate("/calendar");
-            }}
+          onClick={() => {
+            setActiveTab("calendar");
+            navigate("/calendar");
+          }}
         >
           <img src={calendarIcon} alt="calendar" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "task" ? "active" : ""}`}
-         onClick={() => {setActiveTab("task");
-             navigate("/appointment");
-            }}
+          onClick={() => {
+            setActiveTab("task");
+            navigate("/appointment");
+          }}
         >
           <img src={taskIcon} alt="task" className="nav-icon" />
         </button>
 
         <button
           className={`nav-item ${activeTab === "profile" ? "active" : ""}`}
-          onClick={() => setActiveTab("profile")}
+          onClick={() => {
+            setActiveTab("profile");
+            navigate("/profile");
+          }}
         >
           <img src={profileIcon} alt="profile" className="nav-icon" />
         </button>
