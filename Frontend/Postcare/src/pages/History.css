@@ -137,7 +137,7 @@ body,
 
 .history-y-axis {
   width: 24px;
-  height: 220px;
+  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -153,7 +153,7 @@ body,
 .history-chart-main {
   position: relative;
   flex: 1;
-  min-height: 238px;
+  min-height: 178px;
 }
 
 .history-grid {
@@ -172,7 +172,7 @@ body,
 
 .history-bars-row {
   position: relative;
-  height: 220px;
+  height: 160px;
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
@@ -189,7 +189,7 @@ body,
 }
 
 .history-bar-wrap {
-  height: 180px;
+  height: 120px;
   width: 100%;
   display: flex;
   align-items: flex-end;
@@ -198,9 +198,8 @@ body,
 
 .history-bar {
   width: 24px;
+  height: 120px;
   border-radius: 999px;
-  min-height: 6px;
-  transition: height 0.4s ease;
 }
 
 .history-bar-0 {
