@@ -55,17 +55,18 @@ body {
   color: #3d3d3d;
 }
 
-.appointment-title {
-  margin: 0 0 18px;
-  font-size: 18px;
-  font-weight: 600;
-  color: #111;
-}
 .appointment-title-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
+}
+
+.appointment-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
 }
 
 .history-btn {
@@ -73,10 +74,15 @@ body {
   background: #9ab5c5;
   color: #ffffff;
   border-radius: 999px;
-  padding: 6px 14px;
+  min-width: 84px;
+  height: 34px;
+  padding: 0 16px;
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 500;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .appointment-card {

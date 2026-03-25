@@ -7,6 +7,7 @@ import Scheduletime from "./pages/Scheduletime";
 import Bookingsuccess from "./pages/Bookingsuccess";
 import Appointment from "./pages/Appointment"; 
 import Profile from "./pages/Profile"; 
+import History from "./pages/History";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/bookingsuccess" element={<Bookingsuccess />} />
         <Route path="/appointment" element={<Appointment />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </BrowserRouter>
   );

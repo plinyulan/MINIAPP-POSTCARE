@@ -35,6 +35,17 @@ function normalizeDateOnly(value) {
   return String(value).split("T")[0];
 }
 
+function isUpcomingAppointment(item) {
+  if (!item?.appointment_date || !item?.slot_end) return true;
+
+  const dateOnly = normalizeDateOnly(item.appointment_date);
+  const endTime = String(item.slot_end).slice(0, 5);
+  const appointmentEnd = new Date(`${dateOnly}T${endTime}:00`);
+  const now = new Date();
+
+  return appointmentEnd >= now;
+}
+
 export default function Home() {
   const navigate = useNavigate();
   const today = new Date();
@@ -57,10 +68,7 @@ export default function Home() {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        console.log("patient from localStorage:", patient);
-
         if (!patient.id) {
-          console.error("No patientId found in localStorage");
           setAppointments([]);
           setLoadingAppointments(false);
           return;
@@ -69,27 +77,30 @@ export default function Home() {
         setLoadingAppointments(true);
 
         const url = `${API_BASE}/appointments/book/${patient.id}`;
-        console.log("fetching:", url);
-
         const res = await fetch(url);
-        console.log("response status:", res.status);
 
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
 
         const data = await res.json();
-        console.log("appointments from db:", data);
+
+        let normalizedAppointments = [];
 
         if (Array.isArray(data)) {
-          setAppointments(data);
+          normalizedAppointments = data;
         } else if (Array.isArray(data?.appointments)) {
-          setAppointments(data.appointments);
+          normalizedAppointments = data.appointments;
         } else if (data) {
-          setAppointments([data]);
+          normalizedAppointments = [data];
         } else {
-          setAppointments([]);
+          normalizedAppointments = [];
         }
+
+        const upcomingAppointments =
+          normalizedAppointments.filter(isUpcomingAppointment);
+
+        setAppointments(upcomingAppointments);
       } catch (error) {
         console.error("Fetch appointments error:", error);
         setAppointments([]);
@@ -132,9 +143,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div
-          className="top-appointment-card"
-        >
+        <div className="top-appointment-card">
           <div className="top-appointment-text">
             <div>{patient.name}</div>
             <div>Attending physician:</div>

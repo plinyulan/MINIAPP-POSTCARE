@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Appointment.css";
 import profileImg from "../img/profile.jpg";
@@ -11,6 +11,22 @@ import profileIcon from "../img/usercircle.png";
 const API_BASE =
   "https://postcare-blackend-462349025453.asia-southeast1.run.app";
 
+function normalizeDateOnly(value) {
+  if (!value) return "";
+  return String(value).split("T")[0];
+}
+
+function isUpcomingAppointment(item) {
+  if (!item?.appointment_date || !item?.slot_end) return true;
+
+  const dateOnly = normalizeDateOnly(item.appointment_date);
+  const endTime = String(item.slot_end).slice(0, 5);
+  const appointmentEnd = new Date(`${dateOnly}T${endTime}:00`);
+  const now = new Date();
+
+  return appointmentEnd >= now;
+}
+
 export default function Appointment() {
   const navigate = useNavigate();
 
@@ -21,7 +37,7 @@ export default function Appointment() {
 
   const patient = {
     id: localStorage.getItem("patientId"),
-    hn: localStorage.getItem("hn") || "HN12345",
+    hn: localStorage.getItem("hn") || "HN00001",
     name:
       localStorage.getItem("patientName") ||
       "Ms. Pathumwadee Darukanprut",
@@ -44,7 +60,8 @@ export default function Appointment() {
       const data = await res.json();
 
       if (Array.isArray(data) && data.length > 0) {
-        setAppointments(data);
+        const upcomingAppointments = data.filter(isUpcomingAppointment);
+        setAppointments(upcomingAppointments);
       } else {
         setAppointments([]);
       }
@@ -56,6 +73,15 @@ export default function Appointment() {
     }
   };
 
+  useEffect(() => {
+    if (
+      selectedAppointment &&
+      !appointments.some((item) => item.id === selectedAppointment.id)
+    ) {
+      setSelectedAppointment(null);
+    }
+  }, [appointments, selectedAppointment]);
+
   const formatDate = (dateStr) => {
     if (!dateStr) return "-";
     const date = new Date(dateStr);
@@ -63,6 +89,18 @@ export default function Appointment() {
     const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
     return `${day} ${weekday}`;
   };
+
+  const sortedAppointments = useMemo(() => {
+    return [...appointments].sort((a, b) => {
+      const dateA = new Date(
+        `${normalizeDateOnly(a.appointment_date)}T${a.slot_start || "00:00:00"}`
+      );
+      const dateB = new Date(
+        `${normalizeDateOnly(b.appointment_date)}T${b.slot_start || "00:00:00"}`
+      );
+      return dateA - dateB;
+    });
+  }, [appointments]);
 
   const renderAppointmentCard = (item, index = 0, isDetailView = false) => (
     <div
@@ -77,10 +115,10 @@ export default function Appointment() {
       }}
     >
       <div className="appointment-card-left">
-        <p className="ap-code">AP0{index + 1}</p>
+        <p className="ap-code">AP{String(index + 1).padStart(2, "0")}</p>
         <p>Clinic: {item.service_name || "-"}</p>
         <p>Doctor: -</p>
-        <p>Location: {item.location || "-"}</p>
+        <p>Location: {item.location || "Prachomklao HS."}</p>
       </div>
 
       <div className="appointment-card-right">
@@ -107,9 +145,11 @@ export default function Appointment() {
 
       <div className="appointment-title-row">
         <h3 className="appointment-title">Appointment</h3>
+
         {!selectedAppointment && (
           <button
             className="history-btn"
+            type="button"
             onClick={() => navigate("/history")}
           >
             History
@@ -119,13 +159,15 @@ export default function Appointment() {
 
       {loading && <p className="loading-text">Loading...</p>}
 
-      {!loading && appointments.length === 0 && (
+      {!loading && sortedAppointments.length === 0 && (
         <p className="error-text">not found appointment</p>
       )}
 
-      {!loading && appointments.length > 0 && !selectedAppointment && (
+      {!loading && sortedAppointments.length > 0 && !selectedAppointment && (
         <>
-          {appointments.map((item, index) => renderAppointmentCard(item, index))}
+          {sortedAppointments.map((item, index) =>
+            renderAppointmentCard(item, index)
+          )}
         </>
       )}
 
@@ -133,7 +175,12 @@ export default function Appointment() {
         <>
           {renderAppointmentCard(
             selectedAppointment,
-            appointments.findIndex((item) => item.id === selectedAppointment.id),
+            Math.max(
+              0,
+              sortedAppointments.findIndex(
+                (item) => item.id === selectedAppointment.id
+              )
+            ),
             true
           )}
 
@@ -173,8 +220,8 @@ export default function Appointment() {
               </p>
 
               <p>
-                <strong>Detail:</strong>{" "}
-                Room {selectedAppointment.room_id || "-"}
+                <strong>Detail:</strong> Room{" "}
+                {selectedAppointment.room_id || "-"}
               </p>
             </div>
           </div>
@@ -225,4 +272,3 @@ export default function Appointment() {
     </div>
   );
 }
-
