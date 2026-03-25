@@ -1,0 +1,232 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: #f7f6f4;
+}
+
+.history-page {
+  width: 100%;
+  max-width: 393px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: #f7f6f4;
+  padding: 24px 12px 120px;
+  position: relative;
+}
+
+.history-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.history-avatar {
+  width: 57px;
+  height: 57px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.history-patient-info h2 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+  font-weight: 600;
+  color: #3d3d3d;
+}
+
+.history-patient-info p {
+  margin: 3px 0 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: #3d3d3d;
+}
+
+.history-title {
+  margin: 0 0 24px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.history-filter-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.history-filter-btn {
+  border: none;
+  background: transparent;
+  color: #d3dde2;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+}
+
+.history-filter-btn.active {
+  min-width: 64px;
+  height: 30px;
+  border: 1.5px solid #4d7ca0;
+  border-radius: 999px;
+  color: #4d7ca0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-chart-section {
+  margin-bottom: 26px;
+}
+
+.history-chart-label {
+  font-size: 13px;
+  color: #8aafc4;
+  margin: 0 0 16px 18px;
+}
+
+.history-chart {
+  min-height: 250px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  gap: 12px;
+}
+
+.history-bar-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.history-bar {
+  width: 24px;
+  border-radius: 14px;
+}
+
+.history-bar-0 {
+  background: #d8e3e8;
+}
+
+.history-bar-1 {
+  background: #8fb0c4;
+}
+
+.history-bar-2 {
+  background: #4d7ca0;
+}
+
+.history-bar-name {
+  margin-top: 10px;
+  font-size: 11px;
+  color: #7fa0b7;
+  text-align: center;
+  max-width: 84px;
+  line-height: 1.2;
+}
+
+.history-empty {
+  font-size: 14px;
+  color: #7fa0b7;
+}
+
+.history-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-card {
+  background: #dce9eb;
+  border-radius: 24px;
+  padding: 14px 16px 16px;
+}
+
+.history-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4f7898;
+  margin-bottom: 10px;
+}
+
+.history-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.history-card-label {
+  min-width: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4f7898;
+}
+
+.history-card-value {
+  font-size: 14px;
+  color: #4f7898;
+  line-height: 1.5;
+}
+
+.history-card-date-row {
+  margin-bottom: 0;
+}
+
+.history-card-dates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.bottom-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: 315px;
+  height: 57px;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(8px);
+  border-radius: 30px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  padding: 0 12px;
+  z-index: 999;
+}
+
+.nav-item {
+  width: 41px;
+  height: 41px;
+  margin: 0 auto;
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-item.active {
+  width: 66px;
+  background: rgba(217, 217, 217, 0.28);
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
