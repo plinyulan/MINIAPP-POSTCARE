@@ -105,7 +105,17 @@ export default function Appointment() {
         </div>
       </div>
 
-      <h3 className="appointment-title">Appointment</h3>
+      <div className="appointment-title-row">
+        <h3 className="appointment-title">Appointment</h3>
+        {!selectedAppointment && (
+          <button
+            className="history-btn"
+            onClick={() => navigate("/history")}
+          >
+            History
+          </button>
+        )}
+      </div>
 
       {loading && <p className="loading-text">Loading...</p>}
 
@@ -215,3 +225,4 @@ export default function Appointment() {
     </div>
   );
 }
+

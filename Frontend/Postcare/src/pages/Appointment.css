@@ -61,6 +61,23 @@ body {
   font-weight: 600;
   color: #111;
 }
+.appointment-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.history-btn {
+  border: none;
+  background: #9ab5c5;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+}
 
 .appointment-card {
   width: 100%;
