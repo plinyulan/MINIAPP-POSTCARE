@@ -98,33 +98,61 @@ export default function History() {
   }, [historyAppointments, range]);
 
   const groupedServices = useMemo(() => {
-    const groups = {};
+    const base = {
+      "Blood pressure": {
+        serviceName: "Blood pressure",
+        count: 0,
+        dates: [],
+      },
+      "X-ray": {
+        serviceName: "X-ray",
+        count: 0,
+        dates: [],
+      },
+      Diagnosis: {
+        serviceName: "Diagnosis",
+        count: 0,
+        dates: [],
+      },
+    };
 
     filteredHistory.forEach((item) => {
-      const key = item.service_name || "Unknown";
+      const rawName = item.service_name || "Unknown";
+      const key =
+        rawName.toLowerCase() === "blood pressure"
+          ? "Blood pressure"
+          : rawName.toLowerCase() === "x-ray"
+          ? "X-ray"
+          : rawName.toLowerCase() === "diagnosis"
+          ? "Diagnosis"
+          : rawName;
 
-      if (!groups[key]) {
-        groups[key] = {
+      if (!base[key]) {
+        base[key] = {
           serviceName: key,
           count: 0,
           dates: [],
         };
       }
 
-      groups[key].count += 1;
-      groups[key].dates.push(normalizeDateOnly(item.appointment_date));
+      base[key].count += 1;
+      base[key].dates.push(normalizeDateOnly(item.appointment_date));
     });
 
-    return Object.values(groups).map((group) => ({
+    return Object.values(base).map((group) => ({
       ...group,
       uniqueDates: [...new Set(group.dates)].sort(),
     }));
   }, [filteredHistory]);
 
   const maxCount = useMemo(() => {
-    if (groupedServices.length === 0) return 1;
-    return Math.max(...groupedServices.map((item) => item.count), 1);
+    const max = Math.max(...groupedServices.map((item) => item.count), 0);
+    return Math.max(max, 4);
   }, [groupedServices]);
+
+  const yAxisValues = useMemo(() => {
+    return Array.from({ length: maxCount + 1 }, (_, i) => maxCount - i);
+  }, [maxCount]);
 
   return (
     <div className="history-page">
@@ -169,27 +197,53 @@ export default function History() {
         </button>
       </div>
 
-      <div className="history-chart-section">
-        <div className="history-chart-label">Time</div>
+      <div className="history-chart-card">
+        <div className="history-axis-y-title">Time</div>
 
-        <div className="history-chart">
-          {loading ? (
-            <p className="history-empty">Loading...</p>
-          ) : groupedServices.length > 0 ? (
-            groupedServices.map((item, index) => (
-              <div className="history-bar-item" key={`${item.serviceName}-${index}`}>
-                <div
-                  className={`history-bar history-bar-${index % 3}`}
-                  style={{
-                    height: `${Math.max(84, (item.count / maxCount) * 210)}px`,
-                  }}
-                />
-                <div className="history-bar-name">{item.serviceName}</div>
+        <div className="history-chart-layout">
+          <div className="history-y-axis">
+            {yAxisValues.map((value) => (
+              <div key={value} className="history-y-tick">
+                {value}
               </div>
-            ))
-          ) : (
-            <p className="history-empty">No history data</p>
-          )}
+            ))}
+          </div>
+
+          <div className="history-chart-main">
+            <div className="history-grid">
+              {yAxisValues.map((value) => (
+                <div key={value} className="history-grid-line" />
+              ))}
+            </div>
+
+            <div className="history-bars-row">
+              {loading ? (
+                <p className="history-empty">Loading...</p>
+              ) : groupedServices.length > 0 ? (
+                groupedServices.map((item, index) => (
+                  <div
+                    className="history-bar-item"
+                    key={`${item.serviceName}-${index}`}
+                  >
+                    <div className="history-bar-wrap">
+                      <div
+                        className={`history-bar history-bar-${index % 3}`}
+                        style={{
+                          height: `${(item.count / maxCount) * 220}px`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="history-bar-name">{item.serviceName}</div>
+                  </div>
+                ))
+              ) : (
+                <p className="history-empty">No history data</p>
+              )}
+            </div>
+
+            <div className="history-axis-x-title">Service</div>
+          </div>
         </div>
       </div>
 
@@ -206,9 +260,13 @@ export default function History() {
             <div className="history-card-row history-card-date-row">
               <span className="history-card-label">Date :</span>
               <span className="history-card-value history-card-dates">
-                {item.uniqueDates.map((date, i) => (
-                  <span key={`${date}-${i}`}>{formatDateDMY(date)}</span>
-                ))}
+                {item.uniqueDates.length > 0 ? (
+                  item.uniqueDates.map((date, i) => (
+                    <span key={`${date}-${i}`}>{formatDateDMY(date)}</span>
+                  ))
+                ) : (
+                  <span>-</span>
+                )}
               </span>
             </div>
           </div>
