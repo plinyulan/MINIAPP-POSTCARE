@@ -289,7 +289,7 @@ export default function History() {
                       <div className="history-bar-wrap">
                         <span
                           className="history-bar-count"
-                          style={{ bottom: `${barHeight + 8}px` }}
+                          style={{ bottom: `${barHeight + 2}px` }}
                         >
                           {item.count}
                         </span>
