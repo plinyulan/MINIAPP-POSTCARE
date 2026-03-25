@@ -178,6 +178,7 @@ body,
   justify-content: space-around;
   gap: 6px;
   z-index: 1;
+  margin-bottom: 8px;
 }
 
 .history-bar-item {
@@ -226,19 +227,27 @@ body,
   background: #4f7898;
 }
 
-.history-bar-name {
-  margin-top: 6px;
-  font-size: 11px;
-  color: #6f8fa5;
-  text-align: center;
-  line-height: 1;
-  max-width: 84px;
+.history-x-row {
+  display: grid;
+  grid-template-columns: 60px repeat(3, 1fr);
+  align-items: center;
+  column-gap: 8px;
+  margin-top: 4px;
 }
 
 .history-axis-x-title {
-  margin-top: 8px;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 500;
   color: #8aafc4;
+  line-height: 1;
+  text-align: left;
+}
+
+.history-x-name {
+  font-size: 11px;
+  color: #6f8fa5;
+  line-height: 1;
+  text-align: center;
 }
 
 .history-empty {

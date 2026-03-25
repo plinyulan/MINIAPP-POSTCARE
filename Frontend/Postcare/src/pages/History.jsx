@@ -289,7 +289,7 @@ export default function History() {
                       <div className="history-bar-wrap">
                         <span
                           className="history-bar-count"
-                          style={{ bottom: `${barHeight + 2}px` }}
+                          style={{ bottom: `${barHeight + 8}px` }}
                         >
                           {item.count}
                         </span>
@@ -299,8 +299,6 @@ export default function History() {
                           style={{ height: `${barHeight}px` }}
                         />
                       </div>
-
-                      <div className="history-bar-name">{item.serviceName}</div>
                     </div>
                   );
                 })
@@ -309,7 +307,18 @@ export default function History() {
               )}
             </div>
 
-            <div className="history-axis-x-title">Service</div>
+            <div className="history-x-row">
+              <div className="history-axis-x-title">Service</div>
+
+              {groupedServices.map((item, index) => (
+                <div
+                  className="history-x-name"
+                  key={`${item.serviceName}-label-${index}`}
+                >
+                  {item.serviceName}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
