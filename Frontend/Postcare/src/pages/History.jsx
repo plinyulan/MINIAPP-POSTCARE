@@ -291,7 +291,7 @@ export default function History() {
                         style={{
                           height: `${Math.max(
                             8,
-                            (item.count / maxCount) * 220
+                            (item.count / maxCount) * 180
                           )}px`,
                         }}
                       />
