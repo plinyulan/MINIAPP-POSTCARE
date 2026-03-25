@@ -126,9 +126,9 @@ body,
 }
 
 .history-axis-y-title {
-  font-size: 13px;
+  font-size: 11px;
   color: #8aafc4;
-  margin: 0 0 12px 22px;
+  margin: 0 0 0px 22px;
 }
 
 .history-chart {
@@ -136,7 +136,7 @@ body,
   padding: 0 6px;
 }
 
-/* ใช้ grid เดียวกันทั้งแถวแท่งและแถวชื่อ */
+
 .chart-row {
   display: grid;
   grid-template-columns: 60px repeat(3, 1fr);
