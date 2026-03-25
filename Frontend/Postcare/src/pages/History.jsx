@@ -17,14 +17,13 @@ function normalizeDateOnly(value) {
 }
 
 function isPastAppointment(item) {
-  if (!item?.appointment_date || !item?.slot_end) return false;
+  if (!item?.appointment_date) return false;
 
   const dateOnly = normalizeDateOnly(item.appointment_date);
-  const endTime = String(item.slot_end).slice(0, 5);
+  const endTime = item.slot_end ? String(item.slot_end).slice(0, 5) : "23:59";
   const appointmentEnd = new Date(`${dateOnly}T${endTime}:00`);
-  const now = new Date();
 
-  return appointmentEnd < now;
+  return appointmentEnd < new Date();
 }
 
 function formatDateDMY(value) {
@@ -118,12 +117,14 @@ export default function History() {
 
     filteredHistory.forEach((item) => {
       const rawName = item.service_name || "Unknown";
+      const lower = rawName.toLowerCase();
+
       const key =
-        rawName.toLowerCase() === "blood pressure"
+        lower === "blood pressure"
           ? "Blood pressure"
-          : rawName.toLowerCase() === "x-ray"
+          : lower === "x-ray"
           ? "X-ray"
-          : rawName.toLowerCase() === "diagnosis"
+          : lower === "diagnosis"
           ? "Diagnosis"
           : rawName;
 
@@ -150,9 +151,7 @@ export default function History() {
     return Math.max(max, 4);
   }, [groupedServices]);
 
-  const yAxisValues = useMemo(() => {
-    return Array.from({ length: maxCount + 1 }, (_, i) => maxCount - i);
-  }, [maxCount]);
+  const yAxisValues = [4, 3, 2, 1, 0];
 
   const dashboardStats = useMemo(() => {
     const totalVisits = filteredHistory.length;
@@ -278,28 +277,33 @@ export default function History() {
               {loading ? (
                 <p className="history-empty">Loading...</p>
               ) : groupedServices.length > 0 ? (
-                groupedServices.map((item, index) => (
-                  <div
-                    className="history-bar-item"
-                    key={`${item.serviceName}-${index}`}
-                  >
-                    <div className="history-bar-count">{item.count}</div>
+                groupedServices.map((item, index) => {
+                  const barHeight =
+                    item.count <= 0 ? 8 : Math.max(8, (item.count / maxCount) * 120);
 
-                    <div className="history-bar-wrap">
-                      <div
-                        className={`history-bar history-bar-${index % 3}`}
-                        style={{
-                          height: `${Math.max(
-                            8,
-                            (item.count / maxCount) * 180
-                          )}px`,
-                        }}
-                      />
+                  return (
+                    <div
+                      className="history-bar-item"
+                      key={`${item.serviceName}-${index}`}
+                    >
+                      <div className="history-bar-wrap">
+                        <span
+                          className="history-bar-count"
+                          style={{ bottom: `${barHeight + 8}px` }}
+                        >
+                          {item.count}
+                        </span>
+
+                        <div
+                          className={`history-bar history-bar-${index % 3}`}
+                          style={{ height: `${barHeight}px` }}
+                        />
+                      </div>
+
+                      <div className="history-bar-name">{item.serviceName}</div>
                     </div>
-
-                    <div className="history-bar-name">{item.serviceName}</div>
-                  </div>
-                ))
+                  );
+                })
               ) : (
                 <p className="history-empty">No history data</p>
               )}
