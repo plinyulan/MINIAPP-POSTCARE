@@ -253,7 +253,6 @@ export default function Home() {
           ) : (
             <div className="appointment-card">
               <div className="appointment-left">
-                <div className="ap-id">No data</div>
                 <div className="ap-line">No upcoming appointments</div>
               </div>
             </div>
