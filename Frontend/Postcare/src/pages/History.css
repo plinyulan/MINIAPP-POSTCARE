@@ -188,14 +188,6 @@ body,
   justify-content: flex-end;
 }
 
-.history-bar-count {
-  margin-bottom: 6px;
-  font-size: 11px;
-  color: #4f7898;
-  font-weight: 500;
-  line-height: 1;
-}
-
 .history-bar-wrap {
   height: 180px;
   width: 100%;
@@ -224,11 +216,11 @@ body,
 }
 
 .history-bar-name {
-  margin-top: 8px;
+  margin-top: 6px;
   font-size: 11px;
   color: #6f8fa5;
   text-align: center;
-  line-height: 1.15;
+  line-height: 1;
   max-width: 84px;
 }
 
