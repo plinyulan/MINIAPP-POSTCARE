@@ -154,6 +154,34 @@ export default function History() {
     return Array.from({ length: maxCount + 1 }, (_, i) => maxCount - i);
   }, [maxCount]);
 
+  const dashboardStats = useMemo(() => {
+    const totalVisits = filteredHistory.length;
+
+    const topServiceObj = groupedServices.reduce(
+      (max, item) => (item.count > max.count ? item : max),
+      { serviceName: "-", count: 0 }
+    );
+
+    const latestAppointment = [...filteredHistory].sort((a, b) => {
+      const dateA = new Date(
+        `${normalizeDateOnly(a.appointment_date)}T${a.slot_end || "00:00:00"}`
+      );
+      const dateB = new Date(
+        `${normalizeDateOnly(b.appointment_date)}T${b.slot_end || "00:00:00"}`
+      );
+      return dateB - dateA;
+    })[0];
+
+    return {
+      totalVisits,
+      topService: topServiceObj.count > 0 ? topServiceObj.serviceName : "-",
+      rangeCount: filteredHistory.length,
+      lastVisit: latestAppointment
+        ? formatDateDMY(latestAppointment.appointment_date)
+        : "-",
+    };
+  }, [filteredHistory, groupedServices]);
+
   return (
     <div className="history-page">
       <div className="history-header">
@@ -197,6 +225,36 @@ export default function History() {
         </button>
       </div>
 
+      <div className="mini-dashboard">
+        <div className="mini-card">
+          <div className="mini-card-label">Total Visits</div>
+          <div className="mini-card-value">{dashboardStats.totalVisits}</div>
+        </div>
+
+        <div className="mini-card">
+          <div className="mini-card-label">Top Service</div>
+          <div className="mini-card-value small">{dashboardStats.topService}</div>
+        </div>
+
+        <div className="mini-card">
+          <div className="mini-card-label">
+            {range === "day"
+              ? "Today"
+              : range === "week"
+              ? "This Week"
+              : range === "month"
+              ? "This Month"
+              : "This Year"}
+          </div>
+          <div className="mini-card-value">{dashboardStats.rangeCount}</div>
+        </div>
+
+        <div className="mini-card">
+          <div className="mini-card-label">Last Visit</div>
+          <div className="mini-card-value small">{dashboardStats.lastVisit}</div>
+        </div>
+      </div>
+
       <div className="history-chart-card">
         <div className="history-axis-y-title">Time</div>
 
@@ -225,11 +283,16 @@ export default function History() {
                     className="history-bar-item"
                     key={`${item.serviceName}-${index}`}
                   >
+                    <div className="history-bar-count">{item.count}</div>
+
                     <div className="history-bar-wrap">
                       <div
                         className={`history-bar history-bar-${index % 3}`}
                         style={{
-                          height: `${(item.count / maxCount) * 220}px`,
+                          height: `${Math.max(
+                            8,
+                            (item.count / maxCount) * 220
+                          )}px`,
                         }}
                       />
                     </div>
