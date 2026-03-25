@@ -97,50 +97,30 @@ export default function History() {
   }, [historyAppointments, range]);
 
   const groupedServices = useMemo(() => {
-    const base = {
-      "Blood pressure": {
-        serviceName: "Blood pressure",
-        count: 0,
-        dates: [],
-      },
-      "X-ray": {
-        serviceName: "X-ray",
-        count: 0,
-        dates: [],
-      },
-      Diagnosis: {
-        serviceName: "Diagnosis",
-        count: 0,
-        dates: [],
-      },
-    };
+    const base = [
+      { serviceName: "Blood pressure", count: 0, dates: [] },
+      { serviceName: "X-ray", count: 0, dates: [] },
+      { serviceName: "Diagnosis", count: 0, dates: [] },
+    ];
 
     filteredHistory.forEach((item) => {
-      const rawName = item.service_name || "Unknown";
-      const lower = rawName.toLowerCase();
+      const raw = (item.service_name || "").toLowerCase();
 
-      const key =
-        lower === "blood pressure"
-          ? "Blood pressure"
-          : lower === "x-ray"
-          ? "X-ray"
-          : lower === "diagnosis"
-          ? "Diagnosis"
-          : rawName;
+      let target = null;
+      if (raw === "blood pressure") target = "Blood pressure";
+      else if (raw === "x-ray") target = "X-ray";
+      else if (raw === "diagnosis") target = "Diagnosis";
 
-      if (!base[key]) {
-        base[key] = {
-          serviceName: key,
-          count: 0,
-          dates: [],
-        };
+      if (!target) return;
+
+      const found = base.find((s) => s.serviceName === target);
+      if (found) {
+        found.count += 1;
+        found.dates.push(normalizeDateOnly(item.appointment_date));
       }
-
-      base[key].count += 1;
-      base[key].dates.push(normalizeDateOnly(item.appointment_date));
     });
 
-    return Object.values(base).map((group) => ({
+    return base.map((group) => ({
       ...group,
       uniqueDates: [...new Set(group.dates)].sort(),
     }));
@@ -151,14 +131,12 @@ export default function History() {
     return Math.max(max, 4);
   }, [groupedServices]);
 
-  const yAxisValues = [4, 3, 2, 1, 0];
-
   const dashboardStats = useMemo(() => {
     const totalVisits = filteredHistory.length;
 
     const topServiceObj = groupedServices.reduce(
       (max, item) => (item.count > max.count ? item : max),
-      { serviceName: "-", count: 0 }
+      { serviceName: "-", count: -1 }
     );
 
     const latestAppointment = [...filteredHistory].sort((a, b) => {
@@ -198,27 +176,28 @@ export default function History() {
         <button
           className={`history-filter-btn ${range === "day" ? "active" : ""}`}
           onClick={() => setRange("day")}
+          type="button"
         >
           Day
         </button>
-
         <button
           className={`history-filter-btn ${range === "week" ? "active" : ""}`}
           onClick={() => setRange("week")}
+          type="button"
         >
           Week
         </button>
-
         <button
           className={`history-filter-btn ${range === "month" ? "active" : ""}`}
           onClick={() => setRange("month")}
+          type="button"
         >
           Month
         </button>
-
         <button
           className={`history-filter-btn ${range === "year" ? "active" : ""}`}
           onClick={() => setRange("year")}
+          type="button"
         >
           Year
         </button>
@@ -240,10 +219,10 @@ export default function History() {
             {range === "day"
               ? "Today"
               : range === "week"
-              ? "This Week"
-              : range === "month"
-              ? "This Month"
-              : "This Year"}
+                ? "This Week"
+                : range === "month"
+                  ? "This Month"
+                  : "This Year"}
           </div>
           <div className="mini-card-value">{dashboardStats.rangeCount}</div>
         </div>
@@ -257,29 +236,15 @@ export default function History() {
       <div className="history-chart-card">
         <div className="history-axis-y-title">Time</div>
 
-        <div className="history-chart-layout">
-          <div className="history-y-axis">
-            {yAxisValues.map((value) => (
-              <div key={value} className="history-y-tick">
-                {value}
-              </div>
-            ))}
-          </div>
-
-          <div className="history-chart-main">
-            <div className="history-grid">
-              {yAxisValues.map((value) => (
-                <div key={value} className="history-grid-line" />
-              ))}
-            </div>
-
-            <div className="history-bars-row">
-              {loading ? (
-                <p className="history-empty">Loading...</p>
-              ) : groupedServices.length > 0 ? (
-                groupedServices.map((item, index) => {
+        <div className="history-chart-simple">
+          {loading ? (
+            <p className="history-empty">Loading...</p>
+          ) : (
+            <>
+              <div className="history-bars-row">
+                {groupedServices.map((item, index) => {
                   const barHeight =
-                    item.count <= 0 ? 8 : Math.max(8, (item.count / maxCount) * 120);
+                    item.count <= 0 ? 8 : Math.max(8, (item.count / maxCount) * 160);
 
                   return (
                     <div
@@ -287,12 +252,12 @@ export default function History() {
                       key={`${item.serviceName}-${index}`}
                     >
                       <div className="history-bar-wrap">
-                        <span
+                        <div
                           className="history-bar-count"
                           style={{ bottom: `${barHeight + 8}px` }}
                         >
                           {item.count}
-                        </span>
+                        </div>
 
                         <div
                           className={`history-bar history-bar-${index % 3}`}
@@ -301,25 +266,23 @@ export default function History() {
                       </div>
                     </div>
                   );
-                })
-              ) : (
-                <p className="history-empty">No history data</p>
-              )}
-            </div>
+                })}
+              </div>
 
-            <div className="history-x-row">
-              <div className="history-axis-x-title">Service</div>
+              <div className="history-x-row">
+                <div className="history-axis-x-title">Service</div>
 
-              {groupedServices.map((item, index) => (
-                <div
-                  className="history-x-name"
-                  key={`${item.serviceName}-label-${index}`}
-                >
-                  {item.serviceName}
-                </div>
-              ))}
-            </div>
-          </div>
+                {groupedServices.map((item, index) => (
+                  <div
+                    className="history-x-name"
+                    key={`${item.serviceName}-label-${index}`}
+                  >
+                    {item.serviceName}
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
 
