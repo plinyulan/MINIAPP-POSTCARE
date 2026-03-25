@@ -21,6 +21,7 @@ body,
   position: relative;
 }
 
+/* HEADER */
 .history-header {
   display: flex;
   align-items: flex-start;
@@ -33,7 +34,6 @@ body,
   height: 57px;
   border-radius: 50%;
   object-fit: cover;
-  flex-shrink: 0;
 }
 
 .history-patient-info h2 {
@@ -41,51 +41,43 @@ body,
   font-size: 14px;
   font-weight: 400;
   color: #3d3d3d;
-  line-height: 1.2;
 }
 
 .history-patient-info p {
   margin: 3px 0 0;
   font-size: 14px;
-  line-height: 1.35;
   color: #3d3d3d;
 }
 
+/* TITLE */
 .history-title {
   margin: 0 0 18px;
   font-size: 18px;
   font-weight: 700;
-  color: #111111;
 }
 
+/* FILTER */
 .history-filter-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 14px;
 }
 
 .history-filter-btn {
-  border: none;
   background: transparent;
-  color: #d3dde2;
+  border: none;
   font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-  padding: 0;
+  color: #d3dde2;
 }
 
 .history-filter-btn.active {
-  min-width: 64px;
-  height: 30px;
   border: 1.5px solid #4d7ca0;
   border-radius: 999px;
   color: #4d7ca0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 4px 10px;
 }
 
+/* DASHBOARD */
 .mini-dashboard {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -96,42 +88,34 @@ body,
 .mini-card {
   background: #dce9eb;
   border-radius: 18px;
-  padding: 12px 14px 10px;
-  min-height: 72px;
+  padding: 12px;
 }
 
 .mini-card-label {
   font-size: 11px;
   color: #7fa0b7;
-  margin-bottom: 6px;
-  line-height: 1.2;
 }
 
 .mini-card-value {
   font-size: 18px;
   font-weight: 600;
   color: #4f7898;
-  line-height: 1.1;
 }
 
 .mini-card-value.small {
   font-size: 14px;
-  line-height: 1.25;
 }
 
-.history-chart-card {
-  margin-bottom: 18px;
-}
+
 
 .history-axis-y-title {
   font-size: 13px;
   color: #8aafc4;
-  margin: 0 0 8px 20px;
+  margin-left: 20px;
 }
 
 .history-chart-layout {
   display: flex;
-  align-items: stretch;
   gap: 10px;
 }
 
@@ -141,19 +125,17 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
 }
 
 .history-y-tick {
   font-size: 11px;
   color: #8aafc4;
-  line-height: 1;
 }
+
 
 .history-chart-main {
   position: relative;
   flex: 1;
-  min-height: 178px;
 }
 
 .history-grid {
@@ -162,41 +144,36 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  pointer-events: none;
 }
 
 .history-grid-line {
   border-top: 1px dashed rgba(138, 175, 196, 0.25);
-  width: 100%;
 }
 
 .history-bars-row {
-  position: relative;
   height: 160px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  gap: 6px;
-  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+  justify-items: center;
   margin-bottom: 8px;
 }
 
+/* แต่ละแท่ง */
 .history-bar-item {
-  width: 82px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
 }
 
 .history-bar-wrap {
   position: relative;
   height: 120px;
-  width: 100%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
+
 
 .history-bar-count {
   position: absolute;
@@ -204,10 +181,9 @@ body,
   transform: translateX(-50%);
   font-size: 11px;
   font-weight: 600;
-  color: #000000;
-  line-height: 1;
-  pointer-events: none;
+  color: #000;
 }
+
 
 .history-bar {
   width: 24px;
@@ -227,33 +203,28 @@ body,
   background: #4f7898;
 }
 
+
 .history-x-row {
   display: grid;
   grid-template-columns: 60px repeat(3, 1fr);
   align-items: center;
-  column-gap: 8px;
-  margin-top: 4px;
 }
 
+
 .history-axis-x-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #8aafc4;
-  line-height: 1;
-  text-align: left;
+  font-size: 11px;
+  font-weight: 400;
+  color: #6f8fa5;
 }
+
 
 .history-x-name {
   font-size: 11px;
+  font-weight: 400;
   color: #6f8fa5;
-  line-height: 1;
   text-align: center;
 }
 
-.history-empty {
-  font-size: 14px;
-  color: #7fa0b7;
-}
 
 .history-card-list {
   display: flex;
@@ -264,46 +235,29 @@ body,
 .history-card {
   background: #dce9eb;
   border-radius: 24px;
-  padding: 14px 16px 16px;
+  padding: 14px;
 }
 
 .history-card-title {
-  font-size: 14px;
   font-weight: 600;
   color: #4f7898;
-  margin-bottom: 10px;
 }
 
 .history-card-row {
   display: flex;
-  align-items: flex-start;
   gap: 8px;
-  margin-bottom: 10px;
 }
 
 .history-card-label {
-  min-width: 50px;
-  font-size: 14px;
   font-weight: 600;
   color: #4f7898;
 }
 
 .history-card-value {
-  font-size: 14px;
   color: #4f7898;
-  line-height: 1.5;
 }
 
-.history-card-date-row {
-  margin-bottom: 0;
-}
-
-.history-card-dates {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-}
-
+/* ===== NAV ===== */
 .bottom-nav {
   position: fixed;
   left: 50%;
@@ -317,29 +271,18 @@ body,
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
-  padding: 0 12px;
-  z-index: 999;
 }
 
 .nav-item {
-  width: 41px;
-  height: 41px;
-  margin: 0 auto;
-  border: none;
-  background: transparent;
-  border-radius: 999px;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
 
 .nav-item.active {
-  width: 66px;
   background: rgba(217, 217, 217, 0.28);
+  border-radius: 30px;
 }
 
 .nav-icon {
   width: 24px;
-  height: 24px;
-  object-fit: contain;
 }
