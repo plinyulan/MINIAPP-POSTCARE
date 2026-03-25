@@ -33,6 +33,7 @@ body,
   height: 57px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .history-patient-info h2 {
@@ -118,6 +119,8 @@ body,
   line-height: 1.25;
 }
 
+/* ===== CHART ===== */
+
 .history-chart-card {
   margin-bottom: 18px;
 }
@@ -128,35 +131,49 @@ body,
   margin: 0 0 12px 22px;
 }
 
-.history-chart-simple {
+.history-chart {
+  width: 100%;
   padding: 0 6px;
 }
 
-.history-bars-row {
+/* ใช้ grid เดียวกันทั้งแถวแท่งและแถวชื่อ */
+.chart-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 60px repeat(3, 1fr);
+  width: 100%;
+}
+
+.bars {
   align-items: end;
-  justify-items: center;
   height: 190px;
   margin-bottom: 10px;
 }
 
-.history-bar-item {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+.labels {
+  align-items: center;
 }
 
-.history-bar-wrap {
+.chart-spacer {
+  width: 100%;
+}
+
+.chart-col {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* แท่ง */
+.bar-wrap {
   position: relative;
   width: 100%;
   height: 170px;
   display: flex;
-  align-items: flex-end;
   justify-content: center;
+  align-items: flex-end;
 }
 
-.history-bar-count {
+.bar-count {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -166,33 +183,26 @@ body,
   line-height: 1;
 }
 
-.history-bar {
+.bar {
   width: 28px;
-  border-radius: 999px;
   min-height: 8px;
+  border-radius: 999px;
 }
 
-.history-bar-0 {
+.bar-0 {
   background: #dce9ef;
 }
 
-.history-bar-1 {
+.bar-1 {
   background: #8fb3c7;
 }
 
-.history-bar-2 {
+.bar-2 {
   background: #4f7898;
 }
 
-.history-x-row {
-  display: grid;
-  grid-template-columns: 60px repeat(3, 1fr);
-  align-items: center;
-  column-gap: 0;
-  margin-top: 0;
-}
-
-.history-axis-x-title {
+/* แถวชื่อด้านล่าง */
+.service-label {
   font-size: 11px;
   font-weight: 400;
   color: #6f8fa5;
@@ -200,7 +210,7 @@ body,
   text-align: left;
 }
 
-.history-x-name {
+.label {
   font-size: 11px;
   font-weight: 400;
   color: #6f8fa5;
@@ -208,6 +218,7 @@ body,
   text-align: center;
 }
 
+/* cards */
 .history-empty {
   font-size: 14px;
   color: #7fa0b7;
@@ -261,6 +272,7 @@ body,
   gap: 8px 12px;
 }
 
+/* bottom nav */
 .bottom-nav {
   position: fixed;
   left: 50%;

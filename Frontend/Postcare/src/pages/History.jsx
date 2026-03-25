@@ -46,9 +46,7 @@ export default function History() {
   const patient = {
     id: localStorage.getItem("patientId"),
     hn: localStorage.getItem("hn") || "HN00001",
-    name:
-      localStorage.getItem("patientName") ||
-      "Ms. Pathumwadee Darukanprut",
+    name: localStorage.getItem("patientName") || "Ms. Pathumwadee Darukanprut",
     type: localStorage.getItem("patientType") || "OPD",
     image: profileImg,
   };
@@ -136,15 +134,15 @@ export default function History() {
 
     const topServiceObj = groupedServices.reduce(
       (max, item) => (item.count > max.count ? item : max),
-      { serviceName: "-", count: -1 }
+      { serviceName: "-", count: -1 },
     );
 
     const latestAppointment = [...filteredHistory].sort((a, b) => {
       const dateA = new Date(
-        `${normalizeDateOnly(a.appointment_date)}T${a.slot_end || "00:00:00"}`
+        `${normalizeDateOnly(a.appointment_date)}T${a.slot_end || "00:00:00"}`,
       );
       const dateB = new Date(
-        `${normalizeDateOnly(b.appointment_date)}T${b.slot_end || "00:00:00"}`
+        `${normalizeDateOnly(b.appointment_date)}T${b.slot_end || "00:00:00"}`,
       );
       return dateB - dateA;
     })[0];
@@ -211,7 +209,9 @@ export default function History() {
 
         <div className="mini-card">
           <div className="mini-card-label">Top Service</div>
-          <div className="mini-card-value small">{dashboardStats.topService}</div>
+          <div className="mini-card-value small">
+            {dashboardStats.topService}
+          </div>
         </div>
 
         <div className="mini-card">
@@ -219,70 +219,64 @@ export default function History() {
             {range === "day"
               ? "Today"
               : range === "week"
-                ? "This Week"
-                : range === "month"
-                  ? "This Month"
-                  : "This Year"}
+              ? "This Week"
+              : range === "month"
+              ? "This Month"
+              : "This Year"}
           </div>
           <div className="mini-card-value">{dashboardStats.rangeCount}</div>
         </div>
 
         <div className="mini-card">
           <div className="mini-card-label">Last Visit</div>
-          <div className="mini-card-value small">{dashboardStats.lastVisit}</div>
+          <div className="mini-card-value small">
+            {dashboardStats.lastVisit}
+          </div>
         </div>
       </div>
 
       <div className="history-chart-card">
         <div className="history-axis-y-title">Time</div>
 
-        <div className="history-chart-simple">
-          {loading ? (
-            <p className="history-empty">Loading...</p>
-          ) : (
-            <>
-              <div className="history-bars-row">
-                {groupedServices.map((item, index) => {
-                  const barHeight =
-                    item.count <= 0 ? 8 : Math.max(8, (item.count / maxCount) * 160);
+        <div className="history-chart">
+          {/* BAR */}
+          <div className="chart-row bars">
+            <div className="chart-spacer" />
 
-                  return (
+            {groupedServices.map((item, index) => {
+              const barHeight =
+                item.count === 0 ? 6 : (item.count / maxCount) * 160;
+
+              return (
+                <div className="chart-col" key={index}>
+                  <div className="bar-wrap">
                     <div
-                      className="history-bar-item"
-                      key={`${item.serviceName}-${index}`}
+                      className="bar-count"
+                      style={{ bottom: `${barHeight + 6}px` }}
                     >
-                      <div className="history-bar-wrap">
-                        <div
-                          className="history-bar-count"
-                          style={{ bottom: `${barHeight + 8}px` }}
-                        >
-                          {item.count}
-                        </div>
-
-                        <div
-                          className={`history-bar history-bar-${index % 3}`}
-                          style={{ height: `${barHeight}px` }}
-                        />
-                      </div>
+                      {item.count}
                     </div>
-                  );
-                })}
-              </div>
 
-              <div className="history-x-row">
-                <div className="history-axis-x-title">Service</div>
-
-                {groupedServices.map((item, index) => (
-                  <div
-                    className="history-x-name"
-                    key={`${item.serviceName}-label-${index}`}
-                  >
-                    {item.serviceName}
+                    <div
+                      className={`bar bar-${index}`}
+                      style={{ height: `${barHeight}px` }}
+                    />
                   </div>
-                ))}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* LABEL */}
+          <div className="chart-row labels">
+            <div className="chart-spacer service-label">Service</div>
+
+            {groupedServices.map((item, index) => (
+              <div className="chart-col label" key={index}>
+                {item.serviceName}
               </div>
-            </>
-          )}
+            ))}
+          </div>
         </div>
       </div>
 
