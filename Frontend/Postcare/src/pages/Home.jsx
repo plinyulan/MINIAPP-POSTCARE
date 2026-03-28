@@ -177,7 +177,7 @@ export default function Home() {
               <div
                 key={day.iso}
                 className={`calendar-item ${isLast ? "clickable" : "disabled"}`}
-                onClick={isLast ? () => navigate("/calendar") : undefined}
+                onClick={isLast ? () => navigate("/service") : undefined}
               >
                 <div className={`calendar-circle ${isLast ? "today" : ""}`}>
                   {day.date}
